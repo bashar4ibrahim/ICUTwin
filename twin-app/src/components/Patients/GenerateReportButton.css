@@ -1,0 +1,98 @@
+/* GenerateReportButton.css */
+
+.grb-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1.25rem;
+  border-radius: 40px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  white-space: nowrap;
+}
+
+.grb-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.grb-btn:active {
+  transform: scale(0.98);
+}
+
+/* Variants */
+.grb-primary {
+  background: linear-gradient(135deg, #0ea5e9, #14b8a6);
+  color: white;
+  box-shadow: 0 6px 16px rgba(14, 165, 233, 0.35);
+}
+
+.grb-primary:hover {
+  box-shadow: 0 10px 24px rgba(14, 165, 233, 0.5);
+}
+
+.grb-ghost {
+  background: rgba(14, 165, 233, 0.08);
+  color: var(--primary-600, #0284c7);
+  border: 1px solid rgba(14, 165, 233, 0.25);
+}
+
+.grb-ghost:hover {
+  background: rgba(14, 165, 233, 0.15);
+  border-color: rgba(14, 165, 233, 0.5);
+}
+
+.grb-inline {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  color: var(--text-primary, #0f172a);
+  border: 1px solid var(--border-default, #e2e8f0);
+}
+
+.grb-inline:hover {
+  background: white;
+  border-color: var(--primary-500, #0ea5e9);
+  box-shadow: 0 6px 16px rgba(14, 165, 233, 0.15);
+}
+
+/* Icon animation */
+.grb-icon {
+  display: inline-block;
+  transition: transform 0.4s ease;
+  font-size: 0.9rem;
+}
+
+.grb-icon--spin {
+  animation: grbFlip 0.5s ease forwards;
+}
+
+@keyframes grbFlip {
+  0% { transform: rotateY(0deg); }
+  50% { transform: rotateY(90deg); }
+  100% { transform: rotateY(0deg); }
+}
+
+/* Shine sweep on hover */
+.grb-shine {
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  skew-x: -20deg;
+  pointer-events: none;
+}
+
+.grb-btn:hover .grb-shine {
+  animation: grbShine 0.55s ease forwards;
+}
+
+@keyframes grbShine {
+  0% { left: -60%; }
+  100% { left: 140%; }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "ai-twin-workspace",
+  "private": true,
+  "scripts": {
+    "postinstall": "npm --prefix twin-app install",
+    "dev": "npm --prefix twin-app run dev",
+    "dev:vite": "npm --prefix twin-app run dev:vite",
+    "build": "npm --prefix twin-app run build",
+    "preview": "npm --prefix twin-app run preview"
+  }
+}

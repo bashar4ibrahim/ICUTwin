@@ -1,0 +1,1031 @@
+/* ============================================ */
+/* AI RISK ENGINE – CREATIVE REBIRTH             */
+/* ============================================ */
+
+:root {
+  --lumina-bg: #f5f9ff;
+  --lumina-surface: rgba(255, 255, 255, 0.7);
+  --lumina-primary: #0066ff;
+  --lumina-accent: #00c2ba;
+  --lumina-danger: #ff2d55;
+  --lumina-warning: #ff9500;
+  --lumina-success: #30d158;
+  --lumina-text: #001a33;
+  --lumina-text-soft: #2c4c6e;
+  --lumina-border: rgba(0, 102, 255, 0.12);
+  --lumina-shadow: 0 20px 40px -8px rgba(0, 20, 50, 0.08);
+  --lumina-shadow-lg: 0 40px 80px -12px rgba(0, 40, 80, 0.12);
+  --transition-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.ai-risk-container {
+  min-height: 100vh;
+  background: var(--lumina-bg);
+  color: var(--lumina-text);
+  padding: 0;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Particle Canvas Background */
+#riskParticles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+/* Hero Split Screen */
+.risk-hero-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  padding: 2.5rem 3rem;
+  position: relative;
+  z-index: 2;
+  border-bottom: 1px solid var(--lumina-border);
+}
+
+.hero-left h1 {
+  font-size: 4.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  margin-bottom: 1rem;
+}
+.hero-left h1 .gradient-text {
+  background: linear-gradient(135deg, var(--lumina-primary) 0%, var(--lumina-accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero-left p {
+  font-size: 1.2rem;
+  color: var(--lumina-text-soft);
+  max-width: 500px;
+}
+
+.hero-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.hero-stats-ring {
+  display: flex;
+  gap: 2rem;
+}
+.stat-ring {
+  text-align: center;
+}
+.ring-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+}
+.ring-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--lumina-text-soft);
+}
+
+/* Morphing Tab Bar */
+.tab-morph {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 2rem;
+  position: relative;
+  z-index: 2;
+}
+.tab-morph-container {
+  display: flex;
+  background: var(--lumina-surface);
+  backdrop-filter: blur(20px);
+  border-radius: 100px;
+  padding: 0.5rem;
+  border: 1px solid var(--lumina-border);
+  box-shadow: var(--lumina-shadow);
+}
+.tab-morph-btn {
+  padding: 0.9rem 2.2rem;
+  border: none;
+  background: transparent;
+  border-radius: 100px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--lumina-text-soft);
+  cursor: pointer;
+  transition: all 0.3s var(--transition-spring);
+  position: relative;
+}
+.tab-morph-btn.active {
+  background: var(--lumina-primary);
+  color: white;
+  box-shadow: 0 10px 20px rgba(0, 102, 255, 0.3);
+  transform: scale(1.05);
+}
+.tab-indicator {
+  position: absolute;
+  bottom: -8px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--lumina-primary), var(--lumina-accent));
+  border-radius: 3px;
+  transition: left 0.3s var(--transition-spring), width 0.3s var(--transition-spring);
+}
+
+/* Patient Timeline Carousel */
+.patient-carousel {
+  padding: 1.5rem 3rem;
+  position: relative;
+  z-index: 2;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.carousel-track {
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+.patient-card-horizontal {
+  flex-shrink: 0;
+  width: 200px;
+  background: var(--lumina-surface);
+  backdrop-filter: blur(12px);
+  border-radius: 24px;
+  padding: 1.2rem;
+  border: 1px solid var(--lumina-border);
+  cursor: pointer;
+  transition: all 0.3s var(--transition-spring);
+  box-shadow: var(--lumina-shadow);
+}
+.patient-card-horizontal:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: var(--lumina-primary);
+}
+.patient-card-horizontal.active {
+  border: 2px solid var(--lumina-primary);
+  box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.1), var(--lumina-shadow);
+}
+.patient-avatar-large {
+  width: 60px;
+  height: 60px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, var(--lumina-primary), var(--lumina-accent));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+}
+.patient-name {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.patient-risk-mini {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.risk-bar-mini {
+  flex: 1;
+  height: 4px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.risk-fill-mini {
+  height: 100%;
+  border-radius: 4px;
+}
+
+/* Isometric Risk Grid */
+.risk-grid-isometric {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem 3rem;
+  position: relative;
+  z-index: 2;
+}
+
+.risk-card-isometric {
+  background: var(--lumina-surface);
+  backdrop-filter: blur(16px);
+  border-radius: 32px;
+  padding: 1.8rem;
+  border: 1px solid var(--lumina-border);
+  box-shadow: var(--lumina-shadow);
+  transition: all 0.4s var(--transition-spring);
+  transform: rotateX(0deg) rotateY(0deg);
+  cursor: pointer;
+}
+.risk-card-isometric:hover {
+  transform: rotateX(4deg) rotateY(-2deg) translateY(-10px);
+  box-shadow: var(--lumina-shadow-lg), 0 0 0 2px rgba(0, 102, 255, 0.1);
+}
+.card-header-iso {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.2rem;
+}
+.risk-ring-iso {
+  width: 90px;
+  height: 90px;
+}
+.patient-info-iso h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+.patient-info-iso .diagnosis {
+  color: var(--lumina-text-soft);
+  font-size: 0.9rem;
+}
+.vitals-row-iso {
+  display: flex;
+  gap: 1.5rem;
+  margin: 1rem 0;
+}
+.vital-item-iso {
+  display: flex;
+  flex-direction: column;
+}
+.vital-value-iso {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.vital-label-iso {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--lumina-text-soft);
+}
+
+/* Organ System Map */
+.organ-map {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
+  margin-top: 1.2rem;
+}
+.organ-node {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.6rem 1rem;
+  background: rgba(255,255,255,0.5);
+  border-radius: 20px;
+  border: 1px solid var(--lumina-border);
+}
+.organ-icon {
+  font-size: 1.5rem;
+}
+.organ-status {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-left: auto;
+}
+.organ-status.critical { background: var(--lumina-danger); box-shadow: 0 0 10px var(--lumina-danger); }
+.organ-status.warning { background: var(--lumina-warning); }
+.organ-status.stable { background: var(--lumina-success); }
+
+/* Expandable Explainability */
+.explain-accordion {
+  padding: 2rem 3rem;
+}
+.explain-item {
+  background: var(--lumina-surface);
+  backdrop-filter: blur(12px);
+  border-radius: 24px;
+  margin-bottom: 1rem;
+  border: 1px solid var(--lumina-border);
+  overflow: hidden;
+}
+.explain-header {
+  padding: 1.2rem 1.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 600;
+}
+.explain-content {
+  padding: 0 1.8rem 1.8rem;
+}
+
+/* Floating Action Button */
+.fab-ai {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  background: linear-gradient(135deg, var(--lumina-primary), var(--lumina-accent));
+  border: none;
+  color: white;
+  font-size: 1.8rem;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 102, 255, 0.4);
+  z-index: 100;
+  transition: all 0.3s var(--transition-spring);
+}
+.fab-ai:hover {
+  transform: scale(1.1) rotate(90deg);
+  box-shadow: 0 20px 40px rgba(0, 102, 255, 0.5);
+}
+
+/* Animations */
+@keyframes float-particle {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+}
+
+/* Responsive */
+@media (max-width: 1000px) {
+  .risk-hero-split { grid-template-columns: 1fr; padding: 2rem; }
+  .risk-grid-isometric { padding: 1.5rem; }
+}
+
+/* ============================================ */
+/* HEATMAP – PREMIUM INTERACTIVE TILES          */
+/* ============================================ */
+
+.heatmap-premium-container {
+  padding: 2rem 3rem;
+  position: relative;
+  z-index: 2;
+}
+
+.heatmap-premium-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+  perspective: 1000px;
+}
+
+.heatmap-tile {
+  background: var(--lumina-surface);
+  backdrop-filter: blur(16px);
+  border-radius: 28px;
+  padding: 1.8rem 1.2rem;
+  text-align: center;
+  border: 1.5px solid var(--lumina-border);
+  box-shadow: var(--lumina-shadow);
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1);
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transform: translateZ(0);
+}
+
+.heatmap-tile::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+              rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.heatmap-tile:hover::before {
+  opacity: 1;
+}
+
+.heatmap-tile:hover {
+  transform: translateY(-10px) rotateX(2deg) rotateY(-2deg) scale(1.03);
+  border-color: var(--lumina-primary);
+  box-shadow: var(--lumina-shadow-lg), 0 0 30px rgba(0, 102, 255, 0.2);
+}
+
+/* Risk ring around tile */
+.heatmap-tile::after {
+  content: '';
+  position: absolute;
+  top: -3px; left: -3px; right: -3px; bottom: -3px;
+  border-radius: 31px;
+  background: linear-gradient(135deg, 
+    var(--risk-color, var(--lumina-primary)), 
+    transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: -1;
+  filter: blur(8px);
+}
+
+.heatmap-tile:hover::after {
+  opacity: 0.4;
+}
+
+/* Risk value – large and bold */
+.heatmap-value {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, var(--risk-color, var(--lumina-text)), var(--lumina-accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 20px var(--risk-color, rgba(0,102,255,0.3));
+  transition: transform 0.3s;
+}
+
+.heatmap-tile:hover .heatmap-value {
+  transform: scale(1.1);
+}
+
+/* Patient name */
+.heatmap-name {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+  color: var(--lumina-text);
+}
+
+/* Bed info */
+.heatmap-bed {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--lumina-text-soft);
+  margin-bottom: 1rem;
+}
+
+/* Mini risk bar inside tile */
+.heatmap-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.heatmap-bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  background: var(--risk-color, var(--lumina-primary));
+  width: 0%;
+  transition: width 1s ease;
+  box-shadow: 0 0 10px var(--risk-color);
+}
+
+/* Risk category badge */
+.heatmap-badge {
+  display: inline-block;
+  padding: 0.25rem 0.9rem;
+  border-radius: 40px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 0.75rem;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--lumina-border);
+}
+
+/* Staggered animation */
+.heatmap-tile {
+  animation: tileRise 0.6s cubic-bezier(0.2, 0.9, 0.4, 1) both;
+}
+
+@keyframes tileRise {
+  from { opacity: 0; transform: translateY(40px) scale(0.9); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ============================================ */
+/* ALERTS – CINEMATIC FEED                       */
+/* ============================================ */
+
+.alerts-premium-container {
+  padding: 2rem 3rem;
+  position: relative;
+  z-index: 2;
+}
+
+.alerts-header {
+  margin-bottom: 2.5rem;
+}
+
+.alerts-header h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, var(--lumina-text) 0%, var(--lumina-danger) 50%, var(--lumina-warning) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.alerts-header p {
+  color: var(--lumina-text-soft);
+  font-size: 1rem;
+}
+
+/* Timeline layout */
+.alerts-timeline {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-left: 2rem;
+}
+
+.alerts-timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--lumina-danger), var(--lumina-warning), var(--lumina-primary));
+  border-radius: 3px;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+}
+
+/* Alert Card */
+.alert-card-premium {
+  background: var(--lumina-surface);
+  backdrop-filter: blur(16px);
+  border-radius: 24px;
+  padding: 1.5rem 1.8rem;
+  margin-bottom: 1.5rem;
+  border: 1.5px solid var(--lumina-border);
+  box-shadow: var(--lumina-shadow);
+  transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1);
+  position: relative;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transform: translateZ(0);
+}
+
+.alert-card-premium:hover {
+  transform: translateX(12px) translateY(-4px) scale(1.02);
+  border-color: var(--alert-color, var(--lumina-primary));
+  box-shadow: var(--lumina-shadow-lg), 0 0 30px var(--alert-color, rgba(0, 102, 255, 0.2));
+}
+
+/* Timeline dot */
+.alert-card-premium::before {
+  content: '';
+  position: absolute;
+  left: -2rem;
+  top: 2rem;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--alert-color, var(--lumina-primary));
+  box-shadow: 0 0 20px var(--alert-color);
+  border: 3px solid white;
+  z-index: 2;
+  transition: transform 0.3s;
+}
+
+.alert-card-premium:hover::before {
+  transform: scale(1.3);
+}
+
+/* Glow overlay */
+.alert-card-premium::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+              rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.alert-card-premium:hover::after {
+  opacity: 1;
+}
+
+/* Critical pulse animation */
+.alert-card-premium.critical {
+  animation: alertPulse 2s infinite;
+}
+
+@keyframes alertPulse {
+  0%, 100% { box-shadow: var(--lumina-shadow), 0 0 0 0 var(--alert-color, #ef4444); }
+  50% { box-shadow: var(--lumina-shadow), 0 0 0 8px rgba(239, 68, 68, 0); }
+}
+
+/* Alert header row */
+.alert-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.alert-icon {
+  font-size: 2rem;
+  filter: drop-shadow(0 0 10px var(--alert-color));
+}
+
+.alert-title {
+  flex: 1;
+}
+
+.alert-title h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.alert-category {
+  display: inline-block;
+  padding: 0.2rem 0.8rem;
+  border-radius: 40px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--alert-color, var(--lumina-primary));
+  color: white;
+}
+
+/* Risk score display */
+.alert-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 70px;
+}
+
+.alert-score-value {
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--alert-color, var(--lumina-text));
+}
+
+.alert-score-label {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--lumina-text-soft);
+}
+
+/* Alert details */
+.alert-details {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--lumina-border);
+}
+
+.alert-factor {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.factor-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--lumina-text-soft);
+  min-width: 100px;
+}
+
+.factor-value {
+  flex: 1;
+  font-size: 0.9rem;
+  color: var(--lumina-text);
+}
+
+/* Action chips */
+.alert-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.alert-action-chip {
+  padding: 0.5rem 1.2rem;
+  border-radius: 40px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--lumina-border);
+  color: var(--lumina-text);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.alert-action-chip:hover {
+  background: white;
+  border-color: var(--lumina-primary);
+  transform: scale(1.05);
+}
+
+.alert-action-chip.primary {
+  background: var(--lumina-primary);
+  color: white;
+  border-color: transparent;
+}
+
+/* Staggered animation */
+.alert-card-premium {
+  animation: alertSlideIn 0.5s cubic-bezier(0.2, 0.9, 0.4, 1) both;
+}
+
+@keyframes alertSlideIn {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ============================================ */
+/* AUDIT TRAIL – CINEMATIC ACTIVITY LOG          */
+/* ============================================ */
+
+.audit-premium-container {
+  padding: 2rem 3rem;
+  position: relative;
+  z-index: 2;
+}
+
+.audit-header {
+  margin-bottom: 2rem;
+}
+
+.audit-header h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, var(--lumina-text) 0%, var(--lumina-primary) 50%, var(--lumina-accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.audit-header p {
+  color: var(--lumina-text-soft);
+  font-size: 1rem;
+}
+
+/* Filter chips */
+.audit-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.audit-filter-chip {
+  padding: 0.6rem 1.5rem;
+  border-radius: 40px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: var(--lumina-surface);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--lumina-border);
+  color: var(--lumina-text-soft);
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.audit-filter-chip:hover {
+  background: white;
+  border-color: var(--lumina-primary);
+  transform: translateY(-2px);
+}
+
+.audit-filter-chip.active {
+  background: linear-gradient(135deg, var(--lumina-primary), var(--lumina-accent));
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 6px 16px rgba(0, 102, 255, 0.25);
+}
+
+/* Timeline */
+.audit-timeline {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-left: 2.5rem;
+}
+
+.audit-timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 2px;
+  background: linear-gradient(to bottom, 
+    var(--lumina-primary), 
+    var(--lumina-accent), 
+    var(--lumina-warning),
+    var(--lumina-danger));
+  border-radius: 2px;
+  opacity: 0.5;
+}
+
+/* Date group divider */
+.audit-date-group {
+  margin-bottom: 2rem;
+}
+
+.audit-date-label {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  position: relative;
+}
+
+.audit-date-label span {
+  padding: 0.4rem 1.2rem;
+  background: linear-gradient(135deg, var(--lumina-primary) 0%, var(--lumina-accent) 100%);
+  border-radius: 40px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 102, 255, 0.2);
+}
+
+.audit-date-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--lumina-border), transparent);
+}
+
+/* Audit card */
+.audit-card-premium {
+  background: var(--lumina-surface);
+  backdrop-filter: blur(16px);
+  border-radius: 20px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--lumina-border);
+  box-shadow: var(--lumina-shadow-sm);
+  transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1);
+  position: relative;
+  cursor: pointer;
+}
+
+.audit-card-premium:hover {
+  transform: translateX(8px);
+  border-color: var(--lumina-primary);
+  box-shadow: var(--lumina-shadow);
+}
+
+.audit-card-premium::before {
+  content: '';
+  position: absolute;
+  left: -2.5rem;
+  top: 1.5rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--action-color, var(--lumina-primary));
+  box-shadow: 0 0 12px var(--action-color);
+  border: 2px solid white;
+  transition: transform 0.2s;
+}
+
+.audit-card-premium:hover::before {
+  transform: scale(1.3);
+}
+
+/* Action type icon */
+.audit-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  background: var(--action-color, var(--lumina-primary));
+  color: white;
+  font-size: 1.2rem;
+  margin-right: 1rem;
+  flex-shrink: 0;
+  box-shadow: 0 6px 12px rgba(0, 102, 255, 0.15);
+}
+
+/* Audit content */
+.audit-content {
+  flex: 1;
+}
+
+.audit-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.35rem;
+}
+
+.audit-title strong {
+  font-size: 1rem;
+  color: var(--lumina-text);
+}
+
+.audit-badge {
+  padding: 0.2rem 0.8rem;
+  border-radius: 40px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--action-color, var(--lumina-primary));
+  color: white;
+}
+
+.audit-meta {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.75rem;
+  color: var(--lumina-text-soft);
+  margin-bottom: 0.25rem;
+}
+
+.audit-meta span {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.audit-detail {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--lumina-border);
+  font-size: 0.85rem;
+  color: var(--lumina-text-soft);
+}
+
+/* Staggered animation */
+.audit-card-premium {
+  animation: auditSlideIn 0.4s cubic-bezier(0.2, 0.9, 0.4, 1) both;
+}
+
+@keyframes auditSlideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Search bar */
+.audit-search {
+  display: flex;
+  align-items: center;
+  background: var(--lumina-surface);
+  backdrop-filter: blur(12px);
+  border-radius: 40px;
+  padding: 0.25rem 0.25rem 0.25rem 1.25rem;
+  border: 1px solid var(--lumina-border);
+  margin-bottom: 2rem;
+}
+
+.audit-search input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 0.75rem 0;
+  font-size: 0.9rem;
+  color: var(--lumina-text);
+  outline: none;
+}
+
+.audit-search input::placeholder {
+  color: var(--lumina-text-soft);
+}
+
+.audit-search button {
+  padding: 0.5rem 1.5rem;
+  border-radius: 40px;
+  border: none;
+  background: var(--lumina-primary);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.audit-search button:hover {
+  background: var(--lumina-accent);
+  transform: scale(1.02);
+}

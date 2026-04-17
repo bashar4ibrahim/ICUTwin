@@ -1,0 +1,86 @@
+.error-msg .card {
+  color: var(--text-primary);
+}
+
+.error-msg .card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.error-msg .card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-500), transparent);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.error-msg .card:hover {
+  border-color: var(--border-default);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.error-msg .card:hover::before {
+  opacity: 1;
+}
+
+.error-msg .card {
+  border-radius: 26px;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  background:
+    linear-gradient(160deg, rgba(10, 16, 31, 0.86) 0%, rgba(7, 11, 23, 0.94) 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 28%);
+  backdrop-filter: blur(22px);
+  box-shadow: var(--shadow-card);
+}
+
+.error-msg .card::before {
+  background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.9), rgba(129, 140, 248, 0.7), transparent);
+  opacity: 0.55;
+}
+
+.error-msg .card::after {
+  content: '';
+  position: absolute;
+  inset: auto -18% -50% 25%;
+  height: 190px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.16), transparent 65%);
+  transform: translateY(18%);
+  transition: transform var(--transition-slow), opacity var(--transition-slow);
+  opacity: 0.72;
+}
+
+.error-msg .card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(125, 211, 252, 0.22);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.error-msg .card:hover::after {
+  transform: translateY(0);
+}
+
+.error-msg .card {
+  border-color: rgba(152, 184, 212, 0.28);
+  background:
+    linear-gradient(155deg, rgba(255, 255, 255, 0.92) 0%, rgba(246, 251, 255, 0.96) 100%),
+    linear-gradient(180deg, rgba(107, 193, 255, 0.1), transparent 38%);
+}
+
+.error-msg .card::before {
+  background: linear-gradient(90deg, transparent, rgba(52, 125, 255, 0.82), rgba(45, 199, 232, 0.72), transparent);
+}
+
+.error-msg .card::after {
+  background: radial-gradient(circle, rgba(142, 221, 255, 0.34), transparent 64%);
+}

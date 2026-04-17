@@ -1,0 +1,8 @@
+horizon-ui-chakra-ref/
+node_modules/
+twin-app/node_modules/
+twin-app/dist/
+twin-app/.env
+twin-app/.env.*
+!twin-app/.env.example
+twin-app/*.pid

@@ -1,0 +1,414 @@
+/* ============================================
+   SIDEBAR – NEXT‑LEVEL MEDICAL AI
+   ============================================ */
+
+/* Base variables already defined in App.css; we extend here */
+
+.sidebar-shell {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 300px;
+  background: #ffffff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-right: 1px solid #e2e8f0;
+  box-shadow: 4px 0 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  border-radius: 0 32px 32px 0;
+  overflow: hidden;
+  transition: box-shadow var(--transition-slow), border-color var(--transition-slow);
+  animation: sidebarEnter 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.sidebar-shell:hover {
+  box-shadow: 24px 0 64px rgba(14, 165, 233, 0.18);
+  border-right-color: rgba(20, 184, 166, 0.3);
+}
+
+/* Animated background particles (via pseudo‑element) */
+.sidebar-shell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: none;
+  pointer-events: none;
+  z-index: 0;
+  animation: none;
+}
+
+/* Floating particles (additional layer) */
+.sidebar-shell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: none;
+  background-size: 200% 200%;
+  pointer-events: none;
+  z-index: 0;
+  animation: none;
+}
+
+/* All sidebar content sits above pseudo‑elements */
+.sidebar-shell > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== LOGO SECTION ===== */
+.sidebar-logo {
+  padding: 1.75rem 1.5rem 1.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  position: relative;
+}
+
+.sidebar-logo::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 10%;
+  width: 80%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--primary-500), var(--accent-500), transparent);
+  opacity: 0.5;
+}
+
+.logo-icon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(145deg, #0ea5e9, #14b8a6);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  box-shadow: 0 12px 24px rgba(14, 165, 233, 0.3), 0 0 0 2px rgba(255, 255, 255, 0.5) inset;
+  animation: logoFloat 3s ease-in-out infinite;
+  transition: transform var(--transition-spring);
+}
+
+.logo-icon:hover {
+  transform: scale(1.05) rotate(2deg);
+}
+
+.logo-text h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.logo-text span {
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--text-tertiary);
+}
+
+/* ECG Line Animation behind logo */
+.ecg-line {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 30px;
+  opacity: 0.25;
+  pointer-events: none;
+  mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+}
+
+.ecg-line svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ecg-path {
+  stroke: var(--primary-500);
+  stroke-width: 2;
+  fill: none;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: ecgDraw 3s ease-in-out infinite;
+}
+
+/* ===== STATUS SECTION ===== */
+.sidebar-status {
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.live-dot {
+  width: 10px;
+  height: 10px;
+  background: #10b981;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 16px #10b981;
+  animation: medicalPulse 1.8s ease-in-out infinite;
+}
+
+.live-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #0d9488;
+}
+
+.sidebar-time {
+  margin-left: auto;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.4);
+  padding: 0.25rem 0.75rem;
+  border-radius: 40px;
+  border: 1px solid var(--border-subtle);
+  backdrop-filter: blur(8px);
+  transition: all var(--transition-fast);
+}
+
+.sidebar-time:hover {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: var(--primary-500);
+  transform: scale(1.02);
+}
+
+/* ===== NAVIGATION ===== */
+.sidebar-nav {
+  flex: 1;
+  padding: 1.25rem 1rem;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.nav-section-title {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  padding: 0.75rem 0.75rem 0.5rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.25rem;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  color: var(--text-secondary);
+  position: relative;
+  background: transparent;
+  border: 1px solid transparent;
+  backdrop-filter: blur(8px);
+}
+
+.nav-item:hover {
+  background: rgba(14, 165, 233, 0.06);
+  border-color: rgba(14, 165, 233, 0.15);
+  transform: translateX(6px);
+  color: var(--text-primary);
+}
+
+.nav-item.active {
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.12), rgba(20, 184, 166, 0.08));
+  border: 1px solid rgba(20, 184, 166, 0.25);
+  color: var(--primary-600);
+  box-shadow: 0 8px 16px rgba(14, 165, 233, 0.12);
+}
+
+/* Active indicator bar */
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 20%;
+  height: 60%;
+  width: 4px;
+  background: linear-gradient(to bottom, var(--primary-500), var(--accent-500));
+  border-radius: 0 4px 4px 0;
+  box-shadow: 0 0 12px var(--primary-500);
+  animation: slideIn 0.3s ease-out;
+}
+
+.nav-icon {
+  font-size: 1.25rem;
+  width: 28px;
+  text-align: center;
+  transition: transform var(--transition-spring);
+}
+
+.nav-item:hover .nav-icon {
+  transform: scale(1.1) translateX(2px);
+}
+
+.nav-item.active .nav-icon {
+  filter: drop-shadow(0 4px 6px rgba(14, 165, 233, 0.4));
+}
+
+.nav-label {
+  flex: 1;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.active-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent-500);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--accent-500);
+  animation: pulse 1.5s infinite;
+}
+
+/* ===== USER FOOTER ===== */
+.sidebar-footer {
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.user-avatar {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(145deg, #8b5cf6, #0ea5e9);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  color: white;
+  box-shadow: 0 8px 16px rgba(139, 92, 246, 0.25);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  transition: transform var(--transition-spring);
+}
+
+.user-avatar:hover {
+  transform: scale(1.05);
+}
+
+.user-info h4 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.user-info span {
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--text-tertiary);
+}
+
+.logout-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all var(--transition-base);
+  backdrop-filter: blur(8px);
+}
+
+.logout-btn:hover {
+  background: #ef4444;
+  color: white;
+  border-color: #ef4444;
+  transform: rotate(180deg) scale(1.1);
+  box-shadow: 0 8px 16px rgba(239, 68, 68, 0.3);
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes sidebarEnter {
+  0% { opacity: 0; transform: translateX(-30px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes ecgDraw {
+  0% { stroke-dashoffset: 1000; }
+  30% { stroke-dashoffset: 0; }
+  70% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -1000; }
+}
+
+@keyframes medicalPulse {
+  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 16px #10b981; }
+  50% { opacity: 0.6; transform: scale(1.2); box-shadow: 0 0 24px #10b981; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.2); }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-10px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes auroraShift {
+  0% { opacity: 0.6; transform: scale(1) translate(0, 0); }
+  100% { opacity: 1; transform: scale(1.1) translate(-2%, 2%); }
+}
+
+@keyframes floatParticles {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
+}
+
+/* ===== SCROLLBAR ===== */
+.sidebar-nav::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background: rgba(14, 165, 233, 0.25);
+  border-radius: 20px;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-500);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .sidebar-shell {
+    position: static;
+    width: auto;
+    margin: 12px;
+    border-radius: 24px;
+    height: auto;
+  }
+}

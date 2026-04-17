@@ -1,0 +1,123 @@
+.state-panel {
+  color: var(--text-primary);
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-tertiary) 25%, var(--bg-elevated) 50%, var(--bg-tertiary) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-lg);
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(110deg, rgba(255, 255, 255, 0.05) 8%, rgba(103, 232, 249, 0.18) 18%, rgba(255, 255, 255, 0.05) 33%);
+  background-size: 220% 100%;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+}
+
+.state-panel {
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-5);
+  padding: var(--space-8);
+  border-radius: 28px;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  background: linear-gradient(160deg, rgba(10, 16, 31, 0.88), rgba(7, 11, 23, 0.94));
+  box-shadow: var(--shadow-card);
+}
+
+.state-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8fe5ff;
+}
+
+.state-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #34d399, #22d3ee);
+  box-shadow: 0 0 16px rgba(34, 211, 238, 0.36);
+  animation: pulse 1.8s ease-in-out infinite;
+}
+
+.state-heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  color: #f8fbff;
+}
+
+.state-copy {
+  max-width: 40rem;
+  color: rgba(203, 213, 225, 0.72);
+}
+
+.state-rows {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.state-row {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.state-bar {
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.state-panel {
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.92), rgba(245, 250, 255, 0.96));
+  border-color: rgba(150, 184, 214, 0.28);
+  box-shadow: var(--shadow-card);
+}
+
+.state-kicker {
+  color: #177fb6;
+}
+
+.state-dot {
+  background: linear-gradient(135deg, #2dc7e8, #347dff);
+  box-shadow: 0 0 18px rgba(45, 199, 232, 0.22);
+}
+
+.state-heading {
+  color: var(--text-primary);
+}
+
+.state-copy {
+  color: rgba(76, 102, 127, 0.86);
+}
+
+.skeleton {
+  background: linear-gradient(110deg, rgba(224, 239, 255, 0.92) 8%, rgba(168, 235, 249, 0.72) 18%, rgba(224, 239, 255, 0.92) 33%);
+  box-shadow: inset 0 0 0 1px rgba(188, 214, 237, 0.34);
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

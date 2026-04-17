@@ -1,0 +1,51 @@
+.prelogin-screen {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, rgba(34, 211, 238, 0.12), transparent 38%),
+    radial-gradient(circle at 80% 20%, rgba(56, 189, 248, 0.14), transparent 32%),
+    linear-gradient(180deg, #020814 0%, #04101d 36%, #02060f 100%);
+  color: #f8fbff;
+  overflow: hidden;
+}
+
+.prelogin-shell {
+  position: relative;
+  min-height: 100vh;
+  isolation: isolate;
+  overflow-x: hidden;
+}
+
+.prelogin-overlay-dim {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  background: rgba(2, 8, 20, 0.55);
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+}
+
+.prelogin-vignette,
+.prelogin-grid {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+}
+
+.prelogin-vignette {
+  background:
+    radial-gradient(circle at center, transparent 38%, rgba(1, 5, 14, 0.44) 76%, rgba(1, 5, 14, 0.82) 100%);
+}
+
+.prelogin-grid {
+  opacity: 0.22;
+  background-image:
+    linear-gradient(rgba(107, 169, 214, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(107, 169, 214, 0.08) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(circle at center, black 20%, transparent 78%);
+}
+
+.entry-overlay__card {
+  transform: translateY(-8%) !important;
+}

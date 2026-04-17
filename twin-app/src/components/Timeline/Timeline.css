@@ -1,0 +1,477 @@
+/* ════════════════════════════════════════════════════════════════
+   TIMELINE COMPONENT — Clinical Event Timeline with Enhanced Insights
+   ════════════════════════════════════════════════════════════════ */
+
+.timeline-wrapper {
+  width: 100%;
+  position: relative;
+}
+
+.timeline-header {
+  margin-bottom: 1.5rem;
+}
+
+.timeline-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+  color: #1a1a1a;
+}
+
+.timeline-subtitle {
+  font-size: 0.8rem;
+  color: #a0a0a0;
+  margin: 0;
+}
+
+.timeline-empty {
+  padding: 2rem;
+  text-align: center;
+  color: #999;
+  font-size: 0.9rem;
+}
+
+/* ── Timeline Container ── */
+.timeline-container {
+  position: relative;
+  padding: 0;
+}
+
+/* Vertical line connecting events */
+.timeline-container::before {
+  content: '';
+  position: absolute;
+  left: 25px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, #e5e5e5 0%, #f0f0f0 50%, #e5e5e5 100%);
+  border-radius: 2px;
+}
+
+/* ── Timeline Event ── */
+.timeline-event {
+  position: relative;
+  margin-bottom: 2rem;
+  display: flex;
+  gap: 1.5rem;
+  animation: slideIn 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+.timeline-event:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.timeline-event:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.timeline-event:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.timeline-event:nth-child(n+4) {
+  animation-delay: calc(0.1s * var(--index, 4));
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ── Timeline Marker (Dot) ── */
+.timeline-event__marker {
+  position: relative;
+  width: 60px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.timeline-event__dot {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
+}
+
+.badge-dot-xl {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+  position: relative;
+}
+
+.badge-dot-xl::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* Badge colors */
+.badge-success {
+  background-color: #28a745;
+  color: #28a745;
+}
+
+.badge-warning {
+  background-color: #ffc107;
+  color: #ffc107;
+}
+
+.badge-danger {
+  background-color: #dc3545;
+  color: #dc3545;
+}
+
+.badge-primary {
+  background-color: #007bff;
+  color: #007bff;
+}
+
+.badge-info {
+  background-color: #17a2b8;
+  color: #17a2b8;
+}
+
+/* ── Timeline Time (Left aligned) ── */
+.timeline-event__time {
+  position: absolute;
+  left: -75px;
+  top: 2px;
+  font-size: 0.8rem;
+  color: #b3b3b3;
+  font-weight: 500;
+  white-space: nowrap;
+  text-align: right;
+  width: 65px;
+}
+
+/* ── Timeline Content ── */
+.timeline-event__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.timeline-event__body {
+  padding: 1rem;
+  background: #fafafa;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+  transition: all 0.2s ease;
+}
+
+.timeline-event:hover .timeline-event__body {
+  background: #f5f5f5;
+  border-color: #e5e5e5;
+}
+
+/* Header with icon and title */
+.timeline-event__header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-event__icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timeline-event__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+  color: #1a1a1a;
+}
+
+/* Description and details */
+.timeline-event__description {
+  margin: 0.5rem 0 0.25rem;
+  font-size: 0.9rem;
+  color: #333;
+  line-height: 1.4;
+}
+
+.timeline-event__details {
+  margin: 0.25rem 0 0;
+  font-size: 0.8rem;
+  color: #777;
+}
+
+/* ── Risk Insight Box ── */
+.timeline-event__risk-box {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-left: 3px solid #007bff;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.risk-score {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.risk-label {
+  color: #666;
+  font-weight: 600;
+}
+
+.risk-value {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.risk-recommendations {
+  margin-top: 0.5rem;
+}
+
+.rec-label {
+  display: block;
+  color: #666;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.risk-recommendations ul {
+  margin: 0.3rem 0 0;
+  padding-left: 1.2rem;
+  list-style: disc;
+}
+
+.risk-recommendations li {
+  margin: 0.2rem 0;
+  color: #555;
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+
+/* ── Alert Box for critical vitals ── */
+.timeline-event__alert {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(255, 248, 240, 0.9);
+  border-left: 3px solid;
+  border-radius: 4px;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+}
+
+.alert-icon {
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+
+.alert-text {
+  color: #c85c3f;
+  line-height: 1.3;
+}
+
+/* ── Event type specific styling ── */
+.timeline-event--admission .timeline-event__body {
+  background: linear-gradient(135deg, rgba(100, 181, 246, 0.08) 0%, rgba(129, 199, 232, 0.04) 100%);
+  border-color: rgba(100, 181, 246, 0.2);
+}
+
+.timeline-event--prediction .timeline-event__body {
+  background: linear-gradient(135deg, rgba(255, 193, 7, 0.06) 0%, rgba(255, 214, 0, 0.03) 100%);
+  border-color: rgba(255, 193, 7, 0.15);
+}
+
+.timeline-event--vitals .timeline-event__body {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.06) 0%, rgba(129, 199, 232, 0.04) 100%);
+  border-color: rgba(76, 175, 80, 0.15);
+}
+
+/* ── Severity specific styling ── */
+.timeline-event--critical .timeline-event__body {
+  background: linear-gradient(135deg, rgba(220, 53, 69, 0.08) 0%, rgba(248, 113, 113, 0.04) 100%);
+  border-color: rgba(220, 53, 69, 0.2);
+}
+
+.timeline-event--warning .timeline-event__body {
+  background: linear-gradient(135deg, rgba(255, 193, 7, 0.08) 0%, rgba(255, 214, 0, 0.04) 100%);
+  border-color: rgba(255, 193, 7, 0.2);
+}
+
+.timeline-event--critical .timeline-event__title {
+  color: #dc3545;
+}
+
+.timeline-event--warning .timeline-event__title {
+  color: #ff9800;
+}
+
+/* ── Timeline Line (optional for visual connection) ── */
+.timeline-event__line {
+  display: none;
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE DESIGN
+   ═══════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .timeline-event {
+    gap: 1rem;
+  }
+
+  .timeline-event__time {
+    left: -55px;
+    font-size: 0.75rem;
+    width: 50px;
+  }
+
+  .timeline-container::before {
+    left: 15px;
+    width: 2px;
+  }
+
+  .timeline-event__marker {
+    width: 45px;
+  }
+
+  .badge-dot-xl {
+    width: 20px;
+    height: 20px;
+    border-width: 2px;
+  }
+
+  .badge-dot-xl::before {
+    width: 10px;
+    height: 10px;
+  }
+
+  .timeline-event__body {
+    padding: 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .timeline-event__title {
+    font-size: 0.85rem;
+  }
+
+  .timeline-event__description {
+    font-size: 0.8rem;
+  }
+
+  .timeline-event__details {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .timeline-event {
+    margin-bottom: 1.5rem;
+  }
+
+  .timeline-event__time {
+    left: -50px;
+    font-size: 0.7rem;
+    width: 45px;
+  }
+
+  .timeline-event__body {
+    padding: 0.6rem;
+  }
+
+  .timeline-event__header {
+    gap: 0.5rem;
+  }
+
+  .timeline-event__icon {
+    font-size: 1rem;
+  }
+}
+
+/* ═══════════════════════════════════════
+   DARK MODE SUPPORT
+   ═══════════════════════════════════════ */
+
+@media (prefers-color-scheme: dark) {
+  .timeline-title {
+    color: #e0e0e0;
+  }
+
+  .timeline-subtitle {
+    color: #999;
+  }
+
+  .timeline-container::before {
+    background: linear-gradient(180deg, #444 0%, #555 50%, #444 100%);
+  }
+
+  .timeline-event__body {
+    background: #2a2a2a;
+    border-color: #3a3a3a;
+    color: #e0e0e0;
+  }
+
+  .timeline-event:hover .timeline-event__body {
+    background: #333;
+    border-color: #444;
+  }
+
+  .timeline-event__title {
+    color: #e0e0e0;
+  }
+
+  .timeline-event__description {
+    color: #bdbdbd;
+  }
+
+  .timeline-event__details {
+    color: #888;
+  }
+
+  .timeline-event__time {
+    color: #777;
+  }
+
+  .timeline-event__risk-box {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .risk-label,
+  .rec-label {
+    color: #aaa;
+  }
+
+  .risk-recommendations li {
+    color: #bdbdbd;
+  }
+
+  .timeline-event__alert {
+    background: rgba(255, 107, 53, 0.08);
+  }
+
+  .alert-text {
+    color: #ffb399;
+  }
+}

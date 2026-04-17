@@ -1,0 +1,578 @@
+/* ============================================
+   PATIENT REPORT MODAL — ICU Intelligence
+   ============================================ */
+
+/* ── Overlay ── */
+.prm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 15, 35, 0.6);
+  backdrop-filter: blur(14px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: prmOverlayIn 0.25s ease-out;
+}
+
+@keyframes prmOverlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Modal Shell ── */
+.prm-modal {
+  width: 100%;
+  max-width: 860px;
+  max-height: 92vh;
+  background: linear-gradient(160deg, #f8faff 0%, #f0f7ff 50%, #f5fffe 100%);
+  border: 1px solid rgba(20, 184, 166, 0.25);
+  border-radius: 32px;
+  box-shadow:
+    0 40px 80px rgba(0, 30, 80, 0.2),
+    0 0 0 1px rgba(14, 165, 233, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: prmModalIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+/* Decorative mesh gradient behind modal */
+.prm-modal::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  right: -80px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.prm-modal::after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  left: -60px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(20, 184, 166, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes prmModalIn {
+  from { opacity: 0; transform: scale(0.94) translateY(16px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ── Top Bar ── */
+.prm-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem 1rem;
+  border-bottom: 1px solid rgba(14, 165, 233, 0.12);
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.prm-topbar-left { display: flex; align-items: center; }
+.prm-topbar-right { display: flex; align-items: center; gap: 0.75rem; }
+
+.prm-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.prm-logo-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(14, 165, 233, 0.3));
+}
+
+.prm-logo-title {
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #0f172a;
+}
+
+.prm-logo-sub {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #64748b;
+  margin-top: 1px;
+}
+
+.prm-close {
+  background: none;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: #64748b;
+  transition: all 0.15s;
+}
+
+.prm-close:hover {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+  transform: scale(1.05);
+}
+
+/* ── Mode Tabs ── */
+.prm-tabs-bar {
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid rgba(14, 165, 233, 0.08);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.prm-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border-radius: 40px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.prm-tab:hover {
+  background: rgba(14, 165, 233, 0.06);
+  color: #0f172a;
+}
+
+.prm-tab--active {
+  background: linear-gradient(135deg, #0ea5e9, #14b8a6);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 6px 16px rgba(14, 165, 233, 0.3);
+}
+
+/* ── Body / Scroll Area ── */
+.prm-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.25rem 1.5rem;
+  position: relative;
+  z-index: 1;
+  scroll-behavior: smooth;
+}
+
+.prm-body::-webkit-scrollbar { width: 6px; }
+.prm-body::-webkit-scrollbar-track { background: transparent; }
+.prm-body::-webkit-scrollbar-thumb { background: rgba(14, 165, 233, 0.25); border-radius: 3px; }
+
+/* ── Loading State ── */
+.prm-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  min-height: 260px;
+  padding: 2rem 0;
+}
+
+.prm-loading-pulse {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prm-loading-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: #0ea5e9;
+  border-right-color: #14b8a6;
+  animation: prmSpin 1s linear infinite;
+}
+
+@keyframes prmSpin {
+  to { transform: rotate(360deg); }
+}
+
+.prm-loading-icon {
+  font-size: 2rem;
+  animation: prmBob 1.5s ease-in-out infinite;
+}
+
+@keyframes prmBob {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.prm-loading-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: 280px;
+}
+
+.prm-step {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.85rem;
+  border-radius: 12px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #94a3b8;
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.prm-step--active {
+  background: rgba(14, 165, 233, 0.08);
+  color: #0f172a;
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  font-weight: 600;
+  transform: translateX(4px);
+}
+
+.prm-step--done {
+  color: #22c55e;
+  font-weight: 500;
+}
+
+.prm-step-icon { font-size: 1rem; }
+.prm-step-text { flex: 1; }
+
+/* ── Report Layout ── */
+.prm-report {
+  animation: prmReportIn 0.4s ease-out;
+}
+
+@keyframes prmReportIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Report Header */
+.prm-report-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+  background: white;
+  border-radius: 20px;
+  border: 1px solid rgba(14, 165, 233, 0.12);
+  box-shadow: 0 2px 8px rgba(0, 30, 60, 0.05);
+}
+
+.prm-report-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #0f172a;
+  margin-bottom: 0.35rem;
+}
+
+.prm-report-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.72rem;
+  color: #64748b;
+  flex-wrap: wrap;
+}
+
+.prm-dot {
+  opacity: 0.4;
+}
+
+.prm-mode-label {
+  background: rgba(14, 165, 233, 0.1);
+  color: #0369a1;
+  padding: 0.15rem 0.55rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Alert Banner */
+.prm-alert-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: rgba(239, 68, 68, 0.06);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 16px;
+  margin-bottom: 1rem;
+  animation: prmAlertPulse 2.5s infinite;
+}
+
+@keyframes prmAlertPulse {
+  0%, 100% { border-color: rgba(239, 68, 68, 0.2); }
+  50% { border-color: rgba(239, 68, 68, 0.4); }
+}
+
+.prm-alert-icon { font-size: 1.1rem; flex-shrink: 0; }
+.prm-alert-chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+/* Vitals Grid */
+.prm-vitals-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+/* Vital Mini Card */
+.vm-card {
+  background: rgba(248, 250, 255, 0.8);
+  border: 1px solid rgba(14, 165, 233, 0.12);
+  border-radius: 16px;
+  padding: 0.85rem 0.75rem;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.vm-card:hover {
+  background: white;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.1);
+  transform: translateY(-2px);
+}
+
+.vm-card--warn {
+  background: rgba(254, 243, 199, 0.6);
+  border-color: rgba(245, 158, 11, 0.25);
+}
+
+.vm-label {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+}
+
+.vm-value {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.vm-unit {
+  font-size: 0.6rem;
+  font-weight: 500;
+  color: #94a3b8;
+  margin-left: 1px;
+}
+
+.vm-trend {
+  font-size: 0.62rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 0.35rem;
+}
+
+/* AI Text */
+.prm-ai-text {
+  margin-top: 1rem;
+  padding: 1rem 1.1rem;
+  background: rgba(14, 165, 233, 0.04);
+  border-radius: 14px;
+  border-left: 3px solid rgba(14, 165, 233, 0.4);
+}
+
+.prm-ai-para {
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: #334155;
+  margin-bottom: 0.5rem;
+}
+
+.prm-ai-para:last-child { margin-bottom: 0; }
+
+/* Recommendation */
+.prm-recommendation-text {
+  margin-top: 0.75rem;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: #334155;
+  padding: 0.85rem 1rem;
+  background: rgba(34, 197, 94, 0.05);
+  border-radius: 12px;
+  border-left: 3px solid rgba(34, 197, 94, 0.4);
+}
+
+/* Executive Summary */
+.prm-exec-block {
+  padding: 0.5rem 0;
+}
+
+.prm-exec-text {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: #1e293b;
+  font-weight: 450;
+}
+
+/* Action List */
+.prm-action-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.prm-action-item {
+  padding: 0.65rem 1rem;
+  border-radius: 12px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  background: rgba(248, 250, 255, 0.8);
+  border: 1px solid rgba(14, 165, 233, 0.1);
+}
+
+.prm-action-item--critical { background: rgba(239, 68, 68, 0.07); border-color: rgba(239, 68, 68, 0.2); color: #b91c1c; font-weight: 700; }
+.prm-action-item--danger   { background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.15); }
+.prm-action-item--warning  { background: rgba(245, 158, 11, 0.05); border-color: rgba(245, 158, 11, 0.15); }
+
+/* Handover */
+.prm-handover-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.prm-handover-item {
+  font-size: 0.84rem;
+  line-height: 1.6;
+  color: #1e293b;
+  padding: 0.6rem 0.85rem;
+  background: rgba(248, 250, 255, 0.8);
+  border-radius: 12px;
+  border-left: 3px solid rgba(14, 165, 233, 0.3);
+}
+
+.prm-chips-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0.25rem 0;
+}
+
+.prm-no-alerts {
+  font-size: 0.84rem;
+  color: #15803d;
+  font-weight: 600;
+}
+
+/* ── Sticky Action Bar ── */
+.prm-actionbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid rgba(14, 165, 233, 0.1);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.prm-actionbar-left,
+.prm-actionbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.prm-generated-time {
+  font-size: 0.72rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.prm-btn-regen {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: 40px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  color: #0284c7;
+  transition: all 0.18s ease;
+}
+
+.prm-btn-regen:hover:not(:disabled) {
+  background: white;
+  border-color: #0ea5e9;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.15);
+  transform: translateY(-1px);
+}
+
+.prm-btn-regen:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Print Styles */
+@media print {
+  .prm-overlay { position: static; background: none; padding: 0; }
+  .prm-modal { box-shadow: none; border: none; border-radius: 0; max-height: none; }
+  .prm-topbar-right,
+  .prm-tabs-bar,
+  .prm-actionbar { display: none !important; }
+  .prm-body { overflow: visible; }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .prm-overlay { padding: 0; }
+  .prm-modal { border-radius: 0; max-height: 100vh; }
+  .prm-vitals-grid { grid-template-columns: repeat(2, 1fr); }
+  .prm-tabs-bar { gap: 0.25rem; padding: 0.6rem 1rem; overflow-x: auto; }
+  .prm-tab { font-size: 0.72rem; padding: 0.45rem 0.75rem; white-space: nowrap; }
+}

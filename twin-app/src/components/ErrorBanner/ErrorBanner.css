@@ -1,0 +1,42 @@
+.error-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: 0.95rem 1.1rem;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(244, 63, 94, 0.14), rgba(124, 24, 49, 0.16));
+  border: 1px solid rgba(244, 63, 94, 0.22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.error-banner-icon {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: rgba(244, 63, 94, 0.18);
+  color: #ffe1e8;
+  font-weight: 700;
+}
+
+.error-banner-text {
+  color: #ffd8e1;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.error-banner {
+  background: linear-gradient(135deg, rgba(255, 243, 247, 0.96), rgba(255, 251, 252, 0.98));
+  border-color: rgba(235, 90, 120, 0.22);
+}
+
+.error-banner-icon {
+  background: rgba(235, 90, 120, 0.12);
+  color: #ce4565;
+}
+
+.error-banner-text {
+  color: #bf4d67;
+}

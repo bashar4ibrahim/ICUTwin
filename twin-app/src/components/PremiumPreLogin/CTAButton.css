@@ -1,0 +1,222 @@
+.premium-cta-button {
+  position: relative;
+  width: 280px;
+  height: 60px;
+  border: none;
+  border-radius: 16px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: white;
+  z-index: 20;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  outline: none;
+  will-change: transform, box-shadow;
+}
+
+.cta-background {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(20, 184, 166, 0.15) 0%,
+    rgba(14, 165, 233, 0.1) 100%
+  );
+  border: 1px solid var(--accent-color);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  z-index: 1;
+}
+
+.cta-glow-1,
+.cta-glow-2 {
+  position: absolute;
+  inset: -2px;
+  border-radius: 16px;
+  border: 1.5px solid;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.cta-glow-1 {
+  opacity: 0.5;
+}
+
+.cta-glow-2 {
+  opacity: 0.3;
+}
+
+.cta-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.cta-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.cta-arrow {
+  display: inline-block;
+  font-size: 1.2rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.cta-shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  z-index: 3;
+  pointer-events: none;
+  border-radius: 16px;
+}
+
+.premium-cta-button:hover {
+  transform: translateY(-2px);
+}
+
+.premium-cta-button:hover .cta-arrow {
+  transform: translateX(4px);
+}
+
+.premium-cta-button:hover .cta-label {
+  text-shadow: 0 0 12px var(--accent-color);
+}
+
+.premium-cta-button:active {
+  transform: translateY(1px);
+}
+
+.premium-cta-button:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 3px;
+}
+
+@media (max-width: 768px) {
+  .premium-cta-button {
+    width: 250px;
+    height: 56px;
+  }
+
+  .cta-label {
+    font-size: 0.85rem;
+  }
+
+  .cta-arrow {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .premium-cta-button {
+    width: 220px;
+    height: 50px;
+    border-radius: 12px;
+  }
+
+  .cta-background {
+    border-radius: 12px;
+  }
+
+  .cta-glow-1,
+  .cta-glow-2 {
+    border-radius: 12px;
+  }
+
+  .cta-label {
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+  }
+
+  .cta-arrow {
+    font-size: 0.9rem;
+  }
+
+  .cta-shimmer {
+    border-radius: 12px;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .cta-background {
+    border-width: 2px;
+    background: linear-gradient(
+      135deg,
+      rgba(20, 184, 166, 0.2) 0%,
+      rgba(14, 165, 233, 0.15) 100%
+    );
+  }
+
+  .cta-glow-1,
+  .cta-glow-2 {
+    border-width: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .premium-cta-button,
+  .cta-arrow,
+  .cta-label,
+  .cta-shimmer {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .premium-cta-button:hover {
+    transform: none;
+  }
+
+  .premium-cta-button:hover .cta-arrow {
+    transform: none;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .premium-cta-button {
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+  }
+
+  .cta-background {
+    background: linear-gradient(
+      135deg,
+      rgba(20, 184, 166, 0.08) 0%,
+      rgba(14, 165, 233, 0.05) 100%
+    );
+  }
+}
+
+
+/* Center the button and shift it up */
+.entry-overlay__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: -2rem; /* moves everything up */
+}
+
+/* Ensure the CTA button itself is centered */
+.entry-overlay__actions .premium-cta-button {
+  margin: 0 auto;
+}

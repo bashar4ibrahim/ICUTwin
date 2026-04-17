@@ -1,0 +1,62 @@
+/* RiskBadge.css */
+
+.risk-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 40px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  background: var(--rb-bg);
+  color: var(--rb-color);
+  border: 1px solid var(--rb-color);
+  white-space: nowrap;
+}
+
+/* Sizes */
+.risk-badge--sm {
+  padding: 0.2rem 0.6rem;
+  font-size: 0.6rem;
+}
+
+.risk-badge--md {
+  padding: 0.3rem 0.85rem;
+  font-size: 0.7rem;
+}
+
+.risk-badge--lg {
+  padding: 0.45rem 1.1rem;
+  font-size: 0.85rem;
+}
+
+/* Dot indicator */
+.rb-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--rb-color);
+  flex-shrink: 0;
+}
+
+.risk-badge--pulse .rb-dot {
+  animation: rbPulse 1.8s infinite;
+  box-shadow: 0 0 0 0 var(--rb-color);
+}
+
+@keyframes rbPulse {
+  0%, 100% { box-shadow: 0 0 0 0 var(--rb-color); }
+  50% { box-shadow: 0 0 0 5px transparent; }
+}
+
+.rb-label {
+  line-height: 1;
+}
+
+.rb-score {
+  background: var(--rb-color);
+  color: white;
+  border-radius: 20px;
+  padding: 0.1rem 0.4rem;
+  font-size: 0.65em;
+  line-height: 1.5;
+}

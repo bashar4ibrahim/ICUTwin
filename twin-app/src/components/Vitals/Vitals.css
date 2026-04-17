@@ -1,0 +1,236 @@
+/* ============================================ */
+/* VITALS – PREMIUM LIVE MONITORING              */
+/* ============================================ */
+
+/* Base animations */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes medicalPulse {
+  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 12px currentColor; }
+  50% { opacity: 0.6; transform: scale(1.05); box-shadow: 0 0 20px currentColor; }
+}
+
+@keyframes floatGlow {
+  0%, 100% { filter: drop-shadow(0 0 8px currentColor); }
+  50% { filter: drop-shadow(0 0 18px currentColor); }
+}
+
+.vitals-container {
+  animation: fadeSlideUp 0.5s ease-out;
+}
+
+/* Page Header – Premium Glass */
+.vitals-container .page-header {
+  margin-bottom: 2rem;
+  padding: 2rem 2rem 1.5rem;
+  border-radius: 36px;
+  background: #ffffff;
+  backdrop-filter: none;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.vitals-container .page-header h1 {
+  font-size: 2.5rem;
+  color: #0a1628;
+  font-weight: 800;
+}
+
+.vitals-container .page-subtitle-bar {
+  height: 4px;
+  width: 200px;
+  background: linear-gradient(90deg, var(--primary-500), var(--accent-500), transparent);
+  border-radius: 4px;
+  box-shadow: 0 0 20px var(--primary-500);
+  margin-top: 1rem;
+}
+
+/* Live Indicator */
+.vitals-container .live-indicator-premium {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.4rem 1rem;
+  background: #dcfce7;
+  border: 1px solid #86efac;
+  border-radius: 40px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #166534;
+}
+
+.vitals-container .live-dot-premium {
+  width: 10px;
+  height: 10px;
+  background: #10b981;
+  border-radius: 50%;
+  animation: medicalPulse 1.8s infinite;
+}
+
+/* Patient Selector – Sticky Glass */
+.vitals-container .patient-selector-card {
+  background: #ffffff;
+  backdrop-filter: none;
+  border: 1px solid #e2e8f0;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 1.5rem;
+}
+
+.vitals-container .patient-selector-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-subtle);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--primary-600);
+  background: rgba(14, 165, 233, 0.04);
+}
+
+.vitals-container .patient-list-item {
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-left: 3px solid transparent;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.vitals-container .patient-list-item:hover {
+  background: rgba(14, 165, 233, 0.05);
+}
+
+.vitals-container .patient-list-item.selected {
+  background: linear-gradient(90deg, rgba(14, 165, 233, 0.1), transparent);
+  border-left-color: var(--primary-500);
+}
+
+/* Vitals Chip Card */
+.vitals-container .vitals-chip-card {
+  background: var(--bg-surface);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px;
+  padding: 1.25rem 0.75rem;
+  text-align: center;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.vitals-container .vitals-chip-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-500);
+}
+
+.vitals-container .vitals-chip-value {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  transition: color 0.3s;
+}
+
+.vitals-container .vitals-chip-value.danger {
+  color: #ef4444;
+  animation: medicalPulse 2s infinite;
+}
+
+.vitals-container .vitals-chip-value.warning {
+  color: #f59e0b;
+}
+
+.vitals-container .vitals-chip-value.stable {
+  color: #10b981;
+}
+
+/* Chart Card */
+.vitals-container .chart-card-premium {
+  background: var(--bg-surface);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 28px;
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.vitals-container .chart-card-premium:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.vitals-container .chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.vitals-container .chart-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--primary-600);
+}
+
+.vitals-container .chart-value {
+  font-weight: 800;
+  font-size: 1.2rem;
+}
+
+/* AI Intelligence Panel */
+.vitals-container .ai-intel-card {
+  background: linear-gradient(145deg, rgba(14, 165, 233, 0.05), rgba(20, 184, 166, 0.02));
+  border: 1px solid rgba(20, 184, 166, 0.25);
+  border-radius: 28px;
+  padding: 1.5rem;
+  backdrop-filter: blur(16px);
+}
+
+.vitals-container .ai-metric-box {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  padding: 1rem;
+  text-align: center;
+  border: 1px solid var(--border-subtle);
+}
+
+/* Critical Banner */
+.vitals-container .critical-banner {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05));
+  border: 1.5px solid rgba(239, 68, 68, 0.4);
+  border-radius: 24px;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  backdrop-filter: blur(12px);
+  animation: medicalPulse 2s infinite;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .vitals-container .vitals-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .vitals-container .vitals-chips-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .vitals-container .vitals-chips-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}

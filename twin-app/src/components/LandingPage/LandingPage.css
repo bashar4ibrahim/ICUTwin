@@ -1,0 +1,234 @@
+/* LandingPage.css */
+.landing-root {
+  background: #050a14;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Navigation */
+.landing-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  background: rgba(5, 10, 20, 0.7);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(20, 184, 166, 0.2);
+}
+
+.landing-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo-icon {
+  font-size: 2rem;
+}
+
+.logo-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #14b8a6, #0ea5e9);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.landing-enter-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(20, 184, 166, 0.4);
+  border-radius: 40px;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  backdrop-filter: blur(8px);
+}
+
+.landing-enter-btn:hover {
+  background: rgba(20, 184, 166, 0.2);
+  border-color: #14b8a6;
+  transform: scale(1.02);
+}
+
+/* Hero Section */
+.hero-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.hero-center-image {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+}
+
+.hero-gradient-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 300px;
+  background: linear-gradient(to bottom, transparent, #050a14);
+}
+
+/* Parallax Images */
+.parallax-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 200px 1rem 0;
+  position: relative;
+}
+
+.parallax-img-left {
+  width: 30%;
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  border: 1px solid rgba(20, 184, 166, 0.3);
+}
+
+.parallax-img-center {
+  width: 60%;
+  margin: 0 auto;
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  border: 1px solid rgba(20, 184, 166, 0.3);
+}
+
+.parallax-img-right {
+  width: 30%;
+  margin-left: auto;
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  border: 1px solid rgba(20, 184, 166, 0.3);
+}
+
+.parallax-img-bottom {
+  width: 45%;
+  margin-left: 6rem;
+  margin-top: 2rem;
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  border: 1px solid rgba(20, 184, 166, 0.3);
+}
+
+/* Features Section */
+.landing-features {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 6rem 2rem;
+}
+
+.features-title {
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 4rem;
+  text-align: center;
+  background: linear-gradient(135deg, #ffffff, #14b8a6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(20, 184, 166, 0.2);
+  border-radius: 32px;
+  padding: 2rem;
+  backdrop-filter: blur(12px);
+  transition: transform 0.3s, border-color 0.3s;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  border-color: #14b8a6;
+}
+
+.feature-icon {
+  font-size: 2.5rem;
+  color: #14b8a6;
+  margin-bottom: 1.5rem;
+}
+
+.feature-card h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.feature-card p {
+  color: #a0b3c9;
+  line-height: 1.6;
+}
+
+/* Footer */
+.landing-footer {
+  padding: 6rem 2rem;
+  text-align: center;
+  border-top: 1px solid rgba(20, 184, 166, 0.2);
+}
+
+.footer-content h2 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.landing-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2.5rem;
+  background: linear-gradient(135deg, #14b8a6, #0ea5e9);
+  border: none;
+  border-radius: 60px;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 10px 30px rgba(20, 184, 166, 0.3);
+  margin-bottom: 2rem;
+}
+
+.landing-cta:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 40px rgba(20, 184, 166, 0.5);
+}
+
+.footer-note {
+  color: #6b8a9e;
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+  .features-title {
+    font-size: 2rem;
+  }
+  .footer-content h2 {
+    font-size: 2rem;
+  }
+}

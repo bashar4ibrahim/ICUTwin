@@ -1,0 +1,594 @@
+/* ============================================
+   PATIENT DETAIL – NASA COMMAND CENTER (FIXED)
+   ============================================ */
+
+.patient-detail-container {
+  animation: fadeInUp 0.5s ease-out;
+  padding-bottom: 2rem;
+  max-width: 100%;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Header bar ── */
+.patient-detail-container .detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.patient-detail-container .live-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary, #64748b);
+  text-transform: uppercase;
+}
+
+.patient-detail-container .live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #14b8a6;
+  animation: livePulse 1.5s infinite;
+  flex-shrink: 0;
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(20,184,166,0.4); }
+  50%       { opacity: 0.7; box-shadow: 0 0 0 5px rgba(20,184,166,0); }
+}
+
+/* ══════════════════════════════════════════
+   HERO SECTION — Fixed two-column layout
+   ══════════════════════════════════════════ */
+.patient-detail-container .patient-hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  align-items: center;
+  background: #ffffff;
+  backdrop-filter: none;
+  border: 1px solid #e2e8f0;
+  border-radius: 28px;
+  padding: 1.75rem 2rem;
+  margin-bottom: 1.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.patient-detail-container .patient-hero::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(20, 184, 166, 0.12), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Left column: avatar + text */
+.patient-detail-container .hero-left {
+  display: flex;
+  flex-direction: row;
+  gap: 1.25rem;
+  align-items: center;
+  min-width: 0; /* allow text truncation */
+}
+
+.patient-detail-container .hero-left > div {
+  min-width: 0;
+  flex: 1;
+}
+
+/* Avatar */
+.patient-detail-container .patient-avatar-large {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: white;
+  background: linear-gradient(145deg, #0ea5e9, #14b8a6);
+  box-shadow: 0 12px 28px rgba(14, 165, 233, 0.3);
+  letter-spacing: -0.02em;
+}
+
+.patient-detail-container .patient-avatar-large.critical {
+  box-shadow: 0 0 0 3px #ef4444, 0 12px 28px rgba(239, 68, 68, 0.3);
+  animation: pulseCritical 2s infinite;
+}
+
+.patient-detail-container .patient-avatar-large.stable {
+  box-shadow: 0 0 0 3px #22c55e, 0 12px 28px rgba(34, 197, 94, 0.2);
+}
+
+@keyframes pulseCritical {
+  0%, 100% { box-shadow: 0 0 0 3px #ef4444, 0 12px 28px rgba(239,68,68,0.3); }
+  50%       { box-shadow: 0 0 0 7px rgba(239,68,68,0.2), 0 12px 28px rgba(239,68,68,0.2); }
+}
+
+/* Name & meta */
+.patient-detail-container .patient-name {
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin: 0 0 0.35rem 0;
+  color: var(--text-primary, #0f172a);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.patient-detail-container .patient-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--text-tertiary, #64748b);
+  margin-bottom: 0.4rem;
+}
+
+.patient-detail-container .separator { opacity: 0.4; }
+
+.patient-detail-container .patient-diagnosis {
+  font-size: 0.95rem;
+  color: #0284c7;
+  font-weight: 600;
+  margin: 0 0 0.85rem 0;
+}
+
+/* Badge (status pill) */
+.patient-detail-container .badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.patient-detail-container .badge-critical { background: rgba(239,68,68,0.12); color: #b91c1c; border: 1px solid rgba(239,68,68,0.3); }
+.patient-detail-container .badge-stable   { background: rgba(34,197,94,0.12);  color: #15803d; border: 1px solid rgba(34,197,94,0.3); }
+
+/* Right column: gauge */
+.patient-detail-container .hero-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.patient-detail-container .risk-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-tertiary, #64748b);
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* ══════════════════════════════════════════
+   TABS
+   ══════════════════════════════════════════ */
+.patient-detail-container .detail-tabs {
+  display: flex;
+  gap: 0.35rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(14, 165, 233, 0.12);
+  padding-bottom: 0.75rem;
+  overflow-x: auto;
+}
+
+.patient-detail-container .tab-btn {
+  background: transparent;
+  border: none;
+  padding: 0.55rem 1.25rem;
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--text-tertiary, #64748b);
+  cursor: pointer;
+  border-radius: 40px;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.patient-detail-container .tab-btn:hover {
+  background: rgba(14, 165, 233, 0.07);
+  color: var(--text-primary, #0f172a);
+}
+
+.patient-detail-container .tab-btn.active {
+  background: linear-gradient(135deg, #0ea5e9, #14b8a6);
+  color: white;
+  box-shadow: 0 6px 16px rgba(14, 165, 233, 0.3);
+}
+
+/* ══════════════════════════════════════════
+   GRID LAYOUTS
+   ══════════════════════════════════════════ */
+.patient-detail-container .overview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.patient-detail-container .insights-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.patient-detail-container .full-width {
+  grid-column: 1 / -1;
+}
+
+/* ══════════════════════════════════════════
+   GLASS CARDS — Solid background fallback
+   ══════════════════════════════════════════ */
+.patient-detail-container .card-glass {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(14, 165, 233, 0.13);
+  border-radius: 24px;
+  padding: 1.4rem 1.5rem;
+  box-shadow: 0 2px 12px rgba(0, 30, 60, 0.07);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.patient-detail-container .card-glass:hover {
+  box-shadow: 0 8px 24px rgba(0, 30, 60, 0.1);
+  transform: translateY(-3px);
+}
+
+.patient-detail-container .card-glass h3 {
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 1.25rem 0;
+  color: #0284c7;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ══════════════════════════════════════════
+   ORGAN GRID — Fixed: status pill not full-width bar
+   ══════════════════════════════════════════ */
+.patient-detail-container .organs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.85rem;
+}
+
+.patient-detail-container .organ-card {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.85rem 1rem;
+  background: rgba(248, 250, 255, 0.8);
+  border-radius: 16px;
+  border: 1px solid rgba(14, 165, 233, 0.1);
+  transition: background 0.2s;
+}
+
+.patient-detail-container .organ-card:hover {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.patient-detail-container .organ-icon {
+  font-size: 1.75rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.patient-detail-container .organ-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.patient-detail-container .organ-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary, #475569);
+}
+
+.patient-detail-container .organ-value {
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+/* KEY FIX: pill shape, not full-width bar */
+.patient-detail-container .organ-status {
+  display: inline-block;
+  width: fit-content;        /* ← was stretching full width */
+  max-width: fit-content;
+  padding: 0.18rem 0.55rem;
+  border-radius: 20px;       /* pill */
+  font-size: 0.58rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: white;
+  margin-top: 0.15rem;
+  white-space: nowrap;
+}
+
+/* ══════════════════════════════════════════
+   VITALS TREND — Fixed sparkline height
+   ══════════════════════════════════════════ */
+.patient-detail-container .vitals-trend-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.patient-detail-container .trend-item {
+  display: grid;
+  grid-template-columns: 90px 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(14, 165, 233, 0.07);
+}
+
+.patient-detail-container .trend-item:last-child {
+  border-bottom: none;
+}
+
+.patient-detail-container .trend-item > span:first-child {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary, #475569);
+}
+
+.patient-detail-container .trend-item > strong {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--text-primary, #0f172a);
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* Sparkline gets explicit height so it renders */
+.patient-detail-container .sparkline {
+  display: block;
+  width: 100%;
+  height: 32px;
+  overflow: visible;
+}
+
+/* ══════════════════════════════════════════
+   AI SUMMARY CARD
+   ══════════════════════════════════════════ */
+.patient-detail-container .ai-summary p {
+  font-size: 0.83rem;
+  color: var(--text-secondary, #475569);
+  line-height: 1.65;
+  margin-bottom: 0.65rem;
+}
+
+.patient-detail-container .ai-summary p strong {
+  color: var(--text-primary, #0f172a);
+}
+
+.patient-detail-container .confidence-bar {
+  margin-top: 1rem;
+}
+
+.patient-detail-container .confidence-bar > span {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-tertiary, #94a3b8);
+}
+
+.patient-detail-container .confidence-bar .bar {
+  height: 7px;
+  background: rgba(14, 165, 233, 0.12);
+  border-radius: 4px;
+  margin-top: 0.35rem;
+  overflow: hidden;
+}
+
+.patient-detail-container .confidence-bar .bar div {
+  height: 100%;
+  background: linear-gradient(90deg, #0ea5e9, #14b8a6);
+  border-radius: 4px;
+  box-shadow: 0 0 8px rgba(14, 165, 233, 0.4);
+  transition: width 1.2s ease;
+}
+
+/* ══════════════════════════════════════════
+   QUICK ACTIONS
+   ══════════════════════════════════════════ */
+.patient-detail-container .quick-actions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem;
+}
+
+/* btn-nasa base (in case global styles are missing) */
+.patient-detail-container .btn-nasa {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  border-radius: 40px;
+  padding: 0.55rem 1rem;
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: var(--text-primary, #0f172a);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+
+.patient-detail-container .btn-nasa:hover {
+  background: white;
+  border-color: #0ea5e9;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(14, 165, 233, 0.18);
+}
+
+.patient-detail-container .btn-nasa.primary {
+  background: linear-gradient(135deg, #0ea5e9, #14b8a6);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 14px rgba(14, 165, 233, 0.3);
+}
+
+.patient-detail-container .btn-nasa.primary:hover {
+  box-shadow: 0 8px 20px rgba(14, 165, 233, 0.4);
+  transform: translateY(-2px);
+}
+
+/* ══════════════════════════════════════════
+   VITALS TABLE
+   ══════════════════════════════════════════ */
+.patient-detail-container .vitals-table-wrapper {
+  overflow-x: auto;
+  border-radius: 16px;
+}
+
+.patient-detail-container .vitals-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.patient-detail-container .vitals-table th {
+  text-align: left;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-tertiary, #94a3b8);
+  border-bottom: 1px solid rgba(14, 165, 233, 0.12);
+  background: rgba(248, 250, 255, 0.6);
+}
+
+.patient-detail-container .vitals-table td {
+  padding: 0.65rem 0.85rem;
+  border-bottom: 1px solid rgba(14, 165, 233, 0.06);
+  color: var(--text-primary, #0f172a);
+}
+
+.patient-detail-container .vitals-table tr:last-child td {
+  border-bottom: none;
+}
+
+.patient-detail-container .vitals-table tr:hover td {
+  background: rgba(14, 165, 233, 0.03);
+}
+
+/* ══════════════════════════════════════════
+   TIMELINE
+   ══════════════════════════════════════════ */
+.patient-detail-container .timeline-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.patient-detail-container .event {
+  display: flex;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: rgba(248, 250, 255, 0.8);
+  border-radius: 14px;
+  border-left: 3px solid rgba(14, 165, 233, 0.3);
+  font-size: 0.82rem;
+  align-items: baseline;
+}
+
+.patient-detail-container .event .time {
+  min-width: 160px;
+  flex-shrink: 0;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.72rem;
+  color: var(--text-tertiary, #94a3b8);
+}
+
+.patient-detail-container .timeline-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid rgba(14, 165, 233, 0.07);
+  font-size: 0.82rem;
+  gap: 1rem;
+}
+
+.patient-detail-container .timeline-entry:last-child { border-bottom: none; }
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .patient-detail-container .overview-grid,
+  .patient-detail-container .insights-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .patient-detail-container .patient-hero {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    padding: 1.25rem;
+  }
+
+  .patient-detail-container .hero-right {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 1.5rem;
+  }
+
+  .patient-detail-container .patient-name {
+    font-size: 1.35rem;
+  }
+
+  .patient-detail-container .organs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .patient-detail-container .quick-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .patient-detail-container .trend-item {
+    grid-template-columns: 70px 1fr auto;
+  }
+}

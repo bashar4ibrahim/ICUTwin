@@ -3,11 +3,9 @@
 
 const isDevelopment = import.meta.env.MODE === 'development';
 
-// In development, use same origin (Vite dev server at localhost:5173)
-// In production, use the external TEE service
+// Use the external TEE service by default, or override via env var
 const TEE_BASE_URL =
-  import.meta.env.VITE_TEE_BASE_URL ||
-  (isDevelopment ? '/tee' : 'https://capstone.dpdns.org/tee');
+  import.meta.env.VITE_TEE_BASE_URL || 'https://capstone.dpdns.org/tee';
 
 /** Default request timeout in milliseconds */
 const REQUEST_TIMEOUT_MS = 8000;

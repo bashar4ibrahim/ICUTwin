@@ -4,7 +4,7 @@ export const CUSTOM_AI_MODEL_ID = import.meta.env.VITE_CUSTOM_AI_MODEL_ID || 'ne
 export const CUSTOM_AI_MODEL_NAME =
   import.meta.env.VITE_CUSTOM_AI_MODEL_NAME || 'NEOcare Mortality Prediction';
 export const CUSTOM_AI_MODEL_ENDPOINT =
-  import.meta.env.VITE_CUSTOM_AI_MODEL_ENDPOINT || '/icu/ai/models/custom/predict';
+  import.meta.env.VITE_CUSTOM_AI_MODEL_ENDPOINT || '/icu/ai/risk';
 
 const MODEL_SOURCE = 'ICU Digital Twin';
 const ONE_DECIMAL_FIELDS = new Set(['temperature_celsius', 'glucose', 'creatinine', 'wbc', 'lactate', 'map']);
@@ -466,10 +466,10 @@ export async function predictCustomAiModel({ patient, inputs }) {
     throw new Error(`Missing required fields: ${missingFields.map(getFieldLabel).join(', ')}`);
   }
 
-  // TODO: Align this endpoint with the backend adapter that wraps the real ICU model contract.
-  const response = await requestJson(CUSTOM_AI_MODEL_ENDPOINT, {
-    method: 'POST',
-    body: JSON.stringify(payload),
+  // The backend uses GET /icu/ai/risk/{patient_id} endpoint
+  const endpoint = `${CUSTOM_AI_MODEL_ENDPOINT}/${patient?.patient_id}`;
+  const response = await requestJson(endpoint, {
+    method: 'GET',
   });
 
   return normalizeCustomModelPrediction(response, payload);

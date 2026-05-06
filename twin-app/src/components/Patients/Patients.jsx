@@ -166,8 +166,27 @@ function Patients({ onSelectPatient }) {
     try {
       const payload = await apiFetch('/icu/patients');
       const nextPatients = payload.patients || [];
-      syncPatients(nextPatients, source);
-      return nextPatients;
+      
+      // Fetch latest vitals for each patient
+      const patientsWithVitals = await Promise.all(
+        nextPatients.map(async (patient) => {
+          try {
+            const vitalsResponse = await apiFetch(`/icu/vitals/${patient.patient_id}/history?limit=1`);
+            const vitalsHistory = vitalsResponse?.history || [];
+            const latestVitals = vitalsHistory.length > 0 ? vitalsHistory[0] : null;
+            return {
+              ...patient,
+              latest_vitals: latestVitals || patient.latest_vitals || {}
+            };
+          } catch (vitalsError) {
+            console.warn(`Failed to fetch vitals for patient ${patient.patient_id}:`, vitalsError);
+            return patient;
+          }
+        })
+      );
+      
+      syncPatients(patientsWithVitals, source);
+      return patientsWithVitals;
     } catch (e) {
       setError(e.message);
       return [];

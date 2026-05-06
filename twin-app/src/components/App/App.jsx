@@ -61,6 +61,7 @@ import DigitalSigning from '../DigitalSigning/DigitalSigning';
 import DigitalSigningPortal from '../DigitalSigning/DigitalSigningPortal';
 import FloatingAssistant from '../FloatingAssistant/FloatingAssistant';
 import TestDealing from '../TestDealing/TestDealing';
+import OracleAssessment_v2 from '../../OracleAssessment_v2';
 export default function App() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -297,6 +298,7 @@ export default function App() {
       case 'chatbot': return <Chatbot />;
       case 'testdealing': return <TestDealing />;
       case 'signing': return <DigitalSigning />;
+      case 'oracle': return <OracleAssessment_v2 token={getToken()} patients={Object.values(clinicalIntelligence.snapshots)} />;
       default: return <Dashboard onNav={setPage} user={user} />;
     }
   };

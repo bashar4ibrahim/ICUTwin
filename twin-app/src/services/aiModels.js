@@ -460,13 +460,41 @@ export const normalizeCustomModelPrediction = (response, payload = null) => {
 };
 
 export async function predictCustomAiModel({ patient, inputs }) {
+  // Use advanced TurboQuant + CKKS engine if available
+  if (patient?.patient_id) {
+    try {
+      // Try advanced engine first (TurboQuant + CKKS) - matches your FastAPI router
+      const response = await requestJson(`/icu/ai/risk/${patient.patient_id}?use_turboquant=true`);
+
+      // Check if TurboQuant was actually used (from your router's response)
+      if (response.turboquant?.enabled) {
+        return normalizeCustomModelPrediction(response, { patient });
+      } else {
+        // TurboQuant not available, use standard response
+        return normalizeCustomModelPrediction(response, { patient });
+      }
+
+    } catch (advancedError) {
+      console.warn('Advanced engine not available, falling back to standard endpoint:', advancedError.message);
+
+      // Fallback to standard production endpoint
+      try {
+        const response = await requestJson(`/icu/ai/risk/${patient.patient_id}`);
+        return normalizeCustomModelPrediction(response, { patient });
+      } catch (fallbackError) {
+        console.error('Both advanced and standard engines failed:', fallbackError);
+        throw new Error('Unable to get risk prediction from any engine');
+      }
+    }
+  }
+
+  // Fallback to custom model request for non-production environments
   const { missingFields, payload } = prepareCustomModelRequest({ patient, inputs });
 
   if (missingFields.length > 0) {
     throw new Error(`Missing required fields: ${missingFields.map(getFieldLabel).join(', ')}`);
   }
 
-  // TODO: Align this endpoint with the backend adapter that wraps the real ICU model contract.
   const response = await requestJson(CUSTOM_AI_MODEL_ENDPOINT, {
     method: 'POST',
     body: JSON.stringify(payload),

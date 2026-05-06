@@ -55,7 +55,7 @@ import Patients from '../Patients/Patients';
 import Vitals from '../Vitals/Vitals';
 import Resources from '../Resources/Resources';
 import AIRisk from '../AIRisk/AIRisk';
-import SIEM from '../SIEM/SIEM';
+import SecurityCenter from '../TEE/SecurityCenter';
 import Chatbot from '../Chatbot/Chatbot';
 import DigitalSigning from '../DigitalSigning/DigitalSigning';
 import DigitalSigningPortal from '../DigitalSigning/DigitalSigningPortal';

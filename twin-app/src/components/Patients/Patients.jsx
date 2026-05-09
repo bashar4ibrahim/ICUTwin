@@ -165,30 +165,29 @@ function Patients({ onSelectPatient }) {
 
     try {
       const payload = await apiFetch('/icu/patients');
-      const nextPatients = payload.patients || [];
+      const basePatients = payload.patients || [];
       
-      // Fetch latest vitals for each patient
-      const patientsWithVitals = await Promise.all(
-        nextPatients.map(async (patient) => {
+      // The /icu/patients endpoint no longer returns latest_vitals or admitted_at.
+      // We must fetch the details for each patient to get their full clinical state.
+      const detailedPatients = await Promise.all(
+        basePatients.map(async (p) => {
           try {
-            const vitalsResponse = await apiFetch(`/icu/vitals/${patient.patient_id}/history?limit=1`);
-            const vitalsHistory = vitalsResponse?.history || [];
-            const latestVitals = vitalsHistory.length > 0 ? vitalsHistory[0] : null;
-            return {
-              ...patient,
-              latest_vitals: latestVitals || patient.latest_vitals || {}
-            };
-          } catch (vitalsError) {
-            console.warn(`Failed to fetch vitals for patient ${patient.patient_id}:`, vitalsError);
-            return patient;
+            const detail = await apiFetch(`/icu/patients/${p.patient_id}`);
+            // The API returns the patient directly, so we check detail.patient_id
+            return detail.patient_id ? detail : (detail.patient || p);
+          } catch (err) {
+            console.warn(`Failed to fetch details for ${p.patient_id}`, err);
+            return p;
           }
         })
       );
-      
-      syncPatients(patientsWithVitals, source);
-      return patientsWithVitals;
+
+      syncPatients(detailedPatients, source);
+      return detailedPatients;
     } catch (e) {
-      setError(e.message);
+      console.error('❌ fetchPatients error:', e);
+      console.error('Full error object:', { message: e.message, stack: e.stack });
+      setError(e.message || 'Failed to load patients');
       return [];
     } finally {
       if (showLoading) setLoading(false);
@@ -388,35 +387,50 @@ function Patients({ onSelectPatient }) {
             if (!normalized) return;
 
             const nextVitals = normalizeVitalsPayload(normalized.latest_vitals);
-            
-            // Persist to backend
-            await apiFetch(`/icu/vitals/${newPatient.patient_id}`, {
-              method: 'POST',
-              body: JSON.stringify(nextVitals),
-            });
 
-            // Update context and local state
-            registerPatients([{
+            // Persist vitals to backend (skip if it's just a ping/labs_update with no vitals)
+            if (nextVitals && Object.keys(nextVitals).length > 0) {
+              try {
+                await apiFetch(`/icu/vitals/${newPatient.patient_id}`, {
+                  method: 'POST',
+                  body: JSON.stringify(nextVitals),
+                });
+              } catch (persistErr) {
+                console.warn('Vitals persist failed:', persistErr);
+              }
+            }
+
+            // Build the enriched patient — include real risk from backend if present
+            const enrichedPatient = {
               ...normalized,
               latest_vitals: nextVitals,
-            }], 'test-patient-stream-update');
+              // Carry the real prediction from the backend payload directly
+              ...(normalized.prediction ? { _backendPrediction: normalized.prediction } : {}),
+            };
+
+            registerPatients([enrichedPatient], 'test-patient-stream-update');
             registerVitals(newPatient.patient_id, nextVitals, 'test-patient-stream-update');
-            
+
             setPatients((currentPatients) =>
               currentPatients.map((patient) =>
                 patient.patient_id === newPatient.patient_id
-                  ? {
-                      ...patient,
-                      latest_vitals: nextVitals,
-                      status: normalized.status,
-                    }
+                  ? { ...patient, latest_vitals: nextVitals, status: normalized.status }
                   : patient
               )
             );
-            
-            // Trigger prediction
-            await new Promise((resolve) => setTimeout(resolve, 150));
-            runPredictionForPatient(newPatient.patient_id, 'auto');
+
+            // If the WebSocket message already carries a real risk score from the backend,
+            // inject it directly into predictions instead of re-computing locally
+            if (normalized.prediction?.risk?.riskPercentage != null) {
+              registerPatients([{
+                patient_id: newPatient.patient_id,
+                _injectPrediction: normalized.prediction,  // ClinicalIntelligenceProvider reads this
+              }], 'ws-risk-inject');
+            } else {
+              // Fallback: let the local model compute
+              await new Promise((resolve) => setTimeout(resolve, 150));
+              runPredictionForPatient(newPatient.patient_id, 'auto');
+            }
           } catch (updateErr) {
             console.warn('Stream update processing error:', updateErr);
           }

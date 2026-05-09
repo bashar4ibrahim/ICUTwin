@@ -210,6 +210,14 @@ body {
     radial-gradient(circle at 90% 18%, rgba(5, 205, 153, 0.06), transparent 24%),
     linear-gradient(180deg, #f8faff 0%, var(--bg-void) 100%);
   overflow-x: hidden;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+:root[data-theme='dark'] body {
+  background:
+    radial-gradient(circle at 10% 10%, rgba(107, 77, 255, 0.12), transparent 24%),
+    radial-gradient(circle at 90% 18%, rgba(5, 205, 153, 0.08), transparent 24%),
+    linear-gradient(180deg, #0b1437 0%, #18214f 100%);
 }
 
 body::before {
@@ -221,6 +229,13 @@ body::before {
     linear-gradient(180deg, rgba(255, 255, 255, 0.55), transparent 22%),
     radial-gradient(circle at top left, rgba(255, 255, 255, 0.7), transparent 18%);
   z-index: 0;
+  transition: background 0.3s ease;
+}
+
+:root[data-theme='dark'] body::before {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 22%),
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.06), transparent 18%);
 }
 
 body::after {
@@ -234,6 +249,14 @@ body::after {
   background-size: 28px 28px;
   opacity: 0.35;
   z-index: 0;
+  transition: opacity 0.3s ease;
+}
+
+:root[data-theme='dark'] body::after {
+  background-image:
+    linear-gradient(rgba(107, 77, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(107, 77, 255, 0.04) 1px, transparent 1px);
+  opacity: 0.25;
 }
 
 *,

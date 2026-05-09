@@ -1,6 +1,7 @@
 ﻿import React, { createContext, useContext, useState, useEffect, useRef, useCallback } from 'react';
 import './App.css';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useTheme } from '../../context/ThemeContext';
 
 import {
   API_BASE,
@@ -65,6 +66,7 @@ import OracleAssessment_v2 from '../../OracleAssessment_v2';
 export default function App() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { effectiveTheme, themeMode, cycleThemeMode } = useTheme();
   const [user, setUser] = useState(null);
   const [page, setPage] = useState('dashboard');
   const [selectedPatient, setSelectedPatient] = useState(null);
@@ -137,7 +139,33 @@ export default function App() {
   const registerPatients = useCallback((patients, source = 'ui') => {
     setClinicalIntelligence(prev => {
       const nextSnapshots = { ...prev.snapshots };
+      const nextPredictions = { ...prev.predictions };
+
       (patients || []).forEach(patient => {
+        if (!patient?.patient_id) return;
+
+        // ── If the WebSocket payload carries a real backend risk score, inject it
+        // directly into predictions without running the local JS model ──────────
+        if (patient._injectPrediction) {
+          const backendRisk = patient._injectPrediction;
+          const existing = nextPredictions[patient.patient_id];
+          nextPredictions[patient.patient_id] = {
+            ...(existing || {}),
+            risk: {
+              riskPercentage: backendRisk.risk?.riskPercentage ?? existing?.risk?.riskPercentage ?? 0,
+              label:          backendRisk.risk?.label          ?? existing?.risk?.label          ?? 'LOW RISK',
+              mort_7d:        backendRisk.risk?.mort_7d,
+              mort_30d:       backendRisk.risk?.mort_30d,
+              sofa_score:     backendRisk.risk?.sofa_score,
+              shock_index:    backendRisk.risk?.shock_index,
+              factors:        backendRisk.risk?.factors        ?? [],
+            },
+            _source: 'backend-ws',
+            _injectedAt: new Date().toISOString(),
+          };
+          return; // don't touch snapshots for inject-only calls
+        }
+
         const existing = nextSnapshots[patient.patient_id] || {};
         nextSnapshots[patient.patient_id] = mergePatientSnapshot(existing, {
           ...patient,
@@ -145,7 +173,12 @@ export default function App() {
           latest_vitals: patient.latest_vitals || existing.latest_vitals || {},
         });
       });
-      return { ...prev, snapshots: nextSnapshots };
+
+      return {
+        ...prev,
+        snapshots: nextSnapshots,
+        predictions: nextPredictions,
+      };
     });
   }, []);
 
@@ -207,8 +240,19 @@ export default function App() {
   }, []);
 
   const runPredictionForPatient = useCallback(async (patientId, reason = 'auto') => {
-    const snapshot = intelligenceRef.current.snapshots[patientId];
-    if (!snapshot || intelligenceRef.current.pending[patientId]) return;
+    if (!patientId) return;
+    
+    let snapshot = intelligenceRef.current.snapshots[patientId];
+    
+    // For manual refreshes, allow prediction even with minimal snapshot
+    if (!snapshot && reason === 'manual') {
+      snapshot = { patient_id: patientId };
+    }
+    
+    if (!snapshot) return;
+    
+    // Skip if already pending (except allow manual to interrupt)
+    if (reason !== 'manual' && intelligenceRef.current.pending[patientId]) return;
 
     const assembled = assembleAutoModelInputs(snapshot, snapshot.model_inputs || {});
     const signature = buildPredictionSignature(snapshot, assembled);
@@ -222,6 +266,21 @@ export default function App() {
     }));
 
     try {
+      // If a backend WebSocket score was injected recently (within 15s), don't
+      // overwrite it with the local JS model — the backend score is more accurate
+      const existingPred = intelligenceRef.current.predictions[patientId];
+      const injectedRecently = existingPred?._source === 'backend-ws' &&
+        existingPred?._injectedAt &&
+        (Date.now() - new Date(existingPred._injectedAt).getTime()) < 15_000;
+
+      if (injectedRecently && reason !== 'manual') {
+        setClinicalIntelligence(prev => ({
+          ...prev,
+          pending: { ...prev.pending, [patientId]: false },
+        }));
+        return;
+      }
+
       const normalized = await predictCustomAiModel({ patient: snapshot, inputs: assembled.inputs });
       predictionSignaturesRef.current[patientId] = signature;
 
@@ -229,9 +288,19 @@ export default function App() {
         const existingHistory = prev.history[patientId] || [];
         const escalation = buildEscalation(normalized, existingHistory);
         const record = createPredictionRecord(normalized, { reason, escalation, generatedAt: new Date().toISOString() });
+
+        // If a backend score exists, preserve it inside the local model's record
+        // so riskPercentage shown in the UI is always the backend value
+        const backendPred = prev.predictions[patientId];
+        if (backendPred?._source === 'backend-ws') {
+          record.risk = { ...record.risk, ...backendPred.risk };
+        }
+
         const nextHistory = [...existingHistory, record].slice(-24);
         const syntheticAlert = buildSyntheticAlert(snapshot, record, nextHistory);
-        const nextAlerts = syntheticAlert ? [syntheticAlert, ...prev.alerts.filter(a => a.patient_id !== patientId)].slice(0, 20) : prev.alerts;
+        const nextAlerts = syntheticAlert
+          ? [syntheticAlert, ...prev.alerts.filter(a => a.patient_id !== patientId)].slice(0, 20)
+          : prev.alerts;
         const auditEntry = buildAuditEntry({ patient: snapshot, prediction: record, reason, history: nextHistory });
 
         return {
@@ -294,7 +363,7 @@ export default function App() {
       case 'vitals': return <Vitals initialPatientId={selectedPatient} />;
       case 'resources': return <Resources />;
       case 'ai': return <AIRisk />;
-      case 'siem': return <SIEM />;
+      case 'siem': return <SecurityCenter />;
       case 'chatbot': return <Chatbot />;
       case 'testdealing': return <TestDealing />;
       case 'signing': return <DigitalSigning />;
@@ -332,9 +401,9 @@ export default function App() {
             onNavigate={handleNavigate}
             onOpenSettings={() => { }}
             onOpenHelp={() => { }}
-            onToggleTheme={() => { }}
-            themeMode="light"
-            effectiveTheme="light"
+            onToggleTheme={cycleThemeMode}
+            themeMode={themeMode}
+            effectiveTheme={effectiveTheme}
             user={user}
             onLogout={handleLogout}
           />

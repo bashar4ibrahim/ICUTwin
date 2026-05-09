@@ -105,7 +105,7 @@ const NAV_ITEMS = [
   { id: 'resources', icon: '🛏', label: 'Resources', section: 'CLINICAL' },
   { id: 'ai', icon: '🤖', label: 'AI Risk Engine', section: 'INTELLIGENCE' },
   { id: 'siem', icon: '🔒', label: 'SIEM Security', section: 'SECURITY' },
-  { id: 'oracle', icon: '🔮', label: 'Oracle Assessment', section: 'INTELLIGENCE' },
+    { id: 'oracle', icon: '🔮', label: 'Oracle Assessment', section: 'INTELLIGENCE' },
   { id: 'chatbot', icon: '💬', label: 'ICU Assistant', section: 'TOOLS' },
   { id: 'testdealing', icon: '🎨', label: 'Test Dealing', section: 'TOOLS' },
   {

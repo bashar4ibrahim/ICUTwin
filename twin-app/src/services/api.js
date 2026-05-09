@@ -9,6 +9,8 @@ export const WS_BASE = trimSlashes(
   import.meta.env.VITE_WS_BASE_URL || API_BASE.replace(/^http/i, 'ws')
 );
 
+console.log('🔧 API Configuration:', { API_BASE, WS_BASE, env: import.meta.env.VITE_API_BASE_URL });
+
 export const getToken = () => localStorage.getItem('icu_token');
 
 export const resolveServiceUrl = (baseUrl, pathOrUrl) => {
@@ -33,8 +35,11 @@ export async function requestJson(pathOrUrl, options = {}, config = {}) {
   const { baseUrl = API_BASE, includeAuth = true } = config;
   const token = includeAuth ? getToken() : null;
   const isFormData = typeof FormData !== 'undefined' && options.body instanceof FormData;
+  const fullUrl = resolveServiceUrl(baseUrl, pathOrUrl);
 
-  const response = await fetch(resolveServiceUrl(baseUrl, pathOrUrl), {
+  console.log(`🌐 API Request: ${options.method || 'GET'} ${fullUrl}`);
+
+  const response = await fetch(fullUrl, {
     ...options,
     headers: {
       ...(options.body && !isFormData ? { 'Content-Type': 'application/json' } : {}),
@@ -44,7 +49,9 @@ export async function requestJson(pathOrUrl, options = {}, config = {}) {
   });
 
   if (!response.ok) {
-    throw new Error(await parseErrorMessage(response));
+    const errorMsg = await parseErrorMessage(response);
+    console.error(`❌ API Error (${response.status}): ${errorMsg}`);
+    throw new Error(errorMsg);
   }
 
   if (response.status === 204) {

@@ -132,12 +132,14 @@ function MD({ text }) {
 // Heatmap canvas overlay
 function drawHeatmap(canvas, heatmap, imgEl) {
   if (!canvas || !heatmap || !imgEl) return;
-  const displayW = imgEl.clientWidth || imgEl.width || 224;
-  const displayH = imgEl.clientHeight || imgEl.height || 224;
+  const displayW = imgEl.clientWidth || imgEl.naturalWidth || imgEl.width || 224;
+  const displayH = imgEl.clientHeight || imgEl.naturalHeight || imgEl.height || 224;
   canvas.width = displayW;
   canvas.height = displayH;
   canvas.style.width = `${displayW}px`;
   canvas.style.height = `${displayH}px`;
+  canvas.style.top = "0";
+  canvas.style.left = "0";
   const ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, displayW, displayH);
   const rows = heatmap.length, cols = heatmap[0].length;
@@ -148,9 +150,7 @@ function drawHeatmap(canvas, heatmap, imgEl) {
       if (v < 0.15) continue;
       const g = Math.round(255 * (1 - v));
       ctx.fillStyle = `rgba(255,${g},0,${v * 0.85})`;
-      ctx.beginPath();
-      ctx.roundRect(c*cw+2, r*ch+2, cw-4, ch-4, 3);
-      ctx.fill();
+      ctx.fillRect(c * cw + 2, r * ch + 2, Math.max(0, cw - 4), Math.max(0, ch - 4));
     }
   }
 }
@@ -275,6 +275,7 @@ export default function OracleAssessment({
   const [progress,  setProgress] = useState(0);
   const [thinkLog,  setThinkLog] = useState([]);
   const [result,    setResult]   = useState(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const imgRef    = useRef(null);
   const canvasRef = useRef(null);
@@ -288,10 +289,10 @@ export default function OracleAssessment({
   }, [thinkLog]);
 
   useEffect(() => {
-    if (result?.heatmap && imgRef.current && canvasRef.current) {
-      setTimeout(() => drawHeatmap(canvasRef.current, result.heatmap, imgRef.current), 400);
+    if (result?.heatmap && imageLoaded && imgRef.current && canvasRef.current) {
+      drawHeatmap(canvasRef.current, result.heatmap, imgRef.current);
     }
-  }, [result]);
+  }, [result, imageLoaded]);
 
   const handleImage = useCallback((file) => {
     if (!file || !file.type.startsWith("image/")) return;
@@ -299,6 +300,7 @@ export default function OracleAssessment({
     reader.onload = (e) => {
       setImagePreview(e.target.result);
       setImageB64(e.target.result);
+      setImageLoaded(false);
     };
     reader.readAsDataURL(file);
   }, []);
@@ -377,6 +379,7 @@ export default function OracleAssessment({
   const reset = () => {
     wsRef.current?.close();
     setImageB64(""); setImagePreview(null); setClinicalNotes("");
+    setImageLoaded(false);
     setStatus("idle"); setProgress(0); setThinkLog([]); setResult(null);
   };
 
@@ -428,9 +431,10 @@ export default function OracleAssessment({
               style={{ display:"none" }}
               onChange={e => handleImage(e.target.files[0])} />
             {imagePreview ? (
-              <div className="oracle-heatmap-wrap" style={{ position:"relative", display:"inline-block", borderRadius:8, overflow:"hidden" }}>
+              <div className="oracle-heatmap-wrap" style={{ position:"relative", display:"inline-block", borderRadius:8, overflow:"hidden", width:"100%" }}>
                 <img ref={imgRef} src={imagePreview} alt="X-ray"
-                  style={{ maxWidth:"100%", maxHeight:240, borderRadius:8, display:"block" }} />
+                  onLoad={() => setImageLoaded(true)}
+                  style={{ width:"100%", height:"auto", maxHeight:240, borderRadius:8, display:"block" }} />
                 {result?.heatmap && <canvas ref={canvasRef} style={{ position:"absolute", top:0, left:0, width:"100%", height:"100%", pointerEvents:"none", opacity:0.85, borderRadius:8 }} />}
               </div>
             ) : (

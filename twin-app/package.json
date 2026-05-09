@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "postinstall": "npm --prefix server/signflow-backend install",
+    "postinstall": "cd server/signflow-backend && npm install",
     "dev": "node scripts/dev-integrated.mjs",
     "dev:vite": "vite",
     "build": "tsc -b && vite build",

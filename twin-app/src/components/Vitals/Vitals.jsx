@@ -375,6 +375,8 @@ function Vitals({ initialPatientId }) {
                 </div>
               </div>
             )}
+
+            {/* Prediction Insights */}
           </div>
 
           {/* Live Vitals Chips */}

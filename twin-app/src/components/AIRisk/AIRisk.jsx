@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import './AIRisk.css';
 import {
@@ -168,13 +168,69 @@ function AIRisk() {
 
   useEffect(() => {
     Promise.all([apiFetch('/icu/patients'), apiFetch('/icu/ai/alerts')])
-      .then(([p, a]) => {
-        setPatients(p.patients || []);
-        registerPatients(p.patients || [], 'ai-risk');
+      .then(async ([p, a]) => {
+        const basePatients = p.patients || [];
+        const detailedPatients = await Promise.all(
+          basePatients.map(async (patient) => {
+            try {
+              const detail = await apiFetch(`/icu/patients/${patient.patient_id}`);
+              return detail.patient_id ? detail : (detail.patient || patient);
+            } catch (err) {
+              return patient;
+            }
+          })
+        );
+        
+        setPatients(detailedPatients);
+        registerPatients(detailedPatients, 'ai-risk');
         setAlerts(a.alerts || []);
-        if (p.patients?.length) setSelectedId(p.patients[0].patient_id);
+        if (detailedPatients.length > 0) setSelectedId(detailedPatients[0].patient_id);
       }).catch(e => setError(e.message)).finally(() => setLoading(false));
   }, []);
+  // ── WebSocket: inject real backend risk scores per patient ──────────────
+  useEffect(() => {
+    if (patients.length === 0) return;
+
+    const WS_BASE = 'wss://capstone.dpdns.org';
+    const sockets = [];
+
+    patients.forEach(p => {
+      const ws = new WebSocket(`${WS_BASE}/ws/stream/${p.patient_id}`);
+
+      ws.onmessage = (event) => {
+        try {
+          const msg = JSON.parse(event.data);
+          if (msg.type === 'ping') return;
+
+          // Extract risk — handle both shaped payloads
+          const ra = msg.risk?.risk_assessment || {};
+          const riskPercentage = msg.riskPercentage ?? ra.overall_score ?? null;
+          if (riskPercentage === null) return;
+
+          registerPatients([{
+            patient_id: p.patient_id,
+            _injectPrediction: {
+              risk: {
+                riskPercentage,
+                label:       msg.label      ?? ra.category  ?? 'LOW RISK',
+                mort_7d:     msg.mort_7d,
+                mort_30d:    msg.mort_30d,
+                sofa_score:  msg.sofa_score,
+                factors:     msg.factors    ?? [],
+              }
+            }
+          }], 'ws-ai-risk');
+        } catch (e) {
+          // ignore parse errors
+        }
+      };
+
+      ws.onerror = () => {}; // silent — reconnect not needed for AIRisk page
+      sockets.push(ws);
+    });
+
+    return () => sockets.forEach(ws => ws.close());
+  }, [patients, registerPatients]);
 
   const [expandedAlerts, setExpandedAlerts] = useState({});
   const [expandedAuditEntries, setExpandedAuditEntries] = useState({});

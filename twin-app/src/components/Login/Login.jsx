@@ -280,7 +280,7 @@ function Login({ onLogin }) {
   const loginMetrics = [
     { value: '7',        label: 'Core Modules'     },
     { value: 'REST+WS',  label: 'Live Integrations' },
-    { value: 'AI+SIEM',  label: 'Unified Insight'  },
+    { value: 'AI+OPS',   label: 'Unified Insight'  },
   ];
 
   /* \u2500\u2500\u2500 Render \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */

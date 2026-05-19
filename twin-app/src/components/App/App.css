@@ -74,6 +74,23 @@
   --font-display: 'Sora', 'Inter', sans-serif;
 }
 
+:root[data-theme='dark'] {
+  --bg-base: #07111f;
+  --bg-surface: rgba(15, 23, 42, 0.9);
+  --bg-elevated: rgba(30, 41, 59, 0.96);
+  --bg-glass: rgba(15, 23, 42, 0.78);
+  --bg-glass-strong: rgba(15, 23, 42, 0.92);
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
+  --text-disabled: #64748b;
+  --border-subtle: rgba(148, 163, 184, 0.14);
+  --border-default: rgba(148, 163, 184, 0.22);
+  --border-strong: rgba(148, 163, 184, 0.34);
+  --shadow-card: 0 20px 48px rgba(2, 8, 23, 0.34);
+  --shadow-card-hover: 0 28px 64px rgba(2, 8, 23, 0.44), 0 0 0 1px rgba(45, 212, 191, 0.12);
+}
+
 /* ============================================
    RESET & BASE
    ============================================ */
@@ -106,6 +123,10 @@ body {
   position: relative;
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+:root[data-theme='dark'] body {
+  background: var(--bg-base);
 }
 
 /* ============================================
@@ -149,6 +170,12 @@ body::after {
     radial-gradient(circle at 85% 15%, rgba(14, 165, 233, 0.04) 0%, transparent 40%);
   pointer-events: none;
   z-index: 0;
+}
+
+:root[data-theme='dark'] .page-bg {
+  background:
+    radial-gradient(circle at 15% 25%, rgba(45, 212, 191, 0.08) 0%, transparent 36%),
+    radial-gradient(circle at 85% 15%, rgba(56, 189, 248, 0.08) 0%, transparent 40%);
 }
 
 /* ============================================
@@ -580,6 +607,322 @@ tbody tr:hover {
   .show-mobile {
     display: block;
   }
+}
+
+/* ============================================
+   FULL DARK MODE INTEGRATION
+   ============================================ */
+:root[data-theme='dark'] {
+  --primary-50: #082f49;
+  --primary-100: #0c4a6e;
+  --primary-500: #38bdf8;
+  --primary-600: #0ea5e9;
+  --accent-400: #5eead4;
+  --accent-500: #2dd4bf;
+  --accent-600: #14b8a6;
+  --success-500: #34d399;
+  --warning-500: #fbbf24;
+  --danger-500: #fb7185;
+  --bg-base: #07111f;
+  --bg-surface: rgba(15, 23, 42, 0.9);
+  --bg-elevated: rgba(30, 41, 59, 0.96);
+  --bg-glass: rgba(15, 23, 42, 0.78);
+  --bg-glass-strong: rgba(15, 23, 42, 0.94);
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
+  --text-disabled: #64748b;
+  --border-subtle: rgba(148, 163, 184, 0.14);
+  --border-default: rgba(148, 163, 184, 0.24);
+  --border-strong: rgba(148, 163, 184, 0.36);
+  --border-glow: rgba(45, 212, 191, 0.42);
+  --shadow-card: 0 22px 54px rgba(2, 8, 23, 0.36);
+  --shadow-card-hover: 0 30px 72px rgba(2, 8, 23, 0.48), 0 0 0 1px rgba(45, 212, 191, 0.14);
+}
+
+:root[data-theme='dark'] body {
+  background:
+    radial-gradient(circle at 18% 18%, rgba(56, 189, 248, 0.1), transparent 30%),
+    radial-gradient(circle at 82% 12%, rgba(139, 92, 246, 0.12), transparent 28%),
+    linear-gradient(180deg, #07111f 0%, #0f172a 48%, #111827 100%);
+}
+
+:root[data-theme='dark'] body::before {
+  background-image:
+    linear-gradient(rgba(56, 189, 248, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
+  opacity: 0.55;
+}
+
+:root[data-theme='dark'] body::after,
+:root[data-theme='dark'] .page-bg {
+  background:
+    radial-gradient(circle at 15% 25%, rgba(45, 212, 191, 0.08) 0%, transparent 36%),
+    radial-gradient(circle at 85% 15%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 60% 80%, rgba(139, 92, 246, 0.07) 0%, transparent 42%);
+}
+
+:root[data-theme='dark'] h1,
+:root[data-theme='dark'] h2,
+:root[data-theme='dark'] h3,
+:root[data-theme='dark'] h4,
+:root[data-theme='dark'] h5 {
+  color: var(--text-primary);
+}
+
+:root[data-theme='dark'] .card,
+:root[data-theme='dark'] .page-header,
+:root[data-theme='dark'] .modal,
+:root[data-theme='dark'] .glass-card,
+:root[data-theme='dark'] .surface-card,
+:root[data-theme='dark'] .chart-card,
+:root[data-theme='dark'] .stat-card,
+:root[data-theme='dark'] .empty-state,
+:root[data-theme='dark'] .loading-card,
+:root[data-theme='dark'] .error-banner {
+  border-color: var(--border-default) !important;
+  background: rgba(15, 23, 42, 0.84) !important;
+  color: var(--text-primary) !important;
+  box-shadow: var(--shadow-card) !important;
+}
+
+:root[data-theme='dark'] input,
+:root[data-theme='dark'] select,
+:root[data-theme='dark'] textarea,
+:root[data-theme='dark'] .input-field {
+  border-color: var(--border-default) !important;
+  background: rgba(15, 23, 42, 0.78) !important;
+  color: var(--text-primary) !important;
+}
+
+:root[data-theme='dark'] input::placeholder,
+:root[data-theme='dark'] textarea::placeholder {
+  color: var(--text-tertiary) !important;
+}
+
+:root[data-theme='dark'] table,
+:root[data-theme='dark'] th,
+:root[data-theme='dark'] td {
+  border-color: var(--border-subtle) !important;
+  color: var(--text-primary);
+}
+
+:root[data-theme='dark'] th {
+  background: rgba(30, 41, 59, 0.72) !important;
+}
+
+:root[data-theme='dark'] .btn:not(.btn-primary),
+:root[data-theme='dark'] button:not(.btn-primary):not(.oracle-primary-btn):not(.oracle-run-btn):not(.nav-button):not(.icon-button):not(.logout-button) {
+  border-color: var(--border-default);
+}
+
+:root[data-theme='dark'] .chatbot-page {
+  --chat-text-primary: #f8fafc;
+  --chat-text-secondary: #cbd5e1;
+  --chat-text-tertiary: #94a3b8;
+  --chat-bg-surface: rgba(15, 23, 42, 0.9);
+  --chat-bg-soft: rgba(30, 41, 59, 0.72);
+  --chat-border-light: rgba(148, 163, 184, 0.18);
+  --chat-primary: #38bdf8;
+  --chat-accent: #2dd4bf;
+  --chat-shadow-sm: 0 8px 22px rgba(2, 8, 23, 0.22);
+  --chat-shadow-md: 0 16px 36px rgba(2, 8, 23, 0.32);
+  --chat-shadow-lg: 0 28px 68px rgba(2, 8, 23, 0.44);
+}
+
+:root[data-theme='dark'] .chatbot-hero-panel,
+:root[data-theme='dark'] .chat-card,
+:root[data-theme='dark'] .chatbot-prompt-card,
+:root[data-theme='dark'] .chatbot-stat-chip,
+:root[data-theme='dark'] .model-badge,
+:root[data-theme='dark'] .quick-prompts-sidebar,
+:root[data-theme='dark'] .chat-messages,
+:root[data-theme='dark'] .input-container {
+  border-color: var(--chat-border-light) !important;
+  background: var(--chat-bg-surface) !important;
+  color: var(--chat-text-primary) !important;
+}
+
+:root[data-theme='dark'] .message-bubble-assistant,
+:root[data-theme='dark'] .message-bubble-assistant .message-content,
+:root[data-theme='dark'] .chatbot-composer,
+:root[data-theme='dark'] .assistant-html td {
+  background: rgba(30, 41, 59, 0.82) !important;
+  color: #dbeafe !important;
+}
+
+:root[data-theme='dark'] .assistant-html th {
+  background: rgba(56, 189, 248, 0.14) !important;
+  color: #f8fafc !important;
+}
+
+:root[data-theme='dark'] .assistant-html p,
+:root[data-theme='dark'] .assistant-html li,
+:root[data-theme='dark'] .assistant-html ul,
+:root[data-theme='dark'] .assistant-html ol,
+:root[data-theme='dark'] .chatbot-composer-textarea {
+  color: #dbeafe !important;
+}
+
+:root[data-theme='dark'] .message-bubble-user,
+:root[data-theme='dark'] .message-bubble-user .message-content {
+  background: linear-gradient(135deg, #0ea5e9, #14b8a6) !important;
+  color: #ffffff !important;
+}
+
+:root[data-theme='dark'] .patients-container {
+  --p-bg: #07111f;
+  --p-surface: rgba(15, 23, 42, 0.88);
+  --p-surface-soft: #111827;
+  --p-border: rgba(148, 163, 184, 0.18);
+  --p-border-strong: rgba(148, 163, 184, 0.3);
+  --p-text: #f8fafc;
+  --p-text-secondary: #cbd5e1;
+  --p-text-tertiary: #94a3b8;
+  --p-shadow-sm: 0 10px 28px rgba(2, 8, 23, 0.26);
+  --p-shadow: 0 20px 48px rgba(2, 8, 23, 0.36);
+  --p-shadow-lg: 0 34px 76px rgba(2, 8, 23, 0.46);
+  background:
+    radial-gradient(circle at top left, rgba(56, 189, 248, 0.14), transparent 34%),
+    radial-gradient(circle at top right, rgba(139, 92, 246, 0.13), transparent 24%),
+    linear-gradient(180deg, #07111f 0%, #0f172a 100%) !important;
+}
+
+:root[data-theme='dark'] .patients-container .patients-hero,
+:root[data-theme='dark'] .patients-container .patients-snapshot-card,
+:root[data-theme='dark'] .patients-container .patients-hero-panel,
+:root[data-theme='dark'] .patients-container .patients-command-card,
+:root[data-theme='dark'] .patients-container .patients-focus-board,
+:root[data-theme='dark'] .patients-container .patients-list-head,
+:root[data-theme='dark'] .patients-container .patient-card,
+:root[data-theme='dark'] .patients-container .modal {
+  border-color: var(--p-border) !important;
+  background: rgba(15, 23, 42, 0.84) !important;
+  color: var(--p-text) !important;
+}
+
+:root[data-theme='dark'] .patients-container .patients-hero h1,
+:root[data-theme='dark'] .patients-container .patient-name,
+:root[data-theme='dark'] .patients-container .patient-card h3,
+:root[data-theme='dark'] .patients-container strong {
+  color: var(--p-text) !important;
+}
+
+:root[data-theme='dark'] .ai-risk-container,
+:root[data-theme='dark'] {
+  --lumina-bg: #07111f;
+  --lumina-surface: rgba(15, 23, 42, 0.84);
+  --lumina-primary: #38bdf8;
+  --lumina-accent: #2dd4bf;
+  --lumina-danger: #fb7185;
+  --lumina-warning: #fbbf24;
+  --lumina-success: #34d399;
+  --lumina-text: #f8fafc;
+  --lumina-text-soft: #cbd5e1;
+  --lumina-border: rgba(148, 163, 184, 0.18);
+  --lumina-shadow: 0 20px 48px rgba(2, 8, 23, 0.34);
+  --lumina-shadow-lg: 0 38px 84px rgba(2, 8, 23, 0.48);
+}
+
+:root[data-theme='dark'] .ai-risk-container {
+  background:
+    radial-gradient(circle at 20% 10%, rgba(56, 189, 248, 0.14), transparent 30%),
+    radial-gradient(circle at 86% 18%, rgba(139, 92, 246, 0.14), transparent 28%),
+    linear-gradient(180deg, #07111f 0%, #0f172a 100%) !important;
+}
+
+:root[data-theme='dark'] .risk-card-isometric,
+:root[data-theme='dark'] .patient-card-horizontal,
+:root[data-theme='dark'] .tab-morph-container,
+:root[data-theme='dark'] .heatmap-tile,
+:root[data-theme='dark'] .explain-item,
+:root[data-theme='dark'] .alerts-premium-container,
+:root[data-theme='dark'] .alert-card-premium,
+:root[data-theme='dark'] .audit-timeline-item {
+  border-color: var(--lumina-border) !important;
+  background: var(--lumina-surface) !important;
+  color: var(--lumina-text) !important;
+}
+
+:root[data-theme='dark'] .resources-page {
+  color: var(--text-primary);
+}
+
+:root[data-theme='dark'] .resources-page .page-header,
+:root[data-theme='dark'] .resources-page .card,
+:root[data-theme='dark'] .resources-page .stat-card,
+:root[data-theme='dark'] .resources-page .modal,
+:root[data-theme='dark'] .resources-page .resource-card,
+:root[data-theme='dark'] .resources-page .scenario-card,
+:root[data-theme='dark'] .resources-page .chart-card {
+  border-color: var(--border-default) !important;
+  background: rgba(15, 23, 42, 0.84) !important;
+  color: var(--text-primary) !important;
+}
+
+:root[data-theme='dark'] .resources-page .btn:not(.btn-primary) {
+  color: var(--text-primary) !important;
+  background: rgba(30, 41, 59, 0.74) !important;
+}
+
+:root[data-theme='dark'] .vitals-container,
+:root[data-theme='dark'] .timeline-container,
+:root[data-theme='dark'] .patient-detail,
+:root[data-theme='dark'] .patient-report-page,
+:root[data-theme='dark'] .digital-signing,
+:root[data-theme='dark'] .signing-page {
+  color: var(--text-primary);
+}
+
+:root[data-theme='dark'] .vitals-container .card,
+:root[data-theme='dark'] .timeline-container .card,
+:root[data-theme='dark'] .patient-detail .card,
+:root[data-theme='dark'] .patient-report-page .card,
+:root[data-theme='dark'] .prm-modal,
+:root[data-theme='dark'] .prm-topbar,
+:root[data-theme='dark'] .patient-report-preview-modal,
+:root[data-theme='dark'] .patient-report-sheet,
+:root[data-theme='dark'] .signing-card,
+:root[data-theme='dark'] .signing-panel,
+:root[data-theme='dark'] .signing-modal,
+:root[data-theme='dark'] .floating-assistant-panel,
+:root[data-theme='dark'] .toast,
+:root[data-theme='dark'] .command-palette {
+  border-color: var(--border-default) !important;
+  background: rgba(15, 23, 42, 0.86) !important;
+  color: var(--text-primary) !important;
+  box-shadow: var(--shadow-card) !important;
+}
+
+:root[data-theme='dark'] .patient-report-sheet,
+:root[data-theme='dark'] .patient-report-document,
+:root[data-theme='dark'] .patient-report-section,
+:root[data-theme='dark'] .prm-section,
+:root[data-theme='dark'] .report-section {
+  background: rgba(15, 23, 42, 0.78) !important;
+  color: var(--text-primary) !important;
+}
+
+:root[data-theme='dark'] .patient-report-sheet p,
+:root[data-theme='dark'] .patient-report-sheet span,
+:root[data-theme='dark'] .patient-report-document p,
+:root[data-theme='dark'] .patient-report-document span,
+:root[data-theme='dark'] .prm-modal p,
+:root[data-theme='dark'] .prm-modal span:not(.badge):not(.risk-badge),
+:root[data-theme='dark'] .signing-card p,
+:root[data-theme='dark'] .signing-panel p {
+  color: var(--text-secondary);
+}
+
+:root[data-theme='dark'] .patient-report-sheet h1,
+:root[data-theme='dark'] .patient-report-sheet h2,
+:root[data-theme='dark'] .patient-report-document h1,
+:root[data-theme='dark'] .patient-report-document h2,
+:root[data-theme='dark'] .prm-modal h1,
+:root[data-theme='dark'] .prm-modal h2,
+:root[data-theme='dark'] .signing-card h1,
+:root[data-theme='dark'] .signing-panel h1 {
+  color: var(--text-primary);
 }
 
 @media (prefers-reduced-motion: reduce) {

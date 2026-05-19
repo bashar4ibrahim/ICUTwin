@@ -155,16 +155,6 @@ export const NAVIGATION_ITEMS = [
     searchTerms: ['team', 'nursing', 'department'],
   },
   {
-    id: 'security-audit',
-    label: 'Security & Audit',
-    shortLabel: 'Security',
-    icon: 'SA',
-    group: 'System',
-    targetPage: 'siem',
-    description: 'SIEM visibility for alerts, anomalies, incidents, and audit trails.',
-    searchTerms: ['siem', 'security', 'audit'],
-  },
-  {
     id: 'settings',
     label: 'Settings',
     shortLabel: 'Settings',
@@ -197,7 +187,6 @@ export const DEFAULT_TARGET_NAV = {
   report: 'patient-report',
   ai: 'ai-risk-engine',
   chatbot: 'icu-assistant',
-  siem: 'security-audit',
 };
 
 export const HOME_MODULES = [

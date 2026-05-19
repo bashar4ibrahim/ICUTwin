@@ -56,7 +56,6 @@ import Patients from '../Patients/Patients';
 import Vitals from '../Vitals/Vitals';
 import Resources from '../Resources/Resources';
 import AIRisk from '../AIRisk/AIRisk';
-import SecurityCenter from '../TEE/SecurityCenter';
 import Chatbot from '../Chatbot/Chatbot';
 import DigitalSigning from '../DigitalSigning/DigitalSigning';
 import DigitalSigningPortal from '../DigitalSigning/DigitalSigningPortal';
@@ -363,7 +362,6 @@ export default function App() {
       case 'vitals': return <Vitals initialPatientId={selectedPatient} />;
       case 'resources': return <Resources />;
       case 'ai': return <AIRisk />;
-      case 'siem': return <SecurityCenter />;
       case 'chatbot': return <Chatbot />;
       case 'testdealing': return <TestDealing />;
       case 'signing': return <DigitalSigning />;

@@ -790,13 +790,15 @@ function Dashboard({ onNav, user }) {
 
       {combinedAlerts.length > 0 && (
         <div className="alert-ticker">
-          <div className="ticker-content">
-            {[...combinedAlerts, ...combinedAlerts].map((alert, index) => (
-              <span key={`${alert.name || 'alert'}-${index}`}>
-                Alert / {alert.name || 'Patient'} / risk {Math.round(Number(alert.risk_score) || 0)} /{' '}
-                {alert.category || 'AI signal'} <i>+</i>
-              </span>
-            ))}
+          <div className="ticker-window">
+            <div className="ticker-content">
+              {[...combinedAlerts, ...combinedAlerts].map((alert, index) => (
+                <span key={`${alert.name || 'alert'}-${index}`}>
+                  Alert / {alert.name || 'Patient'} / risk {Math.round(Number(alert.risk_score) || 0)} /{' '}
+                  {alert.category || 'AI signal'} <i>+</i>
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       )}

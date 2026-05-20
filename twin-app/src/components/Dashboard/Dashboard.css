@@ -36,6 +36,25 @@
   isolation: isolate;
 }
 
+:root[data-theme='dark'] .dashboard-root {
+  --d-bg: #07111f;
+  --d-surface: rgba(15, 23, 42, 0.9);
+  --d-surface-soft: #111827;
+  --d-surface-muted: #172033;
+  --d-text: #f8fafc;
+  --d-text-secondary: #cbd5e1;
+  --d-text-tertiary: #94a3b8;
+  --d-border: rgba(148, 163, 184, 0.18);
+  --d-border-strong: rgba(148, 163, 184, 0.28);
+  --d-shadow-sm: 0 10px 28px rgba(2, 8, 23, 0.26);
+  --d-shadow: 0 20px 48px rgba(2, 8, 23, 0.34);
+  --d-shadow-lg: 0 34px 76px rgba(2, 8, 23, 0.44);
+  background:
+    radial-gradient(circle at top left, rgba(56, 189, 248, 0.14), transparent 34%),
+    radial-gradient(circle at top right, rgba(139, 92, 246, 0.13), transparent 28%),
+    linear-gradient(180deg, #07111f 0%, #0f172a 48%, #111827 100%);
+}
+
 .dashboard-root * {
   box-sizing: border-box;
 }
@@ -127,6 +146,11 @@
   padding: 0;
 }
 
+:root[data-theme='dark'] .dashboard-root .alert-ticker {
+  border-color: rgba(248, 113, 113, 0.26);
+  background: linear-gradient(90deg, rgba(127, 29, 29, 0.34), rgba(15, 23, 42, 0.92));
+}
+
 .dashboard-root .alert-ticker::before {
   content: 'LIVE ALERTS';
   flex: 0 0 8rem;
@@ -141,6 +165,11 @@
   font-size: 0.7rem;
   letter-spacing: 0.14em;
   font-weight: 700;
+}
+
+:root[data-theme='dark'] .dashboard-root .alert-ticker::before {
+  background: linear-gradient(135deg, rgba(127, 29, 29, 0.84), rgba(136, 19, 55, 0.72));
+  color: #fecdd3;
 }
 
 .dashboard-root .ticker-window {
@@ -159,6 +188,10 @@
   font-family: var(--d-ff-data);
   font-size: 0.8rem;
   animation: d-ticker 30s linear infinite;
+}
+
+:root[data-theme='dark'] .dashboard-root .ticker-content {
+  color: #fecdd3;
 }
 
 .dashboard-root .ticker-content span {
@@ -1090,4 +1123,44 @@
   .dashboard-root .dashboard-footer-summary {
     flex-direction: column;
   }
+}
+
+:root[data-theme='dark'] .dashboard-root .dashboard-hero,
+:root[data-theme='dark'] .dashboard-root .chart-card,
+:root[data-theme='dark'] .dashboard-root .mosaic-card,
+:root[data-theme='dark'] .dashboard-root .hero-mini-card,
+:root[data-theme='dark'] .dashboard-root .focus-watch-card,
+:root[data-theme='dark'] .dashboard-root .stat-card,
+:root[data-theme='dark'] .dashboard-root .dashboard-footer-summary {
+  border-color: var(--d-border);
+  background: rgba(15, 23, 42, 0.82);
+  box-shadow: var(--d-shadow);
+}
+
+:root[data-theme='dark'] .dashboard-root .hero-pill,
+:root[data-theme='dark'] .dashboard-root .hero-action-secondary,
+:root[data-theme='dark'] .dashboard-root .timeline-item,
+:root[data-theme='dark'] .dashboard-root .alert-legend-item,
+:root[data-theme='dark'] .dashboard-root .focus-watch-meta,
+:root[data-theme='dark'] .dashboard-root .capacity-track,
+:root[data-theme='dark'] .dashboard-root .resource-chip {
+  border-color: var(--d-border);
+  background: rgba(30, 41, 59, 0.7);
+}
+
+:root[data-theme='dark'] .dashboard-root .dashboard-kicker,
+:root[data-theme='dark'] .dashboard-root .hero-mini-label,
+:root[data-theme='dark'] .dashboard-root .stat-card-top span,
+:root[data-theme='dark'] .dashboard-root .chart-card-header p,
+:root[data-theme='dark'] .dashboard-root .alert-legend-caption,
+:root[data-theme='dark'] .dashboard-root .timeline-desc,
+:root[data-theme='dark'] .dashboard-root .focus-watch-topline span {
+  color: var(--d-text-secondary);
+}
+
+:root[data-theme='dark'] .dashboard-root .hero-mini-value,
+:root[data-theme='dark'] .dashboard-root .chart-card-header h3,
+:root[data-theme='dark'] .dashboard-root .timeline-title,
+:root[data-theme='dark'] .dashboard-root .focus-watch-topline strong {
+  color: var(--d-text);
 }

@@ -41,8 +41,8 @@ const PANELS = [
   },
   {
     title: 'Security Layer',
-    value: 'SIEM Linked',
-    copy: 'Cyber-clinical observability fused into one command surface.',
+    value: 'Access Aware',
+    copy: 'Clinical workspace safeguards stay visible without a separate security module.',
     Icon: FiShield,
     start: -170,
     end: 160,

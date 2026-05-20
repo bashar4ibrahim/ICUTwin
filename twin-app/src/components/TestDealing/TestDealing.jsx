@@ -238,7 +238,6 @@ const SYSTEM_PAGES = [
   { id: "vitals", icon: "💓", label: "Vitals Monitored", value: "8", unit: "", progress: 80, color: "#ef4444" },
   { id: "resources", icon: "🛏", label: "Beds Occupied", value: "9", unit: "/12", progress: 75, color: "#10b981" },
   { id: "ai", icon: "🤖", label: "AI Predictions", value: "24", unit: "", progress: 82, color: "#8b5cf6" },
-  { id: "siem", icon: "🔒", label: "Security Score", value: "92", unit: "%", progress: 92, color: "#f59e0b" },
   { id: "chatbot", icon: "💬", label: "Queries Today", value: "38", unit: "", progress: 63, color: "#0ea5e9" },
 ];
 

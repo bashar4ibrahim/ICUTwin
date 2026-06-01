@@ -1,6 +1,10 @@
 export const CLINICAL_INTELLIGENCE_STORAGE_KEY = 'icu_clinical_intelligence_v1';
 export const AUTO_PREDICTION_DEBOUNCE_MS = 300;
-
+// JOB 1: GUESS missing lab data         → "What labs would this patient likely have?"
+// JOB 2: GATHER all 12 inputs           → "Collect everything the AI model needs"
+// JOB 3: DECIDE what happened           → "Is it getting worse? Should we alert someone?"
+// JOB 4: RECORD everything              → "Log it, package it, store it"
+// JOB 5: ANSWER chatbot questions       → "Which patient is at risk?"
 const PROFILE_DEFAULTS = {
   default: { glucose: 118, creatinine: 1.1, wbc: 8.4, lactate: 1.6 },
   critical: { glucose: 156, creatinine: 1.7, wbc: 14.2, lactate: 3.6 },

@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+// JOB 1: SETUP on page load          → "Restore old messages, create session ID"
+// JOB 2: ANSWER questions (2 levels) → "Try local first, then call server"
+// JOB 3: MANAGE conversation         → "Clear history, track state"
+// JOB 4: RENDER two UI modes         → "Hero landing page OR conversation thread"
 import {
   FiActivity,
   FiAlertCircle,

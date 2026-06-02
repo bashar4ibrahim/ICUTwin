@@ -1,5 +1,9 @@
 import { requestJson } from './api';
-
+// JOB 1: DEFINE what the AI model needs       → "What inputs? What format? What ranges?"
+// JOB 2: CLEAN raw data into safe numbers      → "Turn messy input into clean numbers"
+// JOB 3: PREPARE the request for the server    → "Package everything the backend expects"
+// JOB 4: CALL the AI model                     → "Send to server, handle failures"
+// JOB 5: NORMALIZE the response                → "Clean messy backend output into consistent format"
 export const CUSTOM_AI_MODEL_ID = import.meta.env.VITE_CUSTOM_AI_MODEL_ID || 'neocare-mortality';
 export const CUSTOM_AI_MODEL_NAME =
   import.meta.env.VITE_CUSTOM_AI_MODEL_NAME || 'NEOcare Mortality Prediction';

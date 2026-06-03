@@ -698,8 +698,9 @@ function Dashboard({ onNav, user }) {
   const spark4 = [4, 5, 4, 6, 5, 7, 6, 8];
   const spark5 = [3, 5, 4, 6, 8, 7, 9, 10];
 
-  const hrData = vitalsHistory.map((reading) => reading.heart_rate).filter((value) => value != null);
-  const hrLabels = vitalsHistory.map((reading) =>
+  const validVitals = vitalsHistory.filter((reading) => reading.heart_rate != null);
+  const hrData = validVitals.map((reading) => reading.heart_rate);
+  const hrLabels = validVitals.map((reading) =>
     new Date(reading.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
   );
 

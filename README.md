@@ -1,602 +1,652 @@
-Let's keep the momentum — Topics 9-12 🔥
+Final stretch — Topics 13-15 to complete your full mastery 🏁🔥
 ________________________________________
-📘 TOPIC SHEET 9: Duplicate Detection
-(~10 questions) ✅ You know the basics, master the edge cases
+📘 TOPIC SHEET 13: Desktop Flows (RPA)
+(~10 questions) ⚠️ Review needed — niche but tested
 ________________________________________
 📖 Concept
-Duplicate detection in Dataverse has 3 components:
-1. DUPLICATE DETECTION RULES
-   → Define WHAT is a duplicate (which tables + which fields to compare)
-   
-2. DUPLICATE DETECTION SETTINGS
-   → Define WHEN to check (on create, on update, during import)
-   
-3. DUPLICATE DETECTION JOBS
-   → Run scheduled bulk scans for existing duplicates
-How a Rule Works
-Setting	What It Means	Example
-Base Record Type	The table you're CREATING a record in	Opportunity
-Matching Record Type	The table you're CHECKING AGAINST	Lead
-Base Record Field	The field on the new record	Originating Lead
-Matching Record Field	The field on the existing record	Topic
-Match Criteria	Exact match, Same First Characters, etc.	Exact Match
-🧠 The Cross-Entity Trick (Exam Favorite)
-"Ensure no leads exist before creating an opportunity"
-This means:
-•	Base Record Type = Opportunity (the record being created)
-•	Matching Record Type = Lead (checking against existing leads)
-•	Base Record Field = Originating Lead (or Company Name)
-•	Matching Record Field = Topic (or Company Name)
-⚠️ The base is the NEW record. The match is the EXISTING record you check against.
-Duplicate Prevention Methods Comparison
-Method	What It Does	Prevents Creation?	Works on Import?
-Duplicate Detection Rule	Warns or blocks when duplicate found	⚠️ Warns (user can override)	✅ If enabled
-Alternate Key	Enforces uniqueness at database level	✅ Hard block (error)	✅ Always
-Business Rule	Form-level validation	❌ Cannot check other records	❌ No
-Power Fx Formula	Column formula	❌ Cannot check other records	❌ No
+Desktop Flows = Robotic Process Automation (RPA) — automate tasks on desktop apps and websites that have NO API.
+When to Use Desktop Flows
+Does the app have an API or connector?
+    ├── YES → Use Cloud Flow (connector-based)
+    └── NO → Use Desktop Flow (UI automation)
+            ├── User is logged in → ATTENDED
+            └── No user logged in → UNATTENDED
+Attended vs Unattended
+Feature	Attended	Unattended
+User present?	✅ Yes — user watches/interacts	❌ No — runs autonomously
+User session	Active user session required	NO active sessions allowed
+Triggered by	User clicks "Run" or cloud flow while user is present	Cloud flow on schedule (no human)
+Use case	Semi-automated tasks (user fills some fields, bot fills others)	Fully automated (nightly batch jobs, scheduled reports)
+License	Power Automate Desktop (free for basic)	Power Automate Premium (paid, per-bot plan)
+Desktop Flow Components
+Component	What It Does
+Power Automate Desktop	The application you install to BUILD and RUN desktop flows
+Actions	Pre-built steps (click, type, read, copy, open app, close app, etc.)
+UI Elements	Selectors that identify specific buttons/fields/windows on screen
+Variables	Store data within the desktop flow
+Input Parameters	Data passed FROM a cloud flow INTO the desktop flow
+Output Parameters	Data passed FROM the desktop flow BACK to the cloud flow
+Recording	Record mouse + keyboard actions to auto-generate steps
+How Desktop Flows Connect to Cloud Flows
+CLOUD FLOW (in the cloud)
+    │
+    ├── Trigger: Scheduled or Automated
+    │
+    ├── Action: "Run a flow built with Power Automate Desktop"
+    │       │
+    │       ├── INPUT: Send data TO desktop flow (e.g., record ID, customer name)
+    │       │
+    │       └── OUTPUT: Receive data FROM desktop flow (e.g., verification result)
+    │
+    └── Next Action: Use output data (e.g., update Dataverse record)
+Two Ways to Create Desktop Flows
+Method	How	Best For
+Pre-built Actions	Drag and drop actions in Power Automate Desktop designer	New flows, precise control
+Recording	Record mouse/keyboard events (legacy: Windows Recorder V1 + Selenium IDE)	Quick automation, legacy migration
+Web UI Flow Requirements (Legacy)
+For web-based UI automation (legacy method — older exam questions):
+Component	Required?
+Power Automate Desktop (or UI Flows app)	✅ Yes
+Latest Microsoft Edge	✅ Yes
+Selenium IDE (browser extension)	✅ Yes
+Mozilla Firefox	❌ Not required (Edge is sufficient)
+On-premises data gateway	❌ Not required for web UI flows
 ________________________________________
 🔑 Rules to Memorize
 Rule	Remember
-1	Base record = the record being CREATED/UPDATED
-2	Matching record = the EXISTING record to check against
-3	Cross-entity detection is possible (Opportunity vs Lead)
-4	Rules must be published before they work
-5	During data import option must be explicitly ENABLED
-6	Alternate Key = hard enforcement (error on duplicate)
-7	Duplicate Detection Rule = soft enforcement (warning, user can override)
-8	Business rules CANNOT detect duplicates (they only see current record)
-9	Power Fx CANNOT detect duplicates
-10	Duplicate detection jobs = scheduled bulk scans of existing data
-11	Three ways to delete audit/duplicate data: by record, by date range, by table
+1	No API / legacy app = Desktop Flow
+2	Attended = user is present, active session
+3	Unattended = no user, NO active sessions on machine
+4	Unattended requires: no active user sessions (not just signed out — no sessions at all)
+5	Input params = cloud flow SENDS data to desktop flow
+6	Output params = desktop flow SENDS data back to cloud flow
+7	Two creation methods: pre-built actions OR recording
+8	Web UI flows (legacy) require: Edge + Selenium IDE + Power Automate Desktop
+9	Desktop flows run on a local machine (not in the cloud)
+10	On-premises data gateway = for connecting cloud to on-premises DATA (not for desktop flows)
+11	Regression testing = Desktop flow (replay UI actions) + Automated cloud flow (orchestrate)
 ________________________________________
 📝 All Related Questions + Answers
-Q14-15: No leads before creating opportunity
-Base Record Type = Opportunity (you're creating this)
-Matching Record Type = Lead (checking against these)
-Base Record Field = Originating Lead
-Matching Record Field = Topic (or relevant identifying field)
-Key: Base = new record. Match = existing records to check against
+Q135, Q235-236: Components for web UI flows
+Scenario: Create and run web UI flows
+Answer: ✅ A (Power Automate Desktop / UI Flows app) + B (Latest Microsoft Edge) + C or D (Selenium IDE)
+Note: Older versions of the question list different options:
+•	Q135: A (Power Automate Desktop), B (Edge), D (Selenium IDE) ✅
+•	Q235-236: A (UI Flows app), B (Edge), C (Selenium IDE) ✅
+❌ Mozilla Firefox — not required (Edge is sufficient)
+❌ On-premises data gateway — not needed for UI automation
+Key: Three components — Desktop app + Browser + Selenium IDE
 ________________________________________
-Q74-75: Duplicate detection during data import
-Scenario: Import records, delete duplicates without user intervention
-Answer: ✅ A. Enable the "During data import" option
-❌ Templates for Data Import — templates define mapping, not duplicate rules
-❌ Disable Allow Duplicates — this is a per-user setting, not import setting
-❌ When record is created or updated — this triggers on manual create, not bulk import
-Key: There's a SPECIFIC setting for imports — it must be enabled separately
+Q136: Desktop flow sequence for SharePoint data transfer
+Sequence (4 steps):
+1.	Start recording (begin capturing actions)
+2.	Perform actions on the legacy software (click, type, navigate)
+3.	Stop recording and save automation
+4.	Output row data to SharePoint list (send data via output params)
+Key: Record first → then configure data output
 ________________________________________
-Q85-86: Alternate key for duplicate prevention?
-Scenario: Table with Name, Company, Contacted On — no duplicate rows
-Solution: Create an alternate key for the columns
-Answer: ✅ Yes — Alternate key enforces uniqueness at database level
-Why: If someone tries to create a record with the same Name + Company + Contacted On → hard error
-Key: Alternate key = strongest duplicate prevention (no user override)
+Q151: Run desktop flow during non-peak hours (no user)
+Scenario: UI flow must sign in with User credentials, run unattended
+Answer: ✅ C. Ensure there are NO active user sessions on the device
+❌ A (Active user session) — that's ATTENDED mode
+❌ B (All signed out) — close but wrong: disconnected sessions are OK, active sessions are NOT
+❌ D (All signed out except locked) — locked sessions are still active
+Key: UNATTENDED = zero active sessions. The flow itself will sign in with provided credentials
 ________________________________________
-Q87: Power Fx formula for duplicate prevention?
-Answer: ❌ No — Power Fx formulas are calculated values on a single record. They cannot query other records to check for duplicates
-Key: Power Fx = single record scope only
+Q155: Two ways to create desktop flows
+Answer: ✅ A (Record mouse and keyboard events) + C (Use pre-built actions)
+❌ B (Pre-built template) — templates exist but aren't a "creation method" per se
+❌ D (Visio models) — not how desktop flows are created
+Key: Two methods — Recording OR drag-and-drop actions
 ________________________________________
-Q88: Duplicate detection rule for duplicate prevention?
-Answer: ✅ Yes — Duplicate detection rules can prevent duplicates on create/update
-But: Users can override the warning (unless you customize the behavior)
-Key: Detection rules = soft block (warning). Alternate keys = hard block (error)
+Q213-214: Attended vs Unattended for two scenarios
+Scenario 1: User manually triggers process, watches it run, fills in some fields
+→ Attended (user is present and interacts)
+Scenario 2: Nightly batch process runs at 2AM, no one at the computer
+→ Unattended (no user present, scheduled via cloud flow)
+Key: User present = Attended. No user = Unattended
 ________________________________________
-Q89-90: Business rule for duplicate prevention?
-Answer: ❌ No — Business rules operate on the current form/record only. They cannot query other records in the table to check for duplicates
-Key: Business rules = form-level only. Cannot check across records
+Q285-286: Desktop flow input/output parameters
+Inbound (Input):
+→ ✅ Run a cloud flow from the Dataverse qualification record to send data to the desktop flow
+❌ Copy/paste — not automated
+❌ Dataverse connector from desktop flow — desktop flows don't have Dataverse connector natively
+Outbound (Output):
+→ ✅ Send data from the desktop flow to cloud flow to update the qualification record
+❌ Copy/paste — not automated
+❌ Dataverse connector from desktop flow — same reason
+Key: Cloud flow = orchestrator. Desktop flow = worker. Data flows: Cloud → Desktop (input) → Desktop → Cloud (output)
 ________________________________________
-Q297: Admin staff duplicate management
-Scenario: Admin staff must receive weekly duplicate list. No alerts when saving new contact
-Answer: ✅ C. Create one duplicate detection rule + one duplicate detection job + update settings
-•	Rule = defines what's a duplicate (same email + last name)
-•	Job = scheduled weekly scan to find existing duplicates
-•	Settings = disable "When a record is created or updated" (no alert on save)
-Key: Disable real-time detection + enable scheduled job = weekly report without save interruptions
+Q307: Regression testing tools
+Answer: ✅ A (Power Automate desktop flow) + C (Power Automate automated flow)
+•	Desktop flow = replays UI interactions (like a test script)
+•	Automated flow = orchestrates and triggers the desktop flow
+❌ Windows Steps Recorder — captures steps but doesn't replay/automate
+❌ Windows Recorder V1 — legacy, replaced by Power Automate Desktop
+Key: Desktop flow (execute tests) + Cloud flow (trigger/schedule tests)
 ________________________________________
 🔧 Apply Section — Verify It Yourself
-✅ Exercise 1: Create a Duplicate Detection Rule
-1.	Settings → Data Management → Duplicate Detection Rules
-2.	Click + New
-3.	Base Record Type: Contact
-4.	Matching Record Type: Contact (same-entity detection)
-5.	Add criteria: Email Address = Exact Match → Email Address
-6.	Click Publish → rule is now active
-7.	Try creating two contacts with same email → see the warning
-✅ Exercise 2: Cross-Entity Detection Rule
-1.	Create a new rule: 
-o	Base Record Type: Opportunity
-o	Matching Record Type: Lead
-o	Criteria: Company Name = Exact Match → Company
-2.	Publish → try creating an Opportunity with a company name that exists as a Lead
-3.	You should get a duplicate warning ✅
-✅ Exercise 3: Create an Alternate Key
-1.	make.powerapps.com → Tables → Contact → Keys
-2.	Click + New key → name: "Email Uniqueness"
-3.	Add column: Email Address
-4.	Save → wait for key to be created (may take a few minutes)
-5.	Try creating two contacts with the same email → you get a hard error (not just warning)
-6.	Compare: Detection rule = warning. Alternate key = error
-✅ Exercise 4: Schedule a Duplicate Detection Job
-1.	Settings → Data Management → Duplicate Detection Jobs
-2.	Click + New → select table (e.g., Contact)
-3.	Set schedule: Weekly
-4.	Run → see results showing potential duplicates
-5.	This is what Q297 tests — scheduled bulk scan
-✅ Exercise 5: See Duplicate Detection Settings
-1.	Settings → Data Management → Duplicate Detection Settings
-2.	See three checkboxes: 
-o	✅ When a record is created or updated
-o	✅ When Microsoft Dynamics 365 goes online
-o	✅ During data import
-3.	Toggle them → understand when detection triggers
+✅ Exercise 1: Open Power Automate Desktop
+1.	Search for "Power Automate" in Windows Start menu
+2.	Open Power Automate Desktop (it's pre-installed on Windows 10/11)
+3.	Sign in with your Microsoft account
+4.	See the main screen with "+ New flow" button
+5.	This is where you BUILD desktop flows
+✅ Exercise 2: Create a Simple Desktop Flow
+1.	Click + New flow → name: "PL200 Practice"
+2.	In the designer, see the Actions panel on the left
+3.	Drag "Launch new Microsoft Edge" → set URL: https://make.powerapps.com
+4.	Drag "Click element on web page" → use the UI element picker to select a button
+5.	Save → Run → watch it automate the browser ✅
+✅ Exercise 3: Use Recording
+1.	In your desktop flow → click "Recorder" (top toolbar) or "Web Recorder"
+2.	A recording toolbar appears
+3.	Perform actions: open browser, click buttons, type text
+4.	Stop recording → see auto-generated actions in your flow
+5.	This is the recording method from Q155
+✅ Exercise 4: See Input/Output Variables
+1.	In your desktop flow → click "Variables" panel (right side)
+2.	Click "+" → Input variable → name: CustomerName, type: Text
+3.	Click "+" → Output variable → name: VerificationResult, type: Text
+4.	Use CustomerName in your actions (e.g., type it into a web form)
+5.	Set VerificationResult at the end (e.g., read text from screen)
+6.	When triggered from a cloud flow → cloud sends CustomerName, receives VerificationResult
+✅ Exercise 5: Connect Desktop Flow to Cloud Flow
+1.	Go to make.powerautomate.com → create a new Automated cloud flow
+2.	Add action: "Run a flow built with Power Automate Desktop"
+3.	Select your desktop flow → see Input parameters appear
+4.	Fill in the input → after the action, Output parameters are available as dynamic content
+5.	Add next action: Update a Dataverse row with the output
+6.	This is the full orchestration pattern (Q285-286)
+✅ Exercise 6: See Attended vs Unattended Setting
+1.	In the cloud flow → when you add "Run a desktop flow" action
+2.	Look for "Run Mode" setting: Attended or Unattended
+3.	Attended = machine must have active user session
+4.	Unattended = machine must have NO active sessions
+5.	Try both → observe the difference
 ________________________________________
-📘 TOPIC SHEET 10: Solutions & ALM
-(~8 questions) ⚠️ You need to review this
+📘 TOPIC SHEET 14: Canvas App Variables & Functions
+(~20 questions) ⚠️ You know the basics, master the exam tricks
 ________________________________________
 📖 Concept
-Solution Types
-Type	Editable?	What Happens on DELETE?	Use Case
-Unmanaged	✅ Yes (full edit)	Components REMAIN in environment	Development environment
-Managed	❌ No (locked)	Components are REMOVED	Production/Test deployment
-Default Solution	✅ Yes	Cannot be deleted	Contains ALL components in environment
-🧠 The Critical Difference (EXAM TRICK)
-DELETE an UNMANAGED solution:
-    → Solution is removed
-    → Components STAY (tables, columns, flows still exist)
-    → Data STAYS
-
-DELETE a MANAGED solution:
-    → Solution is removed
-    → Components are REMOVED (tables, columns, flows deleted)
-    → Data in those tables is DELETED
-Solution Lifecycle
-DEV environment (Unmanaged)
-    → Export as MANAGED
-        → Import to TEST environment (Managed)
-            → Import to PROD environment (Managed)
-Import Options
-Option	What It Does	When to Use
-Update	Overwrites existing components, keeps deleted components	Quick patch, no cleanup needed
-Upgrade	Overwrites + REMOVES components that were deleted from source	Clean deployment, removes old components
-Stage for Upgrade	Imports but doesn't apply upgrade yet	Preview changes before applying
-Solution Patches
+Variable Types in Canvas Apps
+Type	Created With	Scope	Persists Across Screens?	Data Type
+Global Variable	Set(varName, value)	Entire app	✅ Yes	Single value (text, number, boolean, record)
+Context Variable	UpdateContext({varName: value})	Current screen ONLY	❌ No (unless passed via Navigate)	Single value
+Collection	Collect(colName, record) or ClearCollect(colName, data)	Entire app	✅ Yes	Table (multiple rows)
+🧠 The Critical Differences (EXAM LOVES THIS)
+Set()           → Global variable → ONE value → accessible EVERYWHERE
+UpdateContext() → Context variable → ONE value → accessible ONLY on current screen
+Collect()       → Collection → TABLE of rows → accessible EVERYWHERE
+Navigate()      → Can PASS context variables to the target screen
+Key Functions
+Function	What It Does	Returns
+Set(var, value)	Creates/updates a global variable	Nothing (side effect)
+UpdateContext({var: value})	Creates/updates a context variable	Nothing (side effect)
+Navigate(Screen, Transition, {var: value})	Navigate + pass context variable	Nothing
+Collect(col, record)	ADDS a record to a collection	Nothing
+ClearCollect(col, data)	CLEARS then adds records to collection	Nothing
+Remove(col, record)	Removes specific record from collection	Nothing
+Clear(col)	Removes ALL records from collection	Nothing
+Patch(table, record, changes)	Create or update a record in data source	The modified record
+Reset(control)	Resets a control to its Default value	Nothing
+Revert(table)	Refreshes data from source, discards local changes	Nothing
+SaveData(col, "key")	Saves collection to local device (offline)	Nothing
+LoadData(col, "key")	Loads collection from local device (offline)	Nothing
+If(condition, true_val, false_val)	Conditional logic	The result value
+ForAll(table, formula)	Iterates through each row	Table of results
+Delegation
+Concept	What It Means
+Delegation	Power Apps pushes the query to the data source (efficient)
+Non-delegable	Power Apps downloads ALL data then filters locally (slow, limited)
+Default limit	500 rows (can increase to 2,000 in settings)
+Delegable functions	Filter, Sort, Search (with supported data sources)
+Non-delegable functions	CountRows, Sum on filtered data, First on filtered data, Lookup with complex conditions
+Exam Rule: If a query returns more than 2,000 rows → non-delegable functions miss data!
+________________________________________
+🔑 Rules to Memorize
+Rule	Remember
+1	Set() = global (all screens)
+2	UpdateContext() = local (current screen only)
+3	Navigate() can pass context variables to another screen
+4	Collect() = ADD to collection. ClearCollect() = REPLACE collection
+5	Clear() = remove all rows. Remove() = remove specific row
+6	Collection is a table (multiple rows). Variable is a single value
+7	Set() creates a variable — it is NOT a collection
+8	Collect() auto-creates the collection if it doesn't exist
+9	Collect() does NOT update existing records — it ADDS new ones
+10	Reset() resets a CONTROL to its Default (not a variable)
+11	SaveData/LoadData = offline storage on device
+12	Delegation limit = 2,000 max (default 500)
+13	OnVisible = runs when screen becomes visible (good for initializing data)
+14	OnSelect = runs when user clicks/taps a control
+15	Patch() = create or update records in Dataverse/data source
+________________________________________
+📝 All Related Questions + Answers
+Q97-98: Pass values between screens + offline data
+•	Pass values from current screen to another → ✅ Navigate (with context variable parameter)
+❌ Back — goes back, doesn't pass values
+❌ MovePrevious — not a Power Apps function
+•	Display data when app is offline → ✅ LoadData (loads saved data from local storage)
+❌ ClearCollect — needs connection to data source
+❌ ShowDataOffline — not a real function
+Key: Navigate = pass data. LoadData = offline display
+________________________________________
+Q99: Clear all gallery selections
+Scenario: Gallery with checkboxes. Button to clear all selections
+Answer: ✅ D. OnCheck → Collect to collection. OnUncheck → Remove from collection. Button → Clear collection
+How:
+•	Checkbox OnCheck: Collect(CompareList, ThisItem)
+•	Checkbox OnUncheck: Remove(CompareList, ThisItem)
+•	Button OnSelect: Clear(CompareList)
+❌ Reset(Gallery) — can't reset controls inside a gallery from outside
+❌ ForAll + clear — unnecessarily complex
+Key: Collection pattern = Collect on check, Remove on uncheck, Clear on button
+________________________________________
+Q100: Collect() behavior (Yes/No series)
+Statement 1: "People collection is automatically created if it doesn't exist"
+→ ✅ Yes — Collect auto-creates collections
+Statement 2: "When Button is pressed, if record with same ID exists, values are updated"
+→ ❌ No — Collect ADDS a new record, it does NOT update existing. You'd get a duplicate
+Statement 3: "Adding a new field (Age) to the Collect function will result in an error"
+→ ❌ No — Collections are flexible, adding new columns is fine
+Key: Collect = always ADDS, never UPDATES. Collections are schema-flexible
+________________________________________
+Q107: Reset checkbox selections
+Answer: ✅ B. Reset(checkbox control)
+Why: Reset() returns a control to its Default property value
+❌ Reset(gallery) — can't reset gallery from outside
+❌ Reload — not a Power Apps function
+❌ Revert — refreshes data source, doesn't reset controls
+Key: Reset() works on INDIVIDUAL controls, not containers
+________________________________________
+Q111: Set() behavior (Yes/No series)
+Set(AgeGroups, ["25", "26-54", "55+"])
+Statement 1: "AgeGroups can be accessed from Screen1 and Screen2"
+→ ✅ Yes — Set() creates a global variable, accessible everywhere
+Statement 2: "AgeGroups is a collection"
+→ ❌ No — Set() creates a VARIABLE (even if the value is an array). Collections are created with Collect()
+Statement 3: "You can use the Update function to change values in AgeGroups"
+→ ❌ No — Update() works on data sources/collections, not on variables created with Set()
+Key: Set() = variable (even if array). Collect() = collection. They are DIFFERENT
+________________________________________
+Q128: Mask SSN (show only last 4 digits)
+Answer: ✅ D. Power Fx
+How: Use Right(SSN.Text, 4) to get last 4, then "***-**-" & Right(SSN.Text, 4)
+❌ Business rule — can't mask/format display in canvas apps
+❌ BPF — guided process, not formatting
+❌ Power BI DAX — wrong platform
+Key: Power Fx for any UI formatting/masking in canvas apps
+________________________________________
+Q133-134: Collection functions
+•	Create a new collection variable → ✅ ClearCollect (creates fresh collection)
+•	Remove table values from collection → ✅ Drop / Remove 
+o	Remove() = remove specific record
+o	Clear() = remove ALL records
+o	DropColumns() = remove specific columns
+Key: ClearCollect = create/replace. Remove/Clear = delete records
+________________________________________
+Q187: Variable available ONLY to current screen
+Answer: ✅ A (UpdateContext) + B (Navigate)
+•	UpdateContext({myVar: "hello"}) — creates context variable on current screen
+•	Navigate(Screen2, None, {myVar: "hello"}) — passes context variable to Screen2
+❌ SaveData — saves to device storage, not screen-scoped
+❌ Set — creates GLOBAL variable (all screens)
+❌ Collect — creates GLOBAL collection
+Key: Context variable = screen-scoped. Created with UpdateContext or Navigate
+________________________________________
+Q188: Variable types for two requirements
+•	Each screen must maintain separate copy of data and pass to another screen → Context variable (per-screen, passable via Navigate)
+•	Must be able to update separate rows of a table independently → Collection (table structure, row-level operations)
+Key: Separate per screen = context variable. Table with rows = collection
+________________________________________
+Q189-190: Send email after save + conditional display
+•	Send email after record saved → ✅ Power Automate flow (triggered from canvas app)
+•	Display column if creation date > 90 days → ✅ Visible property with If formula 
+o	If(DateDiff(ThisItem.CreatedOn, Today(), Days) > 90, true, false)
+Key: Email = flow. Conditional visibility = If() on Visible property
+________________________________________
+Q129-130: Responsive canvas app
+Answer: ✅ A (Disable Scale to Fit) + D (Configure height/width using formulas)
+How:
+•	Disable Scale to Fit → app no longer stretches to fixed size
+•	Use formulas: App.Width and App.Height to dynamically size controls
+❌ Drag handles — fixed size, not responsive
+❌ Lock orientation — restricts rotation, not responsive layout
+Key: Responsive = disable Scale to Fit + formula-based sizing
+________________________________________
+Q131: Single screen for data entry
+Answer: ✅ C. Create a canvas app
+Why: Canvas apps allow custom single-screen layouts with full control
+❌ Power Automate flow — automation, not UI
+❌ Power Virtual Agents — chatbot, not data entry
+❌ Modify site map — model-driven navigation, not single-screen layout
+________________________________________
+Q192: List records sorted by category with expand/hide
+Answer: ✅ C. Gallery
+Why: Gallery control displays lists of records. Group by category + expand/collapse
+❌ Card — compact summary, not expandable list
+❌ Expression — logic tool, not UI
+❌ Power BI dashboard — reporting, not data entry app
+________________________________________
+Q208: Evaluation form — Total field with conditional color
+Formula for Color property:
+If(Value(Total.Text) > 25, Color.Green, Color.Black)
+Key: Value() converts text to number. If() for conditional formatting. Color.Green/Black for colors
+________________________________________
+🔧 Apply Section — Verify It Yourself
+✅ Exercise 1: Global vs Context Variable
+1.	Create a canvas app with Screen1 and Screen2
+2.	On Screen1, add a button with OnSelect: Set(GlobalVar, "Hello from Global")
+3.	On Screen1, add another button: UpdateContext({LocalVar: "Hello from Local"})
+4.	On Screen1, add labels showing GlobalVar and LocalVar → both show values ✅
+5.	Navigate to Screen2 → add labels showing GlobalVar and LocalVar
+6.	Result: GlobalVar shows ✅ | LocalVar is blank ❌ (it's screen-scoped!)
+✅ Exercise 2: Pass Context Variable via Navigate
+1.	On Screen1 button OnSelect: Navigate(Screen2, None, {PassedVar: "I was passed!"})
+2.	On Screen2, add a label: PassedVar
+3.	Result: Label shows "I was passed!" ✅
+4.	This proves Navigate can pass context variables
+✅ Exercise 3: Collection vs Variable
+1.	Button 1 OnSelect: Set(MyVar, ["A", "B", "C"])
+2.	Button 2 OnSelect: ClearCollect(MyCol, {Letter: "A"}, {Letter: "B"}, {Letter: "C"})
+3.	Try: CountRows(MyVar) → ERROR (it's a variable, not a collection!)
+4.	Try: CountRows(MyCol) → 3 ✅
+5.	Key lesson: Set = variable (even if array). ClearCollect = collection (table)
+✅ Exercise 4: Collect Does NOT Update
+1.	ClearCollect(People, {ID: 1, Name: "Bashar"})
+2.	Collect(People, {ID: 1, Name: "Bashar Updated"})
+3.	Check People collection → you now have TWO records with ID=1
+4.	Collect ADDS, it does NOT update! Use Patch() or UpdateIf() to update
+✅ Exercise 5: Reset a Control
+1.	Add a TextInput control → Default: "" (empty)
+2.	User types "Hello" → the control shows "Hello"
+3.	Add a button: Reset(TextInput1)
+4.	Click the button → TextInput resets to "" (empty) ✅
+5.	Key: Reset returns to Default property, discarding user input
+✅ Exercise 6: Delegation Warning
+1.	Connect to a Dataverse table with 5,000+ records
+2.	Add a Gallery: Filter(LargeTable, Status = "Active") → No warning (delegable ✅)
+3.	Change to: Filter(LargeTable, Len(Name) > 5) → Delegation warning ⚠️
+4.	The yellow triangle means: only first 500/2000 records will be processed
+5.	Go to Settings → Upcoming features → find "Data row limit" → increase to 2000
+✅ Exercise 7: Offline with SaveData/LoadData
+1.	On app start (App.OnStart): LoadData(CachedAccounts, "accounts_cache", true)
+2.	On a refresh button: ClearCollect(CachedAccounts, Accounts); SaveData(CachedAccounts, "accounts_cache")
+3.	When online → refresh button loads fresh data and saves locally
+4.	When offline → app starts with cached data from LoadData
+5.	This is the offline pattern from Q97-98
+________________________________________
+📘 TOPIC SHEET 15: Environment & Admin Management
+(~15 questions) ⚠️ Mixed topics — memorization heavy
+________________________________________
+📖 Concept
+Environment Types
+Type	Purpose	Can Reset?	Can Copy?	Can Backup?
+Default	Auto-created for tenant, all users have access	❌ No	❌ No	✅ Yes
+Production	Live business apps	❌ No reset	✅ Yes (to sandbox)	✅ Yes
+Sandbox	Testing, development, training	✅ Yes	✅ Yes	✅ Yes
+Developer	Individual dev work	❌ No	❌ No	❌ No
+Teams	Created automatically for Teams apps	❌ No	❌ No	❌ Limited
+Trial	30-day evaluation	❌ No	❌ No	❌ No
+Admin Roles
+Role	Can Create Environments?	Can Manage Users?	Can Assign Security Roles?	Can Perform Backups?	Scope
+Global Admin	✅	✅	✅	✅	Entire tenant
+Power Platform Admin	✅	✅	✅	✅	All environments
+Dynamics 365 Admin	✅	✅	✅	✅	D365 environments
+Environment Admin	❌	✅ (within env)	✅ (within env)	✅ (within env)	Single environment
+System Administrator	❌	✅ (within env)	✅ (within env)	❌	Single environment (Dataverse)
+System Customizer	❌	❌	❌	❌	Customize tables/apps
+Environment Maker	❌	❌	❌	❌	Create apps/flows
+Basic User	❌	❌	❌	❌	Run apps, own data
+DLP Policies (Data Loss Prevention)
 Concept	What It Does
-Patch	Contains ONLY the changes (delta), not the full solution
-Clone to Patch	Creates a new patch from the parent solution
-After patching	Must eventually merge patches back into a full solution for upgrade
-Publisher & Prefix
-Setting	What It Is	Why It Matters
-Publisher	Identity of who created the solution	Controls the prefix
-Prefix	Added to all new components (e.g., cr4b2_fieldname)	Prevents naming conflicts across solutions
+Business connectors	Trusted connectors (Dataverse, SharePoint, Outlook)
+Non-Business connectors	Untrusted/personal connectors (Twitter, Gmail)
+Blocked connectors	Cannot be used at all
+Policy scope	Can apply to: single environment, multiple environments, or entire tenant
+Impact	Flows/apps using blocked connector combinations → SUSPENDED
+Key Admin Tasks & Where to Do Them
+Task	Where
+Change username	Microsoft 365 Admin Center
+Assign security roles	Power Platform Admin Center → Environment → Settings
+Create environments	Power Platform Admin Center
+Configure DLP policies	Power Platform Admin Center
+Enable languages	Power Platform Admin Center → Environment → Settings → Product → Languages
+Enable Dataverse Search	Power Platform Admin Center → Environment → Settings → Product → Features
+Configure server-side sync	Power Platform Admin Center → Environment → Settings → Email
+Enable auditing	Power Platform Admin Center → Environment → Settings → Audit and logs
+Manage solutions	make.powerapps.com → Solutions
+Configure SharePoint integration	Power Platform Admin Center → Environment → Settings → Document Management
+Server-Side Synchronization (Email)
+Step	Where
+1. Configure server profile	Power Platform Admin Center → Settings → Email → Server Profiles
+2. Configure mailboxes	Power Platform Admin Center → Settings → Email → Mailboxes
+3. Approve mailbox	Admin must approve email address
+4. Test & Enable	Click "Test & Enable Mailboxes"
+SharePoint Integration
+Step	What
+1	Enable server-based SharePoint integration
+2	Select tables for document management
+3	Create document locations (auto or manual)
+4	Documents stored in SharePoint, linked from Dataverse
+Key benefit	Reduces Dataverse storage consumption
+Currency Management
+Rule	Detail
+Base currency	Set during environment creation → CANNOT be changed
+Cannot deactivate	Base currency → always active
+Can deactivate	Non-base currencies → stops new transactions but keeps historical data
+Cannot delete	Currencies used by records → can only deactivate
+Word/Excel Templates
+Template Type	Created By	Use Case
+Word template	System Admin or Customizer	Generate documents from record data
+Excel template	Any user (personal) or Admin (org-wide)	Export views to formatted Excel
+What you CAN do	Add fields, format tables, add images	Standard Word/Excel features
+What you CANNOT do	Conditional fields, alternating row colors, complex formulas	Limited to mail-merge style
 ________________________________________
 🔑 Rules to Memorize
 Rule	Remember
-1	Unmanaged = development. Managed = deployment
-2	Delete unmanaged → components STAY. Delete managed → components REMOVED
-3	Always export as Managed to production
-4	Upgrade = clean (removes old). Update = overlay (keeps old)
-5	Prefix prevents naming conflicts across solutions/publishers
-6	Cannot change publisher after solution is created
-7	Solution Checker = validates for performance, accessibility, deprecated APIs
-8	Managed properties control what can be customized in managed solution
-9	Environment variables = store configuration values that change per environment
-10	Default value = set by publisher. Current value = overridden per environment
+1	Change username = M365 Admin Center (NOT Dataverse, NOT Power Platform)
+2	Delete user + recreate = ❌ LOSES history. Change username = ✅ KEEPS history
+3	Base currency = CANNOT be changed or deactivated after creation
+4	Deactivate currency = stops new transactions, keeps historical records
+5	DLP policy = controls which connectors can be used together
+6	Business + Non-Business connectors in same flow = BLOCKED by DLP
+7	Server-side sync = configure in Power Platform Admin Center (email settings)
+8	SharePoint integration = reduces Dataverse storage (documents stored in SP)
+9	OneDrive integration = personal document storage (NOT shared team documents)
+10	Enable languages = install language packs → enable in environment settings
+11	Extract translations = from the SOLUTION (Translations → Export)
+12	Dataverse for Teams environment = created by creating/installing an app in Teams
+13	Word template: CAN add customer address. CANNOT add conditional fields or alternating row colors
+14	On-premises data gateway = connects cloud flows to on-premises data sources
+15	Least privilege principle = always assign the MINIMUM role needed
 ________________________________________
 📝 All Related Questions + Answers
-Q241: Prevent display name changes after promotion
-Scenario: Table display names must NOT be changed in UAT
-Answer: ✅ C. Managed solution
-Why: Managed solutions lock components — users can't modify display names
-❌ Unmanaged — fully editable
-❌ Default solution — contains everything, always editable
-❌ Segmented solution — not a real concept for locking
+Q24-27, Q34: Change user sign-in name (Yes/No series)
+Scenario: Elisabeth Rice changes name to Elisabeth Mueller. Update sign-in without losing history
+Q24: Change username in user record for the app → ✅ Yes (A)
+Q25: Ask M365 admin to change username in admin portal → ✅ Yes (A)
+Q26-27: Delete user and recreate → ❌ No (B) — LOSES all history
+Q34: Change email in D365 Email Configuration → ❌ No (B) — wrong location
+Key: Change username = M365 Admin Center. NEVER delete + recreate
 ________________________________________
-Q263-264: Effects of removing solutions
-Scenario 1: Unmanaged solution with custom table + parent-child relationship
-→ Delete solution → Solution only removed. Table, relationship, and data STAY
-Scenario 2: Managed solution PATCH with updated column label
-→ Delete patch → Solution and the updated column label removed (reverts to original)
-Scenario 3: Managed ISV solution with custom table + sitemap changes
-→ Delete solution → Solution, table, and any data in the table removed
-Key: Managed = everything removed. Unmanaged = only solution container removed
+Q21: Admin roles for least privilege
+•	Create users → System Administrator (or Global Admin)
+•	Assign security roles → System Administrator
+•	Perform backups from instance → Dynamics 365 Admin (or Global Admin)
+Key: Match the MINIMUM role needed for each task
 ________________________________________
-Q275-276: Package JavaScript web resource for deployment
-Scenario: Your JS uses a third-party library. ISV has it but may not be installed everywhere
-Answer: ✅ A (Create new JS web resource from library + add both) AND C (Merge library code into your JS)
-Why: You must include the dependency in YOUR solution since ISV may not exist
-❌ B — Can't copy from ISV's managed solution
-❌ D — Adding only the library without your code doesn't work
+Q31: Shared device security (unauthorized access)
+Scenario: Shared warehouse devices, unauthorized users accessing after failed logout
+•	Prevent unauthorized access → Session timeout (auto-logout after inactivity)
+•	Detect unauthorized actions → Audit logging
+Key: Session timeout + audit trail = shared device security
 ________________________________________
-Q284: Avoid naming conflicts during import
-Answer: ✅ D. Prefix
-Why: Each publisher has a unique prefix (e.g., contoso_, cr4b2_). This prevents AccountType from one solution conflicting with AccountType from another
-❌ Package type, Configuration page, Marketplace, Version — none prevent naming conflicts
+Q46, Q50: Currency management
+Q46: Can't deactivate a currency → ✅ C. It's the base currency (base currency can never be deactivated)
+Q50: Stop Brazilian transactions but keep office open → ✅ D. Deactivate Brazilian currency (stops new transactions, keeps historical)
+❌ Delete currency — can't delete if used by records
+❌ Rename — doesn't stop transactions
+❌ Disable language pack — unrelated
 ________________________________________
-Q104: Where to create solution package for promotion
-Answer: ✅ B. Power Apps designer (make.powerapps.com → Solutions)
-❌ Azure DevOps — used for CI/CD pipelines, not manual solution creation
-❌ Power Platform Admin Center — environment management, not solution packaging
-❌ Azure portal — not for Power Platform solutions
+Q72, Q182: Dataverse for Teams environment
+Scenario: How to create a Dataverse for Teams environment
+Answer: ✅ A (Create a new app in Teams) + B (Install existing app in Teams)
+❌ Create in Admin Center — you can't directly create Teams environments
+❌ App permission policy — controls app access, doesn't create environments
+Key: Teams environment is auto-provisioned when you create/install a Power App in Teams
 ________________________________________
-Q246: Environment variable issue after deployment
-Scenario: Power BI report shows dev data in production after managed solution import
-Answer: ✅ B. Remove the environment variable current value
-Why: The current value from dev was included in the solution. Removing it lets the default value (or production-specific value) take effect
-❌ Update default value — default is set by publisher, shouldn't change per environment
-❌ Create new variable — unnecessary, just fix the current value
-Key: Current value = environment-specific override. Default value = publisher's baseline
+Q44-45: Restrict app by location
+•	Restrict to specific region → Azure Active Directory (Conditional Access)
+•	Specify locations → Conditional Access policy with named locations
+Key: Location-based access = always Azure AD Conditional Access
 ________________________________________
-Q65: Transport methods for different components
-•	Customizations (tables, columns, forms) → Solution export/import
-•	Data (records) → Data import (CSV/Excel) or Configuration Migration Tool
-Key: Solutions transport SCHEMA (structure). Data must be transported separately
+Q68, Q105-106, Q295-296: Localization & Translation
+Q68: Translation methods by component type:
+•	Views/forms → Export and re-import translated text (from solution)
+•	Email templates → Create separate version for each language
+•	Reports → Use embedded labels
+Q105-106: Extract text for translation → ✅ C. The solution in the web application
+(Solutions → select solution → Translations → Export Translations)
+Q295-296: Enable languages:
+•	Allow language to be used → Language packs (install them)
+•	Enable the languages → Environment settings (Admin Center → Environment → Settings → Languages)
 ________________________________________
-Q261: Deployment options for managed solutions
-•	Changes to unrelated table → Deploy a full copy of the new solution using upgrade option
-•	Automation enhancements → Deploy the new solution then deploy full copy of original. Upgrade both
-Key: Upgrade option = cleanest deployment (removes old, adds new)
+Q149-150, Q249-250: Hide Flows button
+Answer: ✅ B/C. Customizations section of System Settings
+Where: Settings → Customizations → System Settings → Customizations tab → toggle Flow button
+❌ SiteMap — controls navigation, not the Flows button specifically
+❌ Entity component — not where this setting lives
+❌ Buttons tab of Flow — doesn't exist
 ________________________________________
-Q105-106: Extract text for translation
-Answer: ✅ C. The solution in the web application
-How: Solutions → select solution → Translations → Export Translations
-This exports an XML file with all localizable text for translation
-❌ Tables in web app — too granular
-❌ Admin center — no translation export feature
-❌ Individual components — must be done at solution level
+Q237: Server-side synchronization configuration
+Locations:
+•	Configure server profile → Power Platform Admin Center → Email → Server Profiles
+•	Configure mailboxes → Power Platform Admin Center → Email → Mailboxes
+•	Approve and test → Test & Enable Mailboxes
+Key: All email configuration = Power Platform Admin Center → Settings → Email
 ________________________________________
-🔧 Apply Section — Verify It Yourself
-✅ Exercise 1: Create & Export an Unmanaged Solution
-1.	make.powerapps.com → Solutions → + New solution
-2.	Name: "PL200 Practice" → Publisher: select or create → Create
-3.	Add components: a table, a column, a form
-4.	Click Export → choose Unmanaged → download the ZIP
-5.	This is your development export
-✅ Exercise 2: Export as Managed
-1.	Same solution → click Export → choose Managed
-2.	Download the ZIP → notice it's a different file
-3.	Key difference: If imported to another environment, components will be LOCKED
-✅ Exercise 3: See What Happens When You Delete
-1.	Import your unmanaged solution to a test environment
-2.	Delete the solution → check: table still exists ✅, data still exists ✅
-3.	Now import the managed version
-4.	Delete the managed solution → check: table is GONE ❌, data is GONE ❌
-5.	This is the #1 exam concept for ALM
-✅ Exercise 4: See Solution Prefix
-1.	Solutions → open your solution → Settings (gear icon)
-2.	See the Publisher → click to see the Prefix
-3.	Create a new column in this solution → notice the prefix auto-added (e.g., cr4b2_newfield)
-4.	This prefix prevents naming conflicts (Q284)
-✅ Exercise 5: Environment Variables
-1.	In your solution → + New → More → Environment Variable
-2.	Name: "APIEndpoint" → Type: Text
-3.	Set Default Value: https://dev.api.contoso.com
-4.	Set Current Value: https://prod.api.contoso.com
-5.	Export solution → import to another environment → current value can be different per environment
-6.	This is what Q246 tests
-✅ Exercise 6: Solution Checker
-1.	Solutions → select your solution → Solution Checker → Run
-2.	Wait for results → see issues flagged: 
-o	Performance issues
-o	Accessibility problems
-o	Deprecated APIs
-o	Unsupported customizations
-3.	Fix issues before deploying to production
+Q265-267: Storage solution for documents (Yes/No series)
+Scenario: Sales team needs to attach many documents, minimize storage costs
+Q265-266: Enable Outlook integration → ❌ No — Outlook doesn't reduce Dataverse storage
+Q267: Enable OneDrive for Business → ❌ No — OneDrive is personal, not shared team documents
+Correct answer (implied): Enable SharePoint integration → documents stored in SharePoint, not Dataverse
+Key: SharePoint = shared document storage that reduces Dataverse consumption
 ________________________________________
-📘 TOPIC SHEET 11: Cloud Flows (Power Automate)
-(~14 questions) ✅ You're strong here, but master the exam tricks
+Q269-270: On-premises data gateway
+Scenario: Canvas app needs near-real-time data from on-premises accounting system
+Answer: ✅ A. On-premises data gateway
+Why: Gateway bridges cloud (Power Apps) to on-premises data (SQL, file shares, etc.)
+❌ Azure DevOps — CI/CD pipeline, not data connectivity
+❌ Data integration project — bulk/batch, not real-time
+❌ Power Pages — external website, not data connectivity
 ________________________________________
-📖 Concept
-Flow Types
-Flow Type	Trigger	Use Case
-Automated	Event-based (record created, email received)	React to data changes
-Instant	Manual button press (Power Apps, Teams, mobile)	On-demand actions
-Scheduled	Time-based (daily, weekly, hourly)	Recurring tasks
-Desktop	Triggered from cloud flow or manually	Legacy app automation
-Dataverse Connector — Key Actions
-Action	What It Does	When to Use
-Add a new row	Creates a record	New record automation
-Update a row	Updates specific columns	Modify existing record
-List rows	Query multiple records	Get filtered data
-Get a row by ID	Retrieve one specific record	Lookup by GUID
-Delete a row	Removes a record	Cleanup automation
-Perform a bound action	Run action tied to a specific row	Custom API on a record
-Perform an unbound action	Run action NOT tied to a specific row	Global custom API
-Perform a changeset request	Multiple operations as single transaction	All-or-nothing operations
-Dataverse Triggers
-Trigger	Fires When	Key Setting
-When a row is added	New record created	Table name
-When a row is added, modified or deleted	Any change	Table name + Change type + Column filter
-Column Filter & Filtering Attributes
-Setting	What It Does
-Column filter (on trigger)	ONLY fire when THESE specific columns change
-Filter rows (on trigger)	ONLY fire for rows matching this condition
-Trigger condition	Advanced: OData expression that must be true to fire
+Q283: Word template changes
+Scenario: Can you revise a Word template for thank-you letters?
+Answer: ✅ D. Add the address of the customer (standard mail-merge field)
+❌ A (Conditional field) — Word templates don't support conditions
+❌ B (Alternating row colors) — not supported in Dataverse Word templates
+❌ C (Format Created On to long date) — formatting is limited in Word templates
+Key: Word templates = simple field insertion. No conditional logic or complex formatting
 ________________________________________
-🔑 Rules to Memorize
-Rule	Remember
-1	Automated flow = event trigger (record change, email, etc.)
-2	Scheduled flow = time trigger (every day at 9AM, every Monday, etc.)
-3	Instant flow = manual trigger (button in app, Teams, mobile)
-4	Column filter on trigger = only fires when specific columns change (saves runs)
-5	Perform a bound action = Custom API/action on a SPECIFIC record
-6	Perform an unbound action = Custom API/action NOT tied to a record
-7	Perform a changeset request = multiple CUD operations as ONE transaction
-8	Run after settings = control what happens after success/failure/skip/timeout
-9	Scope = try-catch equivalent (group actions, handle errors)
-10	Apply to Each = loop through array/collection
-11	Condition = if/else branching
-12	Switch = multi-branch (like multiple if/else)
-13	Expressions: formatDateTime(), addDays(), utcNow(), coalesce()
-14	Approvals = Start and Wait for Approval action (built-in connector)
-15	OR condition in filter = or(condition1, condition2)
-16	Cloud flows have inherent delay (seconds to minutes) — NOT truly real-time
+Q323-325: SharePoint document management configuration
+Sequence (4 steps):
+1.	Enable server-based SharePoint integration (Settings → Document Management)
+2.	Select the Prospects table for document management
+3.	Create document locations based on Account lookup
+4.	Validate and finish setup
+Key: Documents saved via integration → stored in SharePoint, linked from Dataverse
 ________________________________________
-📝 All Related Questions + Answers
-Q144: Flow types for different tasks
-•	Repetitive actions in legacy app with no API → Desktop flow (automate UI)
-•	Send email on contact's birthday → Automated flow (triggered by date)
-Key: No API = Desktop flow. Event-based = Automated. Time-based = Scheduled
-________________________________________
-Q148: Twitter hashtag → mobile notification + email
-Sequence:
-1.	Create a connection to Twitter
-2.	Set trigger: When a new tweet with specific hashtag
-3.	Add condition: Check hashtag matches
-4.	Add action: Send email notification
-Key: Connection first → Trigger → Condition → Action
-________________________________________
-Q152: Expression for overdue invoices (≥ 7 days)
-Answer: ✅ @greaterOrEquals(triggerBody()?['OverdueDate'], 7)
-Key: greaterOrEquals for ≥ comparison in expressions
-________________________________________
-Q156: OR filter condition (sales < 500K OR credit hold)
-Expression: or(less(item()?['sales'], 500000), equals(item()?['credithold'], 'true'))
-Key: or() wraps two conditions. less() for <. equals() for =
-________________________________________
-Q164: Canvas app button to send email
-Answer: ✅ B. Power Automate cloud flow
-How: Create instant flow → trigger from Power Apps button → Send email action
-❌ Classic workflow — can't trigger from canvas app button
-❌ Azure Logic App — overkill, not Power Platform native
-❌ BPF — guided process, not single action
-________________________________________
-Q169-170: Approval process without code
-Answer: ✅ A. Power Automate cloud flow (with Approvals connector)
-How: Trigger on revenue > $1M → Start and Wait for Approval → If approved → proceed
-❌ PCF — UI component, not process automation
-❌ Column Expression — calculated value, not approval workflow
-________________________________________
-Q171: Daily email with YTD totals
-Answer: ✅ A. Loop (Apply to Each)
-Why: Need to iterate through records to calculate YTD totals and include in email
-❌ Wait — pauses flow, doesn't loop
-❌ Condition — single branch, doesn't iterate
-❌ Parallel branch — runs actions simultaneously, doesn't loop
-________________________________________
-Q224: Flow sequence for automated email
-Sequence: Trigger → Condition → Action
-1.	Trigger: When a new maintenance request is created
-2.	Condition: Check the department in the request
-3.	Action: Send email to the department's manager
-Key: Always Trigger first → then logic → then action
-________________________________________
-Q229-230: Dataverse connector actions
-•	Run custom API on existing Account row → Perform a bound action
-•	Create three rows, rollback if error → Perform a changeset request (transaction)
-•	Execute create/delete/update as single transaction → Perform a changeset request
-•	Execute complex operations on multiple rows → Perform an unbound action
-Key: Bound = on a specific record. Unbound = global. Changeset = transaction
-________________________________________
-Q298-299: Automation for qualification verification
-Answer: ✅ A (Dataverse connector) + B (Outlook connector)
-Why: Dataverse connector to read/update qualification records. Outlook connector to send email with results
-❌ On-premises gateway — data is in Dataverse, not on-premises
-❌ Update/Create records — these are actions, not the connectors needed
-________________________________________
-Q310: Service request completion process
-Answer: ✅ A (Power Automate flow) + B (Connection reference)
-Why: Flow automates the process. Connection reference = solution-aware way to store connector credentials (works across environments)
-❌ Connection — not solution-aware (breaks on import)
-❌ BPF — guided process for users, not automated background process
-________________________________________
-Q311: Format Current Date for consent email
-Answer: ✅ D. Expression — formatDateTime(utcNow(), 'MMMM dd, yyyy')
-This produces: "May 25, 2026"
-❌ Condition — branching logic, not formatting
-❌ Switch — multi-branch, not formatting
-❌ Dynamic content — gives raw date, not formatted
-________________________________________
-Q318-319: Flow trigger settings for qualification verification
-Trigger: Set Table name to Qualification and Column filter to statuscode
-Logic: Loop through related qualification records and complete if ALL are in Complete status
-Why: Trigger fires when a qualification status changes → then check all related qualifications
-________________________________________
-Q159: Troubleshoot flow in test environment
-•	Enable changes to flow → Turn on (enable the flow)
-•	Enable changes to the object → Edit (open in designer)
-Key: Managed flows must be turned on + edited to troubleshoot
+Q325: Enable attachments to reduce Dataverse storage?
+Answer: ❌ No — Attachments are stored IN Dataverse, which INCREASES storage
+Correct approach: Use SharePoint integration to store documents outside Dataverse
+Key: Attachments = Dataverse storage. SharePoint = external storage (reduces cost)
 ________________________________________
 🔧 Apply Section — Verify It Yourself
-✅ Exercise 1: Create an Automated Flow
-1.	make.powerautomate.com → + Create → Automated cloud flow
-2.	Trigger: "When a row is added" → Table: Account
-3.	Action: "Send an email (V2)" → To: your email → Subject: "New Account!"
-4.	Save → Create a new Account → check inbox
-✅ Exercise 2: Add Column Filter to Trigger
-1.	Open your flow → click the trigger
-2.	Find "Select columns" (Column filter) → type: name,telephone1
-3.	Now the flow ONLY fires when Account Name or Phone changes
-4.	Change a different field (e.g., address) → flow does NOT fire ✅
-✅ Exercise 3: Use Expressions
-1.	Add an action → Compose (for testing expressions)
-2.	Click in the value → switch to Expression tab
-3.	Type: formatDateTime(utcNow(), 'MMMM dd, yyyy')
-4.	Save & Test → see output: "May 25, 2026"
-5.	Try: addDays(utcNow(), 7, 'yyyy-MM-dd') → date 7 days from now
-✅ Exercise 4: Build an OR Condition
-1.	Add a Condition action
-2.	Click "Add row" → set first condition: Sales < 500000
-3.	Click "Add row" → set second condition: CreditHold = true
-4.	Change the operator at the top from "And" to "Or"
-5.	Now the condition is true if EITHER condition matches
-✅ Exercise 5: Perform a Changeset Request
-1.	Add action: "Perform a changeset request"
-2.	Inside, add: Create Row 1, Create Row 2, Create Row 3
-3.	If Row 2 fails → Row 1 is automatically rolled back
-4.	This is a DATABASE TRANSACTION — all or nothing
-✅ Exercise 6: Error Handling with Run After
-1.	Add two actions in sequence: Action A → Action B
-2.	Click ⋯ on Action B → Configure run after
-3.	See options: ✅ has succeeded, ☐ has failed, ☐ is skipped, ☐ has timed out
-4.	Check "has failed" → now Action B runs ONLY when Action A fails
-5.	This is the try-catch pattern in Power Automate
+✅ Exercise 1: See Environment Types
+1.	Go to https://admin.powerplatform.microsoft.com → Environments
+2.	See your environments listed with their Type column (Production, Sandbox, Default, Developer)
+3.	Click an environment → see details: URL, Region, Security Group, Version
+4.	Notice: Default environment has no security group (everyone can access)
+✅ Exercise 2: See Admin Roles
+1.	Go to https://admin.microsoft.com → Users → Active Users
+2.	Click a user → Manage roles
+3.	See available roles: Global Admin, Power Platform Admin, Dynamics 365 Admin, etc.
+4.	This is where Q21 admin role assignment happens
+✅ Exercise 3: Change a Username (View Only)
+1.	M365 Admin Center → Users → Active Users
+2.	Click a user → Manage username and email
+3.	See where you'd change the sign-in name (DON'T change it — just observe)
+4.	This is the correct location for Q24-27
+✅ Exercise 4: See Currency Settings
+1.	Power Platform Admin Center → Environment → Settings → Business → Currencies
+2.	See the list of currencies → notice which one is the Base Currency
+3.	Try to deactivate the base currency → you CAN'T ❌
+4.	Try to deactivate a non-base currency → you CAN ✅
+✅ Exercise 5: See DLP Policies
+1.	Power Platform Admin Center → Policies → Data policies
+2.	Click + New Policy (don't save — just explore)
+3.	See: Business, Non-Business, Blocked connector groups
+4.	Try moving a connector (e.g., Twitter) to Blocked → any flow using it would be suspended
+5.	Cancel without saving
+✅ Exercise 6: See Language Settings
+1.	Power Platform Admin Center → Environment → Settings → Product → Languages
+2.	See available language packs → notice which are enabled vs disabled
+3.	Enable a new language → components can now be translated to it
+4.	This is what Q295-296 tests
+✅ Exercise 7: See Email Configuration (Server-Side Sync)
+1.	Power Platform Admin Center → Environment → Settings → Email
+2.	See: Server Profiles, Mailboxes
+3.	Click Mailboxes → see list of configured mailboxes
+4.	Click a mailbox → see: Approve, Test & Enable buttons
+5.	This is the exact sequence from Q237
+✅ Exercise 8: See Document Management Settings
+1.	Power Platform Admin Center → Environment → Settings → Document Management
+2.	See: SharePoint Sites, Document Management Settings
+3.	Click Document Management Settings → see which tables are enabled
+4.	This is where Q323-325 configuration happens
+✅ Exercise 9: Create a Dataverse for Teams Environment
+1.	Open Microsoft Teams → click Apps (left sidebar)
+2.	Search for "Power Apps" → open it
+3.	Click "Start now" or "Create an app" in a specific Team
+4.	This auto-provisions a Dataverse for Teams environment ✅
+5.	Go to Admin Center → Environments → see the new Teams environment listed
 ________________________________________
-📘 TOPIC SHEET 12: Business Process Flows (BPF)
-(~10 questions) ✅ You're strong, master the exam-specific tricks
-________________________________________
-📖 Concept
-What is a BPF?
-A guided visual process that sits at the top of a form with stages and steps:
-[Stage 1: Qualify] → [Stage 2: Develop] → [Stage 3: Propose] → [Stage 4: Close]
-     ↑                      ↑                     ↑                    ↑
-  Data steps            Data steps            Data steps          Data steps
-  (required fields)     (required fields)     (required fields)   (required fields)
-Key BPF Facts
-Feature	Detail
-Max stages	30 per BPF
-Max steps per stage	30
-Cross-entity	✅ Yes — BPF can span multiple tables (e.g., Lead → Opportunity)
-BPF Table	Every BPF creates its own Dataverse table to store instances
-Multiple BPFs per table	✅ Yes — users can switch between them
-Branching	✅ Yes — conditional branching based on field values
-Security	Control via security role privileges on the BPF table
-Offline	✅ Supported — but only if BPF references ONE table
-Stage Events (Workflow Integration)
-Event	When It Fires	Use Case
-On Enter (Stage Entry)	When user ENTERS a stage	Auto-create task, send notification
-On Exit (Stage Exit)	When user LEAVES a stage	Validate completion, update status
-How to Prevent Users from Using a BPF
-Method	What It Does
-Deactivate the BPF	Removes from all users — no one can use it
-Remove security privileges	Removes access for specific roles — granular control
-❌ Business rule	Cannot control BPF access
-❌ Change display order	Moves it down but doesn't prevent switching to it
-________________________________________
-🔑 Rules to Memorize
-Rule	Remember
-1	Deactivate = remove for ALL users
-2	Remove privileges = remove for SPECIFIC roles
-3	Stage events = On Enter + On Exit (attach workflows)
-4	On-demand workflow on a stage = runs when stage completes
-5	BPF creates its own table — each instance is a record
-6	Cross-entity BPF = spans multiple tables (e.g., Lead → Opportunity → Quote)
-7	Offline BPF = must reference ONLY ONE table
-8	Branching = conditional paths based on field values (If/Switch)
-9	Switch = best for multiple conditions in single evaluation (e.g., ratings 0-100)
-10	Action Step = call an on-demand action/workflow from within a BPF stage
-11	For Action Step to work: entity must match + action must have at least one step
-12	Users CAN switch between BPFs unless restricted
-________________________________________
-📝 All Related Questions + Answers
-Q9, Q255: Prevent users from using BPFA
-Scenario: Multiple BPFs on Prospect entity. Users must NOT use BPFA
-Answer: ✅ B (Deactivate BPFA) + D (Remove all privileges for BPFA)
-❌ A (Business rule) — cannot control BPF access
-❌ C (Change display order) — moves it down but users can still switch to it
-Key: Two valid methods — deactivate (all users) or remove privileges (specific roles)
-________________________________________
-Q137-138: Update BPF while minimizing effort
-•	Combine classic workflows together on a specific stage → Classic workflow (attach to stage On Enter/On Exit)
-•	Add branching for specific stages → Branching (conditional path in BPF designer)
-•	Check conditions in multiple places → Action (call reusable action from BPF)
-Key: Workflows on stages + branching + actions = BPF extensibility
-________________________________________
-Q139: Action not available in Action Step
-Scenario: Created an action but it doesn't appear in BPF Action Step
-Answer: ✅ A (entity must match BPF stage entity) + B (action must have at least one step)
-❌ C (Run as on-demand) — not required for Action Step
-❌ D (Activate) — must be activated, but the question says it's already created
-Key: Two requirements — matching entity + at least one step inside the action
-________________________________________
-Q145-146: BPF branching for probability ratings
-Scenario: Ratings 0-100 with different likelihoods
-Answer: Use Switch step (evaluates one expression, branches to multiple outcomes)
-Why: Switch = single evaluation with multiple branches. Better than nested conditions
-Key: Multiple ranges from one value = Switch. Two outcomes = Condition
-________________________________________
-Q153-154: Workflow runs when user completes final stage
-Answer: ✅ C. Available to run: As an on-demand process
-Why: On-demand workflows can be attached to BPF stages. They trigger on stage entry/exit
-❌ Record status changes — triggers on record status, not BPF stage
-❌ Run in background — this is about execution mode, not trigger
-❌ As a child process — called from another process, not from BPF
-________________________________________
-Q161-162: BPF offline + send email on create
-•	Available offline → Ensure BPF references ONE table per stage (offline requires single table)
-•	Send email when record created → Create a required column (no — this should be a flow/workflow, but the question's options suggest BPF configuration)
-Key: Offline BPF = one table only. Multi-table BPF = NOT available offline
-________________________________________
-Q277-278: New BPF version impact on existing records
-•	Existing accounts → Show the new BPF (existing records get updated to new version)
-•	New accounts (if ProcessId not set) → No BPF is linked (system defaults based on configuration)
-Key: When you update a BPF, existing records that had the old version get the new version. New records follow the system's BPF defaulting logic
-________________________________________
-🔧 Apply Section — Verify It Yourself
-✅ Exercise 1: Create a Simple BPF
-1.	make.powerapps.com → Solutions → open your solution
-2.	+ New → Automation → Process → Business Process Flow
-3.	Select table: Account
-4.	Add 3 stages: "Qualify" → "Develop" → "Close"
-5.	Add data steps (required fields) to each stage
-6.	Save & Activate → open an Account record → see the BPF at the top
-✅ Exercise 2: Deactivate a BPF
-1.	Go to your BPF → click Deactivate
-2.	Open an Account record → the BPF is GONE for ALL users
-3.	Reactivate → it's back
-4.	This is how Q9/Q255 works
-✅ Exercise 3: See BPF Security Privileges
-1.	Settings → Security Roles → open a role
-2.	Go to Custom Entities tab → find your BPF table (it has the BPF name)
-3.	Remove Read/Write/Create privileges → users with this role can't use the BPF
-4.	This is the second method from Q9/Q255
-✅ Exercise 4: Add Branching
-1.	Open your BPF in designer
-2.	Click on a stage → click + Add Branch
-3.	Set condition: If Account Rating = "Hot" → go to "Fast Track" stage
-4.	If Account Rating = "Cold" → go to "Standard" stage
-5.	Save & Activate → test with different ratings
-✅ Exercise 5: Attach Workflow to Stage
-1.	Create a classic workflow: Table = Account, Available to run = As an on-demand process
-2.	Add a step: Send email
-3.	Open your BPF designer → click on a stage
-4.	Drag a Workflow step into the stage
-5.	Select your on-demand workflow
-6.	Now when a user completes this stage → email is sent
-✅ Exercise 6: BPF Table in Dataverse
-1.	After creating and activating a BPF → go to Tables
-2.	Search for your BPF name → you'll find a NEW table created by the system
-3.	This table stores BPF instances (each record = one process instance)
-4.	Open it → see columns like Active Stage, Completed On, etc.
-________________________________________
-📋 Progress Tracker (Updated)
+🏆 COMPLETE PROGRESS TRACKER — ALL 15 TOPICS DONE!
 #	Topic	Status	Questions	Your Level
-1	✅ Search Types	✅ Done	12	Now mastered
-2	✅ Tool Selection	✅ Done	15	Now mastered
-3	✅ Business Rule Scope	✅ Done	10	Now mastered
-4	✅ Views	✅ Done	12	Now mastered
-5	✅ Power Virtual Agents	✅ Done	27	Now mastered
-6	✅ Power Pages	✅ Done	12	Now mastered
-7	✅ Security	✅ Done	12	Now mastered
-8	✅ Forms	✅ Done	10	Now mastered
-9	✅ Duplicate Detection	✅ Done	10	Now mastered
-10	✅ Solutions/ALM	✅ Done	8	Now mastered
-11	✅ Cloud Flows	✅ Done	14	Now mastered
-12	✅ BPF	✅ Done	10	Now mastered
-13	🔜 Desktop Flows	Next		
-14	🔜 Canvas App (Variables/Functions)	Next		
-15	🔜 Environment & Admin	Next		
+1	✅ Search Types	✅ Mastered	12	🟢 Ready
+2	✅ Tool Selection	✅ Mastered	15	🟢 Ready
+3	✅ Business Rule Scope	✅ Mastered	10	🟢 Ready
+4	✅ Views	✅ Mastered	12	🟢 Ready
+5	✅ Power Virtual Agents	✅ Mastered	27	🟢 Ready
+6	✅ Power Pages	✅ Mastered	12	🟢 Ready
+7	✅ Security	✅ Mastered	12	🟢 Ready
+8	✅ Forms	✅ Mastered	10	🟢 Ready
+9	✅ Duplicate Detection	✅ Mastered	10	🟢 Ready
+10	✅ Solutions/ALM	✅ Mastered	8	🟢 Ready
+11	✅ Cloud Flows	✅ Mastered	14	🟢 Ready
+12	✅ BPF	✅ Mastered	10	🟢 Ready
+13	✅ Desktop Flows	✅ Mastered	10	🟢 Ready
+14	✅ Canvas Variables	✅ Mastered	20	🟢 Ready
+15	✅ Environment & Admin	✅ Mastered	15	🟢 Ready
 ________________________________________
-🔥 You've now covered 12/15 topics = ~87% of exam content mastered!
-Only 3 topics left — Desktop Flows, Canvas App Variables, and Environment & Admin. These are your final stretch!
+🎉 ALL 15 TOPIC MASTERY SHEETS COMPLETE!
+📊 Total Coverage
+Metric	Count
+Topics covered	15/15 (100%)
+Questions analyzed	~220 unique (from 329 total)
+Concepts explained	150+ key rules
+Apply exercises	60+ hands-on verifications
+Exam domains covered	All 4 (Dataverse, Apps, Automation, Environments)
+________________________________________
+🚀 Your Next Steps
+Phase	What To Do	Time
+Phase 1	Go through ALL 60+ "Apply" exercises — verify concepts in your environment	3-4 days
+Phase 2	Re-read the Rules to Memorize tables for each topic (print them!)	1 day
+Phase 3	Take the Microsoft Official Practice Assessment (https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/pl-200)
+1 day
+Phase 4	Review any topics you got wrong → re-read that mastery sheet	1-2 days
+Phase 5	Book your exam 🎯	You're ready!
+________________________________________
 
-# ICUTwin.

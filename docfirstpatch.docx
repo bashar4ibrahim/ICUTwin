@@ -1,441 +1,79 @@
-Let's go — Topic Mastery Sheets, starting NOW 🔥
-I'll deliver them topic by topic, weak areas first. Each sheet has:
-•	📖 Concept — learn it
-•	🔑 Rules — memorize it
-•	📝 Questions + Answers — test it
-•	🔧 Apply — verify it yourself
-________________________________________
-📘 TOPIC SHEET 1: Search Types
-(Relevance vs Categorized vs Quick Find vs Dataverse Search)
-12 questions in exam — HIGH priority ❌ Your weak area
-________________________________________
-📖 Concept
-Microsoft Power Platform has 4 search types. The exam LOVES testing which one to use:
-Search Type	What It Does	Key Strength	Limitation
-Dataverse Search (formerly Relevance Search)	Searches across ALL tables enabled for search, uses Azure Search index	✅ Inflectional matching ("running" → "run"), searches Notes & Attachments, fuzzy matching	Must be enabled by admin, only indexed columns
-Categorized Search	Searches within one table at a time, exact keyword match	✅ Always available, organized by table tabs	❌ NO inflectional matching, ❌ does NOT search Notes/Attachments
-Quick Find	Searches within the current view using Quick Find columns	✅ Fast, works on current view	❌ Only searches columns added to Quick Find view, ❌ NO inflectional
-Advanced Find	Filter-based query builder, complex conditions (AND/OR)	✅ Multiple conditions, precise filtering	❌ NOT a keyword search, it's a filter tool
-🧠 The Critical Difference (exam trick)
-The word "running" is stored in a Note:
-•	Search for "run": 
-o	✅ Dataverse Search → FINDS it (inflectional: run → running ✅, searches Notes ✅)
-o	❌ Categorized Search → FAILS (no inflectional matching ❌)
-o	❌ Quick Find → FAILS (no inflectional, doesn't search Notes ❌)
-________________________________________
-🔑 Rules to Memorize
-Rule	Remember
-1	Dataverse Search = the ONLY one with inflectional matching
-2	Dataverse Search = the ONLY one that searches Notes & Attachments
-3	Categorized Search = searches by exact keyword, table by table
-4	Quick Find = searches ONLY columns configured in the Quick Find View
-5	Advanced Find = NOT a search, it's a filter/query builder
-6	Search inside a model-driven app = Dataverse Search or Categorized
-7	Search outside an app (across M365) = Microsoft Search
-8	Dataverse Search must be enabled by admin in environment settings
-________________________________________
-📝 All Related Questions + Answers
-Q36-37: Categorized Search for "run" in Notes?
-Scenario: User created a Note with "running" on a Contact. Can't find it.
-Solution: Use Categorized Search for "run"
-Answer: ❌ No — Categorized Search does NOT support inflectional matching and does NOT search Notes
-Why others wrong: Categorized = exact keyword only, no Note/Attachment search
-________________________________________
-Q38: Relevance Search for "run" in Notes?
-Same scenario
-Solution: Use Relevance Search for "run"
-Answer: ✅ Yes — Relevance Search supports inflectional matching (run → running) AND searches Notes
-Key: This is the #1 search question in the exam
-________________________________________
-Q39: Quick Find for "run" in Notes list?
-Same scenario
-Solution: Quick Find on the Notes list
-Answer: ❌ No — Quick Find only searches configured columns, no inflectional matching
-________________________________________
-Q58: Dataverse Search for "run"?
-Same scenario
-Solution: Dataverse Search for "run"
-Answer: ❌ No (at the time of this question, Dataverse Search was different from Relevance Search)
-⚠️ Updated: In current versions, Dataverse Search = Relevance Search (renamed). So the answer may now be Yes — see Q251
-________________________________________
-Q251: Dataverse Search for "run"? (Updated version)
-Same scenario
-Answer: ✅ Yes — Microsoft renamed Relevance Search to Dataverse Search. Now it DOES find inflectional matches in Notes
-Exam tip: If the exam says "Dataverse Search" in a recent question → treat it as Relevance Search
-________________________________________
-Q293-294: Dataverse Search for "run"? (Another variant)
-Answer: ❌ No in this version (older question)
-Lesson: The exam may have CONFLICTING answers depending on when the question was written. Know BOTH versions
-________________________________________
-Q63-64: Bicycle repair — two search requirements
-Requirement 1: Search for customers with bicycle type "Contoso" AND tires "Fords" → Advanced Find (multiple filter conditions)
-Requirement 2: Search all tables for any record containing "broken" → Relevance/Dataverse Search (cross-table keyword search)
-Why: Advanced Find = filter builder (AND/OR conditions). Relevance = keyword across all tables
-________________________________________
-Q81-82: Search inside app vs outside app
-Requirement 1: Search data inside the app → Dataverse Search
-Requirement 2: Search data outside the app → Microsoft Search
-Key: Microsoft Search = searches across M365 (SharePoint, Teams, Outlook + Dataverse)
-________________________________________
-Q96: Prevent filtering on a custom field in Advanced Find
-Answer: Set the Searchable property to No on the Field Properties form
-Not: Delete the column, not business rules, not Quick Find columns
-Key: The "Searchable" property controls whether a field appears in Advanced Find filters
-________________________________________
-🔧 Apply Section — Verify It Yourself
-✅ Exercise 1: See Dataverse Search in Action
-1.	Go to https://make.powerapps.com → select your environment
-2.	Open any model-driven app (e.g., Customer Service Hub)
-3.	Look at the search bar at the top → this is Dataverse Search
-4.	Type a partial word (e.g., "run") → see if it finds inflectional matches
-5.	If no results → Admin may need to enable it: 
-o	Power Platform Admin Center → Environment → Settings → Product → Features → Dataverse Search = ON
-✅ Exercise 2: Compare Categorized vs Dataverse Search
-1.	In the same app, click the search bar
-2.	If Dataverse Search is OFF → you'll see Categorized Search (table tabs at top)
-3.	If Dataverse Search is ON → you'll see a unified search bar (no table tabs initially)
-4.	Notice: Categorized = tabs per table. Dataverse = unified results
-✅ Exercise 3: Quick Find View Configuration
-1.	Go to make.powerapps.com → Tables → select Contact
-2.	Click Views → find "Quick Find Active Contacts"
-3.	Open it → see which Find columns are configured (right panel)
-4.	Only THESE columns are searched when using Quick Find
-5.	Try adding/removing a column → see how it affects search
-✅ Exercise 4: Advanced Find (Filter Builder)
-1.	Open any model-driven app
-2.	Click the funnel icon (🔍) or go to Advanced Find (may be in Settings)
-3.	Build a filter: e.g., Account Name contains "Contoso" AND City equals "Amman"
-4.	Notice: This is a FILTER, not a keyword search — you build conditions
-✅ Exercise 5: Searchable Property
-1.	Go to make.powerapps.com → Tables → Account → Columns
-2.	Click any column → expand Advanced options
-3.	Find "Searchable" toggle → this controls if the field appears in Advanced Find
-4.	Set it to No → the field disappears from Advanced Find filters
-________________________________________
-📘 TOPIC SHEET 2: Tool Selection
-(Business Rule vs Flow vs Workflow vs Plugin vs Custom API)
-~15 questions in exam — #1 MOST TESTED TOPIC ⚠️
-________________________________________
-📖 Concept
-The exam constantly asks: "Which tool should you use?"
-Tool	Runs Where	Code?	Cross-Table?	Returns Value?	Real-Time?
-Business Rule	Client-side (form) or Table-level	❌ No code	❌ Same table only	❌ No	✅ Yes (instant on form)
-Power Automate Cloud Flow	Cloud (server)	❌ No code	✅ Yes	❌ No (unless child flow)	⚠️ Near real-time (seconds delay)
-Classic Workflow	Server (async or real-time)	❌ No code	⚠️ Limited	❌ No	✅ If set to real-time
-Plugin	Server (sync/async)	✅ C# code	✅ Yes	✅ Yes	✅ Yes
-Custom API	Server	✅ Code	✅ Yes	✅ Yes	✅ Yes
-Desktop Flow	Local machine	❌ No code (recorded)	N/A	⚠️ Via output params	❌ Scheduled/triggered
-🧠 Decision Tree (MEMORIZE THIS)
-Need to SET/VALIDATE/SHOW/HIDE field on a FORM?
-  → Business Rule
+NOS Report Guide 
+Abstract 
+NOSs are statements that define the performance standards individuals must achieve 
+when carrying out workplace functions, along with the necessary underpinning 
+knowledge and understanding. 
+The apprentice must understand the performance standards and apply the tasks 
+assigned to him in accordance with those standards. 
+Five NOS reports are required to be submitted, categorized as follows 
+ 4 Technical NOSs. 
+ 1 Non-Technical NOS (Soft Skills). 
+Technical NOSs: These standards focus on industry-specific expertise, such as 
+programming, networking, data analysis, engineering, or system maintenance, ensuring 
+professionals meet occupational requirements and best practices. 
+Non-technical NOSs: These standards cover communication, teamwork, leadership, 
+problem-solving, adaptability, and time management, ensuring individuals have 
+interpersonal and cognitive skills for eAective collaboration. 
+The NOSs can be found on this site: https://www.ukstandards.org.uk/en 
+1 
+How to Find specific NOS 
+Enter Keywords or URN 
+National Occupational Standards (NOS) can 
+be identified using a Unique Registration 
+Number (URN) for precise searches. 
+Alternatively, keywords may be used to 
+generate broader search results. 
+Select a Business Sector (Suite) 
+NOS are categorized into suites based on the 
+industry sector they apply to. The number of 
+NOS within each suite varies according to 
+sector-specific requirements. 
+Select an Occupation 
+NOS are developed in alignment with specific 
+occupations. Searching by occupation 
+provides a wider range of relevant results. 
+The matching NOSs will be displayed upon completing the search process: 
+2 
+Read the performance section points, check how they align with the work tasks, then 
+copy them into the NOS Report template and explain below each one how it was applied, 
+supported by evidence. 
+3 
 
-Need to SEND EMAIL when record changes?
-  → Power Automate Cloud Flow (or Classic Workflow if real-time needed)
 
-Need to automate a LEGACY APP with no API?
-  → Desktop Flow
+doc sample
 
-Need logic across MULTIPLE TABLES + RETURN A VALUE?
-  → Custom API
+•	Student Name: Abdallah Daradkeh
+•	Company: Publicis Groupe
+•	Number of NOS: TECHDUBI1
+•	Name of NOS: Create business insight dashboards and reports
+ **Performance criteria of the NOS and how you applied it in your company ** 
+  (Explain and include evidence from your work)  
+P1 – Identify customer requirements to plan dashboard or reporting solutions
+I go through many trailhead modules, and learnt theoretical and practical to identify requirements to plan dashboard and reporting solutions. I studied, analyzed and creating dashboards and reports for many Systems included in the system
+ 
+ 
+ 
+ 
+P2 – Select the specified data to produce reports and dashboards
 
-Need server-side logic WITH CODE?
-  → Plugin
+I selected the required Salesforce data needed to create reports and dashboards, such as Accounts, Leads, Opportunities, and related fields. I also filtered the data based on the reporting purpose, for example by status, date, owner, or record type, to make sure the report shows only the relevant information.
+   
 
-Need to UPDATE STATUS in REAL-TIME (no delay)?
-  → Classic Workflow (real-time) with Change Status step
+P3 – Create and modify data reports and dashboards using industry standard tools to provide business insights
+I created and modified reports and dashboards in Salesforce by choosing the needed fields, applying filters, and organising the report layout. I also worked with dashboard components to display the data visually and support better understanding of business performance.
+ 
+ 
+   	
 
-"No custom code allowed" in scenario?
-  → ELIMINATE Plugin and Custom API immediately
-________________________________________
-🔑 Rules to Memorize
-Rule	Remember
-1	Business Rule = form-level logic ONLY (set value, show/hide, validate, set required, recommend)
-2	Canvas apps business rules: can ONLY validate, set values, set required — CANNOT show/hide or recommend
-3	"No custom code" in the question = eliminate Plugin + Custom API
-4	Real-time update = Classic Workflow with Change Status step (NOT cloud flow — cloud flows have delay)
-5	Cross-table logic + return value = Custom API
-6	Legacy app, no API = Desktop Flow
-7	Send email on trigger = Power Automate Cloud Flow
-8	Approval process = Power Automate Cloud Flow (Approvals connector)
-9	Daily/weekly scheduled task = Scheduled Cloud Flow
-10	Wunderlist/3rd-party integration = Power Automate (connector-based)
-________________________________________
-📝 All Related Questions + Answers
-Q8: Three automation requirements
-•	Send email when status changes on Opportunity → Classic Workflow (real-time email on status change)
-•	Text sales manager when Opportunity created → Power Automate (SMS connector)
-•	Create Wunderlist task when open 30 days → Power Automate (scheduled check + Wunderlist connector)
-________________________________________
-Q17: Dynamic field visibility in canvas app
-Scenario: Vet office, dropdown "type of pet" → if "Other" selected, show text field
-Answer: ✅ Business Rule — show/hide based on field value
-⚠️ BUT: Canvas apps DON'T support show/hide in business rules. This question likely expects conditional visibility using Power Fx (If formula on Visible property)
-Exam tip: If the question says "canvas app" + "show/hide" → it might be a Power Fx formula, not business rule
-________________________________________
-Q40-41: Three business logic scenarios
-•	Set field value automatically when record is saved → Business Rule
-•	Automatically send email when record is created → Power Automate
-•	Validate data before save → Business Rule
-________________________________________
-Q140: Three automation processes
-•	Automate legacy software with no API → Desktop Flow
-•	Access data from REST API → Custom Connector (in Power Automate)
-•	Access public web data with OAuth → Custom Connector
-________________________________________
-Q160: Complex logic, return value, run from existing action
-Answer: ✅ Custom API
-Why not Plugin? Custom API can be called from existing Dataverse actions and returns values. Plugin runs on events but isn't callable as an action
-Why not Workflow? Workflows can't return values
-Why not Flow? Flows don't return values to Dataverse natively
-________________________________________
-Q163: Two requirements
-•	Prevent save if custom validation fails → Real-time Workflow (runs before save, can cancel)
-•	Query and update a list of records → Cloud Flow (List Rows + Update Row actions)
-________________________________________
-Q167: Two email requirements
-•	Send email in real-time when customer enters email → Real-time Workflow
-•	Send email at same time every day for cases open > 24hrs → Scheduled Cloud Flow
-________________________________________
-Q212: Create evaluation record automatically for a prospect
-Answer: ✅ Cloud Flow (triggered when prospect record created → auto-create evaluation)
-Why not Quick Create Form? Evaluation records "cannot be manually created" per requirements
-Why not Plugin? "Custom code not allowed" per case study
-________________________________________
-Q215-218, Q223: Auto-update Status in real-time (Yes/No Series)
-•	Flow with Update Item action → ❌ No (Update Item is SharePoint, not Dataverse)
-•	Workflow with Update Record step → ❌ No (Update Record doesn't change status)
-•	Flow with Update a Row action → ❌ No (cloud flows have delay, not truly real-time)
-•	Workflow with Change Status step → ✅ Yes (real-time workflow + Change Status = instant)
-🔥 Key Lesson: For real-time status changes, use Classic Workflow with Change Status step. Cloud Flows are near-real-time but have inherent delay.
-________________________________________
-Q169-170: Approval process without code
-Answer: ✅ Power Automate Cloud Flow (Approvals connector)
-Why not PCF? PCF is a UI component, not process automation
-Why not Azure Service Bus? Overkill and requires code/configuration
-________________________________________
-Q164: Canvas app — button to send email
-Answer: ✅ Power Automate Cloud Flow (triggered from canvas app button)
-Why not Classic Workflow? Can't trigger from canvas app button
-Why not BPF? BPF is for guided processes, not single actions
-________________________________________
-🔧 Apply Section — Verify It Yourself
-✅ Exercise 1: Create a Business Rule
-1.	make.powerapps.com → Tables → Account → Business Rules
-2.	Click + New business rule
-3.	Add a Condition: If "Account Rating" = "Hot"
-4.	Add an Action: Set "Description" to "Priority Customer"
-5.	Set Scope = Entity (for canvas) or All Forms (for model-driven)
-6.	Save & Activate → open Account form → change rating → see it work
-✅ Exercise 2: Create a Cloud Flow (Auto-email on create)
-1.	Go to https://make.powerautomate.com
-2.	+ Create → Automated cloud flow
-3.	Trigger: "When a row is added" (Dataverse) → Table: Account
-4.	Action: "Send an email" (Outlook) → To: your email, Body: "New account created"
-5.	Save → create a new Account → check your inbox
-✅ Exercise 3: Classic Workflow with Change Status
-1.	Go to https://make.powerapps.com → Solutions → open your solution
-2.	+ New → Automation → Process → Workflow
-3.	Table: Case, Start when: Record is created
-4.	Check: "Run as real-time workflow"
-5.	Add step: Change Status → set to "In Progress"
-6.	Activate → create a new Case → status auto-changes instantly
-✅ Exercise 4: See the Difference (Flow vs Workflow timing)
-1.	Create BOTH a cloud flow and real-time workflow on the same trigger
-2.	Create a record → observe: 
-o	Workflow = instant (before page refreshes)
-o	Cloud flow = 5-30 second delay
-________________________________________
-📘 TOPIC SHEET 3: Business Rule Scope
-(Entity/Table vs All Forms vs Specific Form)
-~10 questions — repeatedly tested ⚠️
-________________________________________
-📖 Concept
-Business rules have a Scope that controls WHERE they execute:
-Scope	Where It Runs	Use Case
-Table (formerly Entity)	Server-side — works in Canvas apps, Model-driven, API, import	✅ Required for Canvas apps
-All Forms	Client-side — ALL model-driven app forms for that table	Model-driven: same rule on every form
-Specific Form (e.g., "Account Form")	Client-side — ONLY that one form	Model-driven: different rules per form
-🧠 The Exam Trick
-App Type	Required Scope	Why
-Canvas App	Table (Entity)	Canvas apps don't use model-driven forms — only server-side (Table) scope works
-Model-driven (all forms)	All Forms	Applies to every form in every model-driven app
-Model-driven (one app only)	Specific Form	Only applies to the selected form
-⚠️ Canvas App Limitations
-Business rules in Canvas apps (Table scope) can ONLY:
-•	✅ Validate data and show error messages
-•	✅ Set field values
-•	✅ Set field requirement levels (required/optional)
-They CANNOT:
-•	❌ Show or hide columns
-•	❌ Enable or disable columns
-•	❌ Create recommendations
-________________________________________
-🔑 Rules to Memorize
-Rule	Remember
-1	Canvas app → Table scope (ALWAYS)
-2	Model-driven, all forms → All Forms scope
-3	Model-driven, specific app only → Specific Form scope
-4	Canvas apps: NO show/hide, NO enable/disable, NO recommendations
-5	Table scope = server-side = works everywhere (API, import, canvas, model-driven)
-6	All Forms / Specific Form = client-side = model-driven only
-________________________________________
-📝 All Related Questions + Answers
-Q10-11: Business rule for canvas app — which scope?
-Answer: ✅ B. Entity (Table)
-Why: Canvas apps require Table/Entity scope because they don't use model-driven forms
-❌ Screen1 — not a valid scope
-❌ All Forms — model-driven only
-❌ Global — not a valid scope
-________________________________________
-Q125-126: Two business rules, different apps
-•	Canvas app: set Business Type to "Large" if currency > X → Table scope
-•	Model-driven app: recommend re-evaluation when credit hold, this app only → Specific Form scope
-Key: "this app only" = specific form, not All Forms
-________________________________________
-Q143: Which actions work in Canvas app business rules?
-Answer: ✅ A (Validate + error), C (Set required), D (Set values)
-❌ B (Enable/disable) — NOT available in canvas
-❌ E (Show/hide) — NOT available in canvas
-________________________________________
-Q157-158: Farm canvas app — business rule across multiple forms
-Answer: ✅ A. Table
-Why: Canvas app = always Table scope. Even though the question mentions "several forms", canvas apps use Table scope
-❌ All Forms — model-driven only
-❌ Form specific — model-driven only
-________________________________________
-Q89-90: Business rule to prevent duplicates?
-Answer: ❌ No — Business rules cannot check for duplicates across records. They only work on the current record's form
-Use instead: Duplicate Detection Rules or Alternate Keys
-________________________________________
-Q95: Business rule components (lock, trigger, recommendations)
-•	Lock a field → Lock/Unlock action
-•	Trigger logic based on field value → Condition
-•	Use existing data to enhance entry → Recommendation
-Key: Recommendations are available in model-driven apps only (not canvas)
-________________________________________
-🔧 Apply Section — Verify It Yourself
-✅ Exercise 1: See the Scope Dropdown
-1.	make.powerapps.com → Tables → Account → Business Rules
-2.	Open any business rule (or create new)
-3.	Look at the top-right corner → you'll see a Scope dropdown
-4.	Click it → see options: Table, All Forms, or specific form names
-5.	Change it and observe: 
-o	Table → rule shows "(Table)" in the list
-o	All Forms → rule shows "(All Forms)"
-✅ Exercise 2: Test Table Scope in Canvas App
-1.	Create a business rule on Account table with Scope = Table
-2.	Action: If "Account Name" contains "TEST" → set "Description" to "Test Account"
-3.	Save & Activate
-4.	Open a Canvas app connected to Account table
-5.	Create a record with name "TEST" → verify Description auto-fills
-6.	Now change scope to All Forms → repeat → it WON'T work in canvas app
-✅ Exercise 3: Test Specific Form Scope
-1.	Create a business rule with Scope = specific form (e.g., "Account Main Form")
-2.	Open that form in a model-driven app → rule works ✅
-3.	Open a DIFFERENT form for the same table → rule does NOT apply ❌
-4.	This proves: specific form scope = only that one form
-✅ Exercise 4: Canvas App Limitations
-1.	Create a business rule with Scope = Table
-2.	Try adding a "Show/Hide" action → you CAN add it in the designer
-3.	BUT: Open a canvas app → the show/hide action is IGNORED
-4.	Only validate, set value, and set required actually work in canvas apps
-________________________________________
-📘 TOPIC SHEET 4: Views (Public vs Personal vs System)
-(~12 questions — appears more than ANY other topic!)
-________________________________________
-📖 Concept
-View Type	Created By	Visible To	Editable By	Where Created
-Public View	Maker/Customizer	All users with table access	Maker/Customizer	Solution → Tables → Views (Maker Portal)
-Personal View	Individual user	Only that user (unless shared)	That user	Advanced Find → Save As
-System View	System (OOB)	All users	Maker/Customizer can modify	Pre-built (e.g., "Active Accounts")
-Quick Find View	Maker/Customizer	All users (search results)	Maker/Customizer	Solution → Tables → Views
-Lookup View	Maker/Customizer	All users (lookup dropdowns)	Maker/Customizer	Solution → Tables → Views
-Associated View	System	All users (subgrids)	Maker/Customizer	Solution → Tables → Views
-🧠 The Exam's Favorite Question
-"You need to create a view visible to ALL users. No custom code. Where do you create it?"
-Answer: Maker Portal (make.powerapps.com → Tables → Views) or Entities/Tables component of a solution
-NOT:
-•	❌ Advanced Find (= personal views)
-•	❌ Visual Studio (= custom code)
-•	❌ Excel template (= export, not a view)
-•	❌ System Settings (= admin settings, not views)
-•	❌ Templates area (= document templates)
-________________________________________
-🔑 Rules to Memorize
-Rule	Remember
-1	Public view for all users = create in Maker Portal / Solution
-2	Advanced Find = creates Personal views (only visible to creator)
-3	No custom code + view for all users = Maker Portal (always)
-4	Quick Find View = controls which columns are searched in Quick Find
-5	Lookup View = controls what users see in lookup field dropdowns
-6	You can share a personal view, but it's still personal
-________________________________________
-📝 All Related Questions + Answers
-Q4, Q42, Q54, Q56-57, Q66-67, Q103, Q179-180: "Create view for all users, no custom code"
-This SAME question appears 8+ times with slightly different wrong answers:
-Answer: ✅ Entities/Tables component of a solution OR Maker Portal
-❌ Advanced Find = personal view
-❌ Visual Studio = custom code
-❌ Excel template = not a view
-❌ Templates area = not a view
-❌ System Settings = not views
-❌ List view of entity = this refers to Portal Lists (Power Pages), not model-driven views
-________________________________________
-Q76: Column vs View
-•	Add alternate phone number → Column (add column to table)
-•	List customers without phone number → View (create filtered public view)
-________________________________________
-Q96: Prevent filtering on custom field
-Answer: Set Searchable = No on Field Properties
-This removes the field from Advanced Find filter options
-________________________________________
-Q108: Display events by venue in calendar
-Answer: Add a control to a View (calendar control on a view)
-Not form, not chart, not subgrid
-________________________________________
-Q228: Underage Prospects view filter
-Filter: Current Age is less than 18
-Why Current Age and not Birthdate? Because Current Age is a calculated field that auto-updates — the view stays correct without modifications
-Why not "Age at Registration"? That's fixed at registration time, not current
-________________________________________
-🔧 Apply Section — Verify It Yourself
-✅ Exercise 1: Create a Public View
-1.	make.powerapps.com → Tables → Account → Views
-2.	Click + New view → name it "My Public View"
-3.	Add columns, set filters → Save & Publish
-4.	Open a model-driven app → this view appears for ALL users ✅
-✅ Exercise 2: Create a Personal View (Advanced Find)
-1.	Open a model-driven app → click Advanced Find (funnel icon)
-2.	Set table to Account → add filters → click Results
-3.	Click Save As → name it "My Personal View"
-4.	This view is visible only to you ❌ other users can't see it
-✅ Exercise 3: See Quick Find View
-1.	make.powerapps.com → Tables → Contact → Views
-2.	Find "Quick Find Active Contacts" → open it
-3.	See the Find By columns on the right → these are searchable columns
-4.	Add "Job Title" → now Quick Find will also search job titles
-✅ Exercise 4: See Lookup View
-1.	make.powerapps.com → Tables → Account → Views
-2.	Find a view with type "Lookup" → open it
-3.	These columns appear when a user searches in a lookup field dropdown
-________________________________________
-That covers your first 4 Topic Mastery Sheets! 🔥
-📋 Progress Tracker
-#	Topic	Status
-1	✅ Search Types	Done
-2	✅ Tool Selection	Done
-3	✅ Business Rule Scope	Done
-4	✅ Views	Done
-5	🔜 Power Virtual Agents	Next
-6	🔜 Power Pages (Portals)	Next
-7	🔜 Security (Roles, Teams, Field-Level)	Coming
-8	🔜 Forms (Main, Quick Create, Quick View)	Coming
-9	🔜 Duplicate Detection	Coming
-10	🔜 Solutions/ALM	Coming
-11	🔜 Cloud Flows	Coming
-12	🔜 BPF	Coming
-13	🔜 Desktop Flows	Coming
-14	🔜 Canvas App (Variables/Functions)	Coming
-15	🔜 Environment & Admin	Coming
-________________________________________
+P4 – Assist in providing performance metrics across the reporting suite to inform stakeholders
+I helped prepare reporting metrics in Salesforce by using reports and dashboards to display useful information such as totals, filtered results, and record statuses. This supports stakeholders by giving them a clear view of performance and progress.
+P5 – Deliver ad hoc reports in line with organisational requirements
+I delivered ad hoc reports by creating or modifying Salesforce reports according to specific business requirements, ensuring that the selected data, filters, and report layout matched the requested information.
+
+P6 – Distribute reports and dashboards to stakeholders in line with organisational procedures
+
+I supported this criterion by preparing Salesforce reports and dashboards to be ready for sharing with relevant stakeholders. I ensured the reports were organised, updated, and followed the required data structure and access considerations.
+P7 – Distribute reports and dashboards to stakeholders in line with organisational procedures
+
+I applied this criterion partially by learning how Salesforce Digital Experience can be used to provide online access to Salesforce information. I also understood the importance of following organisational procedures, permissions, and security rules before publishing any reports or dashboards online.
 

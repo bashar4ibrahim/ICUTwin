@@ -1,613 +1,90 @@
-Let's go — Topics 5-8 coming in hot 🔥
-________________________________________
-📘 TOPIC SHEET 5: Power Virtual Agents (PVA) / Copilot Studio
-(27 questions — YOUR BIGGEST GAP) ❌ Study from scratch
-________________________________________
-📖 Concept
-Power Virtual Agents (now Microsoft Copilot Studio) lets you build chatbots without code.
-Core Architecture
-Component	What It Is	Example
-Topic	A conversation path (like a dialog)	"Store Hours" topic, "Return Policy" topic
-Trigger Phrases	Words/sentences that START a topic	"help", "issue", "trouble" → triggers Support topic
-Nodes	Building blocks inside a topic	Question node, Message node, Condition node, Action node
-Entities	Data types the bot recognizes	Age, City, Email, Phone, Custom entities
-Variables	Store user responses for later use	UserAge = 25, UserName = "Bashar"
-Channels	WHERE the bot is published	Teams, Website, Facebook, Custom web channel
-Fallback Topic	What happens when bot doesn't understand	"I didn't understand, let me transfer you..."
-🧠 Variable Types (EXAM FAVORITE)
-Variable Type	Scope	Persists Across Topics?	Use Case
-Topic Variable	Single topic only	❌ No	Temp storage within one conversation path
-Bot Variable (Global)	Entire bot	✅ Yes	Store name, email across ALL topics
-Session Variable	Current session	✅ Yes (within session)	Session-specific data
-Exam Rule: If bot needs to maintain info when topic changes → Bot (Global) Variable
-Entity Types
-Entity Type	What It Does	Example
-Pre-built Entities	Microsoft provides them	Age, City, Email, Money, Number, Date, Person name
-Closed-list Entity	You define exact values	Product categories: "Laptop", "Phone", "Tablet"
-Regular Expression (Regex) Entity	Pattern matching	Order ID format: ORD-####
-Smart Matching	Fuzzy matching on closed-list items	User says "Phones" → matches "Phone"
-Slot Filling	Auto-fills entity from user's message	"I want a red laptop" → Color=Red, Product=Laptop
-________________________________________
-🔑 Rules to Memorize
-Rule	Remember
-1	Bot variable = persists across topics (like global variable)
-2	Topic variable = dies when topic ends
-3	Trigger phrases = what the user says to START a topic (minimum 5 recommended)
-4	Closed-list entity = you define exact values (product categories, departments)
-5	Smart matching = fuzzy matching on closed-list (handles typos, plurals)
-6	Slot filling = auto-extracts multiple entities from one sentence
-7	Channel = where you PUBLISH the bot (Teams, Website, Facebook, etc.)
-8	Custom web channel = embed bot on YOUR website using IFrame/code snippet
-9	SSO (Single Sign-On) supported in: Teams and Custom website only
-10	Publish to entire company in Teams → Submit for admin approval
-11	Suggest topics = auto-create topics from existing FAQ/support webpages
-12	Testing → use Demo website (built-in test page)
-13	Deploy to all users → Share bot with security group
-14	Embed in external website → IFrame with bot code
-15	Manual authentication = for scenarios requiring user identity (sensitive data)
-________________________________________
-📝 All Related Questions + Answers
-Q172, Q239-240, Q322: Age group chatbot — conditional branches
-Scenario: Bot must determine age group (0-17, 18-25, 26-35, 36-55, 55-100)
-Solution: Use Age for Identify in the question + add branches with conditional logic
-Answer: ✅ Yes — Age is a pre-built entity. Conditional branches check value ranges
-How it works:
-1.	Ask: "How old are you?" → Identify: Age
-2.	Branch: If Age < 18 → "Under 18 group"
-3.	Branch: If Age >= 18 AND Age <= 25 → "18-25 group"
-4.	... and so on for each group
-________________________________________
-Q173-174: Variable to maintain info across topics
-Scenario: Bot must keep customer name and email when conversation topic changes
-Answer: ✅ C. Bot variable (Global variable)
-❌ Topic variable — dies when topic ends
-❌ Session variable — exists but bot variable is the correct PVA terminology
-❌ Slot — slot filling is for entity extraction, not variable storage
-Key: "maintain info if topic changes" = always Bot variable
-________________________________________
-Q175: Custom entities for product categories + variations
-Scenario: Teach bot about product categories and variations within categories
-•	Product categories (exact list) → Closed-list entity
-•	Variations within categories (fuzzy matching) → Smart matching (enabled on closed-list)
-Key: Closed-list = you define values. Smart matching = handles synonyms/typos automatically
-________________________________________
-Q176-177: Create topics from existing website content
-Sequence (3 steps):
-1.	Suggest topics (Select "Suggest topics" → enter FAQ/support page URLs)
-2.	Add suggested topics (review and select which to add)
-3.	Enable the topics (toggle them ON)
-Key: This is the exact 3-step process. The bot auto-extracts Q&A from web pages
-❌ "Identify trigger phrases" is NOT the first step — the system does this automatically
-________________________________________
-Q243-244: Bot available from Teams AND company website
-Answer: ✅ B. Channel
-Why: Channels are how you publish a bot to different platforms
-•	Teams channel → bot appears in Teams
-•	Custom website channel → bot embedded on your site
-❌ Template — templates are starting points for bot creation
-❌ Skill — skills are reusable bot capabilities (advanced)
-❌ Composer — Bot Framework Composer is a pro-dev tool
-________________________________________
-Q245: Chat solution to answer guest inquiry
-Answer: ✅ B (Escalations), C (Smart match), E (Topics)
-•	Topics = conversation paths for known questions
-•	Smart matching = handles variations of trigger phrases
-•	Escalations = transfer to human agent when bot can't help
-❌ Variables — store data but don't answer questions
-❌ Synonyms — not a PVA component name
-________________________________________
-Q247-248: Two scenarios — event info + snow conditions
-Scenario 1: Guest asks about company event start time
-→ Use smart matching to load an entity for a topic (match event name → retrieve info)
-Scenario 2: Guest asks about snow conditions
-→ Create a fallback topic (weather is external data — bot can't answer, redirect to weather service or escalate)
-Key: Known info = topic + smart matching. Unknown/external info = fallback or escalation
-________________________________________
-Q268: PVA SSO — where can you publish?
-Answer: ✅ B (Website with pro-dev tools) and C (Microsoft Teams)
-SSO is supported ONLY on:
-•	Microsoft Teams
-•	Custom websites (using Azure AD authentication)
-❌ Mobile app — SSO not natively supported in PVA mobile
-❌ Azure Bot Service channels — SSO configuration is different
-________________________________________
-Q271: Embed PVA in custom website
-Answer: ✅ D. Custom web channel
-How: PVA generates a code snippet → you embed it in your website's HTML
-❌ Webpage URL — not how you embed
-❌ Form ID — not relevant
-❌ Bot ID — used internally, not for embedding
-________________________________________
-Q273-274: Permissions for bot creators vs bot users
-•	Accounting users (create/collaborate) → Assign Maker permissions (or share bot with edit access)
-•	Sales users (chat only) → Share bot with security group (use access only)
-Key: Makers = create/edit. Users = chat only via sharing
-________________________________________
-Q279-280: Testing + Deployment sequence
-•	Testing → ✅ Use the demo website (built-in test page, shareable link)
-•	Deploy to all users → ✅ Share chatbot to security group containing all users
-•	Public website → ✅ Embed chatbot code in IFrame on company's public website
-Key: Demo website = testing. Security group = internal deployment. IFrame = external website
-________________________________________
-Q289: Chatbot security on Power Pages
-Answer: ✅ C (Set up new channel) + E (Enable web channel security)
-•	Manual authentication (D) = for Entra ID user identification
-•	Web channel security = ensures bot is accessible only from authorized domains
-❌ Only for Teams auth — too restrictive
-❌ DLP policy — controls connectors, not chatbot access
-________________________________________
-Q304: Environment doesn't appear in PVA
-Answer: ✅ C. Create an environment in a supported region
-Why: PVA is not available in all regions. If your environment is in an unsupported region, it won't appear
-❌ Change region — you can't change an environment's region after creation
-❌ Convert to sandbox — doesn't fix region issue
-________________________________________
-Q305-306: Bot nodes for help desk
-•	When user says "issue", "help", "trouble" → Trigger phrases (start the topic)
-•	Bot responds "How can we help?" + choices → Question node (with multiple-choice options)
-•	Bot saves response for action → Save response to variable
-Key: Trigger phrases → Question node → Variable → Action node
-________________________________________
-Q308-309: Sharing — collaborate vs use only
-•	Accounting (collaborate/build) → Share with edit access (co-author)
-•	Sales (use only) → Share with view/use access (end user)
-Key: PVA has two sharing levels: edit (maker) and use (consumer)
-________________________________________
-Q312-313: Publish bot to entire company in Teams
-Answer: ✅ D. Submit the chatbot for admin approval
-Why: To publish a bot company-wide in Teams, you must submit it for tenant admin approval in the Teams admin center
-❌ Export/import — not needed within same tenant
-❌ Invite teams — doesn't scale to entire company
-❌ Email link — not the proper deployment method
-❌ Configure Teams channel — this enables Teams, but company-wide requires admin approval
-________________________________________
-🔧 Apply Section — Verify It Yourself
-✅ Exercise 1: Create Your First Bot
-1.	Go to https://copilotstudio.microsoft.com (or search "Copilot Studio" in your browser)
-2.	Select your environment → + Create a copilot
-3.	Name it "PL200 Practice Bot" → Create
-4.	You'll see the Topics page with pre-built topics (Greeting, Thank you, etc.)
-✅ Exercise 2: Create a Topic with Trigger Phrases
-1.	Click + Add a topic → From blank
-2.	Name: "Store Hours"
-3.	Add trigger phrases: "what are your hours", "when do you open", "store hours", "opening time", "schedule"
-4.	Add a Message node: "We're open Mon-Fri 9AM-5PM"
-5.	Save → Test using the test panel on the left
-6.	Type "what time do you open" → bot should trigger this topic ✅
-✅ Exercise 3: Create a Question Node + Variable
-1.	In your topic, add a Question node after the message
-2.	Question: "Which department do you need?"
-3.	Options: "Sales", "Support", "Billing"
-4.	The answer auto-saves to a variable (e.g., Var1)
-5.	Add a Condition node: If Var1 = "Sales" → Message "Connecting to sales..."
-6.	Test it → verify branching works
-✅ Exercise 4: See Bot Variables vs Topic Variables
-1.	Click on any variable in your topic → see Variable properties panel
-2.	Toggle "Bot (global)" → this makes it a bot variable (persists across topics)
-3.	Leave it OFF → it stays a topic variable (dies when topic ends)
-4.	Create a SECOND topic → try to use the variable: 
-o	Bot variable → ✅ appears in the second topic
-o	Topic variable → ❌ does NOT appear
-✅ Exercise 5: Suggest Topics from Website
-1.	Go to Topics → Suggest topics
-2.	Enter a URL: e.g., https://learn.microsoft.com/en-us/power-platform/ (or any FAQ page)
-3.	Click Suggest → wait for extraction
-4.	Review suggested topics → Add the ones you want → Enable them
-5.	This is the exact 3-step process from Q176-177
-✅ Exercise 6: Publish to Demo Website
-1.	Go to Publish → click Publish
-2.	After publishing, click Demo website link
-3.	A new tab opens with your bot embedded → this is for testing/sharing with stakeholders
-4.	Share this URL with a colleague → they can test without Teams
-✅ Exercise 7: See Channels
-1.	Go to Channels in the left menu
-2.	You'll see: Microsoft Teams, Custom website, Facebook, Demo website, etc.
-3.	Click Microsoft Teams → see the "Submit for admin approval" option (Q312-313)
-4.	Click Custom website → see the embed code snippet (Q271)
-________________________________________
-📘 TOPIC SHEET 6: Power Pages (Portals)
-(12 questions — YOUR #2 WEAK AREA) ❌ Study from scratch
-________________________________________
-📖 Concept
-Power Pages (formerly Power Apps Portals) = external-facing websites connected to Dataverse.
-Core Security Model (EXAM LOVES THIS)
-User visits website
-    ↓
-Authenticated? ──No──→ Anonymous Users Web Role (limited access)
-    ↓ Yes
-Which Web Role? ──→ Determines what pages + data they can access
-    ↓
-Page Permissions ──→ Controls which PAGES they can view
-    ↓
-Table Permissions ──→ Controls which DATA (records) they can read/write
-    ↓
-Scope of Table Permission:
-    • Global = ALL records
-    • Contact = only records linked to the user's contact
-    • Account = only records linked to the user's account
-    • Parent = only child records of a parent they have access to
-    • Self = only the user's own contact record
-Key Components
-Component	What It Does	Exam Context
-Web Role	Groups permissions together (like security roles)	Assign to users → controls access
-Authenticated Users Role	Special flag on a web role → auto-assigned to ALL logged-in users	Set to true = every authenticated user gets this role
-Table Permission	Controls CRUD access to Dataverse records	Scope: Global/Contact/Account/Parent/Self
-Page Permission	Controls access to specific web pages	Restrict/Grant access to individual pages
-Inherited Permissions	Child pages inherit parent page permissions	If disabled → child page is NOT accessible even if parent is
-Identity Provider	How users authenticate	Local auth, Azure AD, Microsoft Account, Google, Facebook
-Open Registration	Allow anyone to sign up	Enabled = public signup. Disabled = invitation only
-________________________________________
-🔑 Rules to Memorize
-Rule	Remember
-1	Authenticated Users Role = auto-assigned to ALL logged-in users when Authenticated Users Role = true
-2	Anonymous users can ONLY see pages explicitly granted to the Anonymous Users web role
-3	Table permissions control DATA access (records). Page permissions control PAGE access
-4	Scope = Contact → user sees only records linked to their Contact record
-5	Scope = Global → user sees ALL records (dangerous!)
-6	Inherited permissions disabled → child pages are NOT accessible even if parent is ✅
-7	Open Registration = disabled → users need an invitation code to register
-8	Power Pages data source = ALWAYS Dataverse (no SQL, no Excel, no external)
-9	Basic Form = single-step form. Advanced Form (Multi-step) = wizard-style form
-10	Entity List (now List) = displays a grid of records on a page
-________________________________________
-📝 All Related Questions + Answers
-Q5: Default permissions for students (free courses)
-Scenario: Free courses auto-available after sign-in
-Answer: ✅ C — Create entity for free courses → Create Students web role with Authenticated Users Role = true → Create entity permissions for free course records → assign to web role
-❌ A — Assigning web role to each user individually = not scalable
-❌ B — Creating entity permissions per user at registration = too manual
-Key: Authenticated Users Role = true means ALL logged-in users get it automatically
-________________________________________
-Q115: Anonymous user can't view linked page
-Scenario: Anonymous user sees Home page but NOT a linked child page
-Answer: ✅ B. Inherited permissions are not enabled for the linked page
-Why: If inherited permissions are OFF, the child page doesn't inherit the parent's access
-❌ Authenticated Users Role — user is anonymous, not authenticated
-❌ Maintenance mode — would block ALL pages, not just one
-Key: Always check inherited permissions when child pages aren't visible
-________________________________________
-Q116: Authentication + permissions components
-Requirements:
-•	Only authenticated users sign in → Identity Provider (configure external auth like Azure AD)
-•	Varying degrees of access → Web Roles (different roles for different access levels)
-•	Select from external entities during registration → Entity Form with lookup fields
-Key: Identity Provider + Web Roles + Entity Forms = the three pillars of portal security
-________________________________________
-Q120: Microsoft Account + invitation code authentication
-Configuration:
-•	External sign-in → Microsoft Account (identity provider)
-•	Open Registration → Disabled (requires invitation code)
-Key: Disabled open registration = invitation-only signup
-________________________________________
-Q123: User gets "permission denied" creating portal
-Answer: ✅ A, C, E
-•	A: User must have read-write access in Power Platform admin center
-•	C: User must have permission to register an app in Azure AD
-•	E: User must have System Administrator security role
-Key: Portal creation requires both Power Platform admin permissions AND Azure AD app registration rights
-________________________________________
-Q124: Two communities (sales + service) with multiple languages
-•	Languages for both → Enable language packs in the environment
-•	Company logo/colors for all screens → Theme configuration
-•	Separate communities with different URLs → Create separate portals (each gets its own URL)
-________________________________________
-Q183-184: Power Pages templates
-•	Automated scheduling → Schedule and manage meetings template
-•	Event registration → Community template (or custom)
-•	Ticketing/support → Customer Self-Service template
-Key: Know the main templates and their use cases
-________________________________________
-Q200: Webpage permissions setup
-Scenario: Bellows College portal — set up page permissions for different pages
-Key: Each page can have specific permissions controlling who can view/edit it
-Combine Page Permissions + Web Roles for granular access
-________________________________________
-Q238: Portal email registration process
-•	Send invitation code → Email (manual or automated)
-•	User enters code during registration → Invitation entity in Dataverse
-•	User signs in → Identity Provider validates credentials
-Key: Invitation-based registration = Invitation entity + disabled open registration
-________________________________________
-Q256: Page permissions for store managers (data access)
-Scenario: Managers must update stock for THEIR store only
-Solution: Page permissions alone → ❌ No
-Why: Page permissions control PAGE access, not DATA access. For record-level filtering (own store only), you need Table Permissions with Contact or Account scope
-Key: Page permissions ≠ data-level security. Table permissions = data-level security
-________________________________________
-Q315: Power Pages data source
-Answer: ✅ A. Microsoft Dataverse
-Power Pages ONLY connects to Dataverse. No SQL Server, no Excel, no external databases
-❌ Excel — not supported
-❌ Azure SQL — not supported
-❌ SQL Server — not supported
-________________________________________
-🔧 Apply Section — Verify It Yourself
-✅ Exercise 1: See Power Pages Templates
-1.	Go to https://make.powerpages.microsoft.com
-2.	Click + Create a site
-3.	Browse the available templates → see: Starter, Blank, Community, FAQ, etc.
-4.	Note what each template includes (don't create unless you want to explore)
-✅ Exercise 2: Explore Web Roles
-1.	If you have a Power Pages site → go to Set up → Web Roles
-2.	See the default roles: Anonymous Users, Authenticated Users
-3.	Click Authenticated Users → see the "Authenticated Users Role" toggle
-4.	This is the toggle from Q5 — when ON, all logged-in users get this role
-✅ Exercise 3: See Table Permissions
-1.	In Power Pages → Set up → Table Permissions
-2.	Click + New → see the Scope dropdown: 
-o	Global = all records
-o	Contact = records linked to user's contact
-o	Account = records linked to user's account
-3.	Assign to a Web Role → this controls which records users see
-✅ Exercise 4: Test Inherited Permissions
-1.	Create a parent page and a child page
-2.	Set page permissions on the parent → grant to a web role
-3.	Disable inherited permissions on the child page
-4.	Log in as that web role → parent page visible ✅, child page NOT visible ❌
-5.	Enable inherited permissions → child page now visible ✅
-✅ Exercise 5: See Identity Providers
-1.	In Power Pages → Set up → Identity Providers
-2.	See available options: Local sign-in, Azure AD, Microsoft Account, Google, Facebook
-3.	This is what Q120 tests — which provider + open registration setting
-________________________________________
-📘 TOPIC SHEET 7: Security (Roles, Teams, Field-Level, Hierarchy)
-(~12 questions — complex combinations) ⚠️
-________________________________________
-📖 Concept
-Security Layers (from broadest to narrowest)
-Layer 1: ENVIRONMENT ACCESS
-    → Who can even SEE the environment?
-    → Controlled by: Office 365 / Azure AD Security Groups
+ Monthly Report / Month 1
 
-Layer 2: SECURITY ROLES
-    → What can users DO inside the environment?
-    → CRUD privileges on tables at different access levels
+•	Date of Report: 29/3/2026
+•	Student ID - Name: Bashar Ibrahim Awwad Alkhresheh
+•	Major: CS
+•	Company: Safwa Islamic Bank
+•	Department: IT Department
+•	Industry Mentor: Sadeq
+•	Apprenticeship Mentor: Osaid Ghunmat
+•	Working days/hours: 5 days/week | 8:00 AM – 3:30 PM
 
-Layer 3: TEAMS
-    → How do users SHARE access to records?
-    → Owner Teams vs Access Teams
+Your report must cover these topics:
+1.	Your role and responsibilities this month (+ evidence)
+ 
+ 
+ 
 
-Layer 4: FIELD-LEVEL SECURITY
-    → Which specific FIELDS can users see/edit?
-    → Field Security Profiles
+During Month 1, I worked as a System Analyst at Safwa Islamic Bank's IT Department. My role focused on understanding business operations and building the data foundation needed to support the bank's digital transformation goals.
 
-Layer 5: HIERARCHY SECURITY
-    → Can managers see subordinates' records?
-    → Manager Hierarchy vs Position Hierarchy
-Security Roles — Access Levels
-Access Level	Symbol	What They See
-None	○ (empty)	No access
-User	🟡 (one circle)	Own records only
-Business Unit	🟢 (two circles)	Own BU records
-Parent: Child BU	🔵 (three circles)	Own BU + child BU records
-Organization	🔴 (four circles)	ALL records in org
-Teams Comparison
-Feature	Owner Team	Access Team
-Can own records	✅ Yes	❌ No
-Has security roles	✅ Yes	❌ No (inherits from sharing)
-Created how	Manually by admin	Dynamically (auto or manual)
-Best for	Permanent groups (Sales Team, Support Team)	Temporary/dynamic access to specific records
-Members	Fixed membership	Flexible, record-by-record
-Field-Level Security
-Step	What To Do
-1	Enable column for field-level security (column properties → "Enable column security")
-2	Create a Field Security Profile
-3	Add users/teams to the profile
-4	Set Read/Create/Update permissions per field in the profile
-________________________________________
-🔑 Rules to Memorize
-Rule	Remember
-1	Environment access = Office 365 Security Group (restricts who sees the environment)
-2	Security roles = CRUD privileges at different access levels
-3	Owner teams = own records + have security roles
-4	Access teams = temporary access, don't own records, no security roles
-5	Field-level security = controls individual FIELD access (not record, not table)
-6	Field Security Profile = the container for field permissions
-7	Manager Hierarchy = managers auto-see subordinates' records (depth configurable)
-8	Position Hierarchy = based on position, not direct reporting line
-9	Conditional Access (Azure AD) = restrict by location, device, IP
-10	User/Team owned table = supports security roles, sharing, teams
-11	Organization-owned table = no record-level security, everyone sees all
-12	Environment Maker = can create apps/flows but NOT access data
-13	Basic User (Common Data Service User) = can run apps + access own data
-________________________________________
-📝 All Related Questions + Answers
-Q12, Q16, Q253-254: Restrict environment access
-Scenario: Two environments — users must NOT see the other one
-Answer: ✅ Office 365 / Azure AD Security Group
-How: Associate a security group with the environment → only members see it
-❌ Security roles — controls what users do INSIDE, not whether they SEE the environment
-❌ Privileges — too granular
-❌ App security — controls app access, not environment visibility
-________________________________________
-Q30, Q47: Security role for canvas app user (no extra permissions)
-Scenario: User has Dataverse access, needs to create canvas apps, least privilege
-Answer: ✅ Environment Maker (Q30) or Basic User (Q47 — depends on exact wording)
-•	Environment Maker = create apps/flows (but not access data)
-•	Basic User = run apps + access own data
-❌ Environment Admin — too much privilege
-❌ System Customizer — can customize but overkill for just creating canvas apps
-________________________________________
-Q44-45: Restrict canvas app by location
-Scenario: Employees must access app only from specific locations
-•	Ensure access from specific region → Azure Active Directory (Conditional Access)
-•	Specify allowed locations → Conditional Access Policy (named locations)
-❌ Canvas app settings — no location restriction setting
-❌ Security roles — no location-based control
-________________________________________
-Q48-49: Owner Teams vs Access Teams
-Requirements:
-•	Team can own records → Owner Team
-•	Team membership is auto-managed by Azure AD group → AAD Group Team
-•	Temporary access to specific records without ownership → Access Team
-•	Different access rights per record → Access Team
-Key: Own records = Owner Team. Dynamic/temporary = Access Team
-________________________________________
-Q51: Manager Hierarchy issues
-Scenario: CEO sees all, managers see their reports, but reps need to see each other's data across managers
-Fix: Give support representatives a security role with Organization-level Read on customer table
-Why: Hierarchy alone won't give cross-manager visibility — need explicit security role
-________________________________________
-Q55: Security roles at scale (5000 users)
-•	Assign roles based on teams → Use Owner Teams with security roles attached
-•	Minimize admin effort → Team-based security role assignment (not individual)
-Key: At scale, assign security roles to TEAMS, not individual users
-________________________________________
-Q62: Field-Level Security for sales associates (view only)
-•	Enable fields for field-level security → Power Apps app designer (column properties)
-•	Set security settings to view only → Field Security Profiles
-Steps: Enable column security → Create profile → Add sales associates → Set Read=Yes, Update=No
-________________________________________
-Q69: Hide address columns from users
-Answer: ✅ C. Use column-level security to remove read access
-❌ Delete columns — destroys data
-❌ Disable search — hides from search, not from views
-❌ Business rules — can hide on forms but not from views/filters
-________________________________________
-Q259-260: Access teams for service requests
-Scenario: After service request completed, only QV team should access records
-•	During work → Access team (add team member for temporary access)
-•	After completion → Assign records to QV team (owner team)
-Key: Access teams = temporary. Owner teams = permanent ownership
-________________________________________
-🔧 Apply Section — Verify It Yourself
-✅ Exercise 1: See Security Roles
-1.	Power Platform Admin Center → Environments → select your environment → Settings
-2.	Users + permissions → Security roles
-3.	Open Basic User → see the privilege matrix (Read, Write, Create, Delete per table)
-4.	Notice the circle symbols: ○ = None, 🟡 = User, 🟢 = BU, 🔵 = Parent-Child, 🔴 = Org
-✅ Exercise 2: See Environment Security Group
-1.	Power Platform Admin Center → Environments → select environment
-2.	Look for "Security group" field in the environment details
-3.	If set → only members of that group can access this environment
-4.	If empty → all licensed users can see it
-✅ Exercise 3: Create a Field Security Profile
-1.	make.powerapps.com → Tables → Account → Columns
-2.	Open a column (e.g., "Annual Revenue") → Advanced options
-3.	Toggle "Enable column security" = ON → Save
-4.	Go to Settings → Field Security Profiles → + New
-5.	Name it "Sales View Only" → Save
-6.	Add users → set: Read = ✅, Create = ❌, Update = ❌
-7.	Now those users can SEE the field but NOT edit it
-✅ Exercise 4: Owner Team vs Access Team
-1.	Settings → Security → Teams → see existing teams
-2.	Owner teams have a security role column
-3.	Access teams do NOT have security roles — they get access via sharing
-4.	Try creating both → assign a record to an owner team → see how ownership transfers
-✅ Exercise 5: Conditional Access (View Only)
-1.	Go to https://portal.azure.com → Azure Active Directory → Conditional Access
-2.	See existing policies (if any) → notice location-based conditions
-3.	This is what Q44-45 tests — restrict app access by named locations
-4.	⚠️ Don't change anything — just observe the UI
-________________________________________
-📘 TOPIC SHEET 8: Forms (Main, Quick Create, Quick View, Card)
-(~10 questions) ✅ You know the basics, but exam tests edge cases
-________________________________________
-📖 Concept
-Form Type	Purpose	Where It Appears	User Can Create Records?
-Main Form	Full data entry form	Opens when you click a record	✅ Yes (full edit)
-Quick Create Form	Rapid entry with minimal fields	"+" button or quick create dialog	✅ Yes (minimal fields, no navigation away)
-Quick View Form	Read-only snapshot from RELATED record	Embedded inside another form	❌ No (display only)
-Card Form	Compact record summary	Board views, timeline, mobile	❌ No (display only)
-🧠 Key Differences
-Feature	Main	Quick Create	Quick View
-Tabs/Sections	✅ Yes	❌ No (single section)	❌ No
-Subgrids	✅ Yes	❌ No	❌ No
-Business Rules	✅ Yes	✅ Yes	❌ No
-Navigation away	Yes (opens full form)	❌ No (stays on current page)	N/A
-Editable	✅ Yes	✅ Yes	❌ Read-only
-Shows related data	Via subgrids/lookups	❌ No	✅ Yes (from parent/related)
-________________________________________
-🔑 Rules to Memorize
-Rule	Remember
-1	Quick Create = "rapidly create without navigating away" (exam keyword!)
-2	Quick View = "display read-only data from a RELATED record"
-3	Main Form = full editing, tabs, sections, subgrids, BPF, timeline
-4	Card Form = compact summary in views/boards
-5	Multiple Main Forms per table → controlled by form order or security role assignment
-6	Quick View form requires a lookup relationship to the related table
-7	To prepopulate data from related entity → Quick View Form
-8	To let assistants edit data + see subgrids → Main Form
-9	Form assignment: Settings → Form Order or Manage Roles per form
-________________________________________
-📝 All Related Questions + Answers
-Q43: Embed related entity info + allow editing
-Scenario: Main form doesn't show data from other entities
-•	Embed read-only info from another entity → Quick View Form (add Quick View control)
-•	Allow editing of related data → Add a subgrid (navigate to related records for editing)
-Key: Quick View = read-only display. Subgrid = navigate + edit
-________________________________________
-Q77-78: Auto parts help desk — prepopulate + manual entry
-Scenario: Prepopulate customer name from Client table + type automobile info
-•	Prepopulate first/last name from Client → Quick View Form (displays Client data read-only)
-•	Type automobile make/model → Main Form fields (editable text inputs on Automobile form)
-________________________________________
-Q91: Form types for different case types
-Scenario: Different data entry needs for different case types
-•	Minimal data entry, fast → Quick Create Form
-•	Full details with all fields → Main Form
-•	Summary card in list → Card Form
-________________________________________
-Q204: Bellows College — registration team vs assistants
-•	Registration team: "rapidly create prospects without navigating away" + only First Name, Last Name, Birthdate → Quick Create Form
-•	Assistants: "update prospect information and add teams to a subgrid" → Main Form
-Key: "rapidly" + "without navigating away" = ALWAYS Quick Create. "subgrid" = ALWAYS Main Form
-________________________________________
-Q320-321: Embed custom interface in model-driven form without code
-Answer: ✅ A. Create a canvas app and bind its properties to the form
-Why: You can embed a canvas app inside a model-driven form → custom UI without code
-❌ IFrame — requires HTML/code
-❌ Quick View form — read-only, no custom interface
-❌ Tablet form factor — changes layout, not custom interface
-________________________________________
-🔧 Apply Section — Verify It Yourself
-✅ Exercise 1: See All Form Types
-1.	make.powerapps.com → Tables → Account → Forms
-2.	Filter by form type → see: Main, Quick Create, Quick View, Card
-3.	Open each one → notice the differences in layout/capabilities
-✅ Exercise 2: Create a Quick Create Form
-1.	Tables → Account → Forms → + New form → Quick Create Form
-2.	Add ONLY 3-4 fields (e.g., Account Name, Phone, Email)
-3.	Save & Publish
-4.	Open a model-driven app → click "+" (quick create button) → select Account
-5.	See your minimal form appear WITHOUT navigating away ✅
-✅ Exercise 3: Create a Quick View Form
-1.	Tables → Contact → Forms → + New form → Quick View Form
-2.	Add: First Name, Last Name, Email
-3.	Save & Publish
-4.	Now go to Account → Main Form → add a Quick View control
-5.	Select the Contact lookup → select your Quick View form
-6.	Open an Account with a linked Contact → see Contact info displayed read-only
-✅ Exercise 4: Embed Canvas App in Model-Driven Form
-1.	Open Account → Main Form in form designer
-2.	Click + Component → find Canvas App
-3.	Create a new canvas app → it opens Power Apps Studio embedded
-4.	Design your custom interface → Save & Publish
-5.	Open Account form → see the canvas app embedded ✅
-✅ Exercise 5: Form Assignment by Security Role
-1.	Tables → Account → Forms
-2.	If you have multiple Main Forms → click ⋯ → Form Settings
-3.	See "Security Roles" tab → assign which roles see which form
-4.	This is how different users see different forms for the same table
-________________________________________
-📋 Progress Tracker (Updated)
-#	Topic	Status	Questions
-1	✅ Search Types	✅ Done	12
-2	✅ Tool Selection	✅ Done	15
-3	✅ Business Rule Scope	✅ Done	10
-4	✅ Views	✅ Done	12
-5	✅ Power Virtual Agents	✅ Done	27
-6	✅ Power Pages	✅ Done	12
-7	✅ Security	✅ Done	12
-8	✅ Forms	✅ Done	10
-9	🔜 Duplicate Detection	Next	
-10	🔜 Solutions/ALM	Next	
-11	🔜 Cloud Flows	Next	
-12	🔜 BPF	Next	
-13	🔜 Desktop Flows	Next	
-14	🔜 Canvas App (Variables/Functions)	Next	
-15	🔜 Environment & Admin	Next	
-________________________________________
-🔥 You've now covered 8/15 topics = ~65% of exam content mastered!
-The remaining 7 topics cover the other ~35%. Most of them (Cloud Flows, BPF, Canvas Variables) you already have hands-on experience with, so they'll go faster.
+Weeks 1–2: Call Center Study & Systems Analysis
+I studied the call center operations in detail to understand how customers interact with the bank. My work included:
+	Analyzing the types of customer calls received and identifying the underlying reasons for each
+	Identifying patterns and recurring themes across hundreds of customer interactions
+	Grouping calls into clear service categories: Account Services, Complaints, General Inquiries, and Transaction-related requests
+	Flagging repetitive and manual processes with potential for automation or digitization
+	Documenting all findings in structured reports to support future system improvement decisions
+
+Objective: Understand why customers contact the bank, identify high-frequency service types, and provide an evidence-based foundation for the deeper analysis in Month 2.
+
+Weeks 3–4: Branch Data Analysis (44 Branches | Last 6 Years)
+ 
+I expanded my scope to a large-scale data analysis exercise covering 44 branches over six years. Key activities included:
+	Collecting and consolidating historical data from all 44 branches
+	Cleaning and preparing raw data using Microsoft Excel
+	Building interactive dashboards and visualizations in Microsoft Power BI
+	Using Microsoft Copilot (AI assistance) to accelerate analysis and surface key trends
+	Analyzing metrics: customers arrived vs. served, service time, waiting time, workload distribution, and service efficiency
+	Comparing branch performance to identify overloaded branches, high-wait services, and efficiency gaps
+
+2.	Any problems / Challenges and how did you overcome them?
+
+	Unstructured call data – Customer calls were not categorized clearly in the source system. Overcome by applying pattern recognition and logical grouping to derive a clean classification framework.
+	High variability in customer requests – Each call was unique, making pattern identification difficult. Resolved by focusing on frequency analysis and grouping similar intents together.
+	Data inconsistency across 44 branches – Branch data had formatting inconsistencies. Resolved through a standardization process in Excel before loading into Power BI.
+	Large dataset volume – Six years of data across 44 branches was resource-intensive. Managed by segmenting and processing data in structured batches.
+
+3.	Any training courses you attended during the apprenticeship, whether you opted for independently or through the employer.
+	Name of the course: N/A – No formal external courses attended during Month 1.
+	Main Topics: Development was driven through hands-on, project-based learning (Power BI, Excel, systems analysis).
+	Copy of certification: N/A
+
+4.	What software / tools did you use?
+
+	Microsoft Power BI – Dashboard creation, branch performance visualization, and interactive reporting
+	Microsoft Excel – Data cleaning, transformation, and quantitative analysis across branch datasets
+	Microsoft Copilot – AI-assisted analysis, pattern recognition, and productivity acceleration
+	Internal Call Center Systems – Accessing call logs and service interaction records for pattern analysis
+
+5.	Technical and non-technical skills
+
+Technical Skills:
+	Data analysis and visualization using Power BI and Excel
+	Systems analysis, process mapping, and documentation
+	Pattern recognition and trend analysis from large-scale datasets
+	AI-assisted analysis using Microsoft Copilot
+	Branch performance benchmarking and KPI reporting
+Non-Technical Skills:
+	Analytical thinking – synthesizing unstructured observations into structured findings
+	Communication – engaging with call center staff and supervisors to gather qualitative insights
+	Problem solving – developing workarounds for unstructured and inconsistent data
+	Documentation – producing clear, structured reports from raw observations
+	Time management – balancing two distinct project phases within a single month
+
+6.	Did you work on the National Occupational Standards (NOSs):
+	How many NOSs did you complete out of 5?  
+	List of NOSs (Number (URN) – Name of NOS):
+
+7.	Events / Conferences you participated in
+
+No external events or conferences were attended during Month 1. Engagement was focused entirely on internal project work and collaboration with bank staff and department teams.
+
+8.	Your Plan for Next Month.
+
+	Conduct a deep-dive analysis of specific banking processes, focusing on Withdrawal and Deposit transactions
+	Process and categorize approximately 10 million transaction records spanning the last 3 years
+	Analyze data by customer type (Individual vs. Corporate; VIP vs. Regular), channel (Branch vs. ATM), and time trends
+	Identify opportunities to shift branch-based transactions to self-service channels (ATM/CDM)
+	Begin system integration work on the WSO2 Safwa Portal
+	Build on Power BI and Excel proficiency from Month 1 to produce richer dashboards
 

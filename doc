@@ -1,90 +1,137 @@
- Monthly Report / Month 1
+Monthly Report / Month 1
 
-•	Date of Report: 29/3/2026
-•	Student ID - Name: Bashar Ibrahim Awwad Alkhresheh
-•	Major: CS
-•	Company: Safwa Islamic Bank
-•	Department: IT Department
-•	Industry Mentor: Sadeq
-•	Apprenticeship Mentor: Osaid Ghunmat
-•	Working days/hours: 5 days/week | 8:00 AM – 3:30 PM
+Date of Report: 30/4/2026
+Student ID - Name: Bashar Ibrahim Awwad Alkhresheh
+Major: CS
+Company: PwC (PricewaterhouseCoopers) – Middle East
+Department: Advisory – Microsoft Technology Consulting
+Industry Mentor: Louay Qadura
+Apprenticeship Mentor: Osaid Ghunmat
+Working days/hours: 5 days/week | 8:00 AM – 5:00 PM
 
-Your report must cover these topics:
-1.	Your role and responsibilities this month (+ evidence)
- 
- 
- 
 
-During Month 1, I worked as a System Analyst at Safwa Islamic Bank's IT Department. My role focused on understanding business operations and building the data foundation needed to support the bank's digital transformation goals.
+1. Your Role and Responsibilities This Month (+ Evidence)
+During Month 1, I joined PwC's Advisory – Microsoft Technology Consulting team as an Intern/Trainee based in the Amman office. My role focused on building foundational knowledge in the tools and platforms the team uses in client consulting projects, and applying that knowledge through hands-on practice projects.
+Weeks 1–2: Learning the Core Platform
+I started by studying the fundamentals of Microsoft Dynamics 365 and Power Platform — the main technology stack used by the team to deliver business solutions for clients. My work included:
 
-Weeks 1–2: Call Center Study & Systems Analysis
-I studied the call center operations in detail to understand how customers interact with the bank. My work included:
-	Analyzing the types of customer calls received and identifying the underlying reasons for each
-	Identifying patterns and recurring themes across hundreds of customer interactions
-	Grouping calls into clear service categories: Account Services, Complaints, General Inquiries, and Transaction-related requests
-	Flagging repetitive and manual processes with potential for automation or digitization
-	Documenting all findings in structured reports to support future system improvement decisions
+Understanding how business applications are structured: data tables, forms, views, workflows, and security settings
+Learning how to extend the platform using custom server-side code (plugins) to automate business logic
+Creating internal documentation and study guides to consolidate my learning and share with the team
 
-Objective: Understand why customers contact the bank, identify high-frequency service types, and provide an evidence-based foundation for the deeper analysis in Month 2.
+Weeks 2–3: Hands-On Plugin Development
+I moved from theory to practice by working on plugin development tasks assigned by the team:
 
-Weeks 3–4: Branch Data Analysis (44 Branches | Last 6 Years)
- 
-I expanded my scope to a large-scale data analysis exercise covering 44 branches over six years. Key activities included:
-	Collecting and consolidating historical data from all 44 branches
-	Cleaning and preparing raw data using Microsoft Excel
-	Building interactive dashboards and visualizations in Microsoft Power BI
-	Using Microsoft Copilot (AI assistance) to accelerate analysis and surface key trends
-	Analyzing metrics: customers arrived vs. served, service time, waiting time, workload distribution, and service efficiency
-	Comparing branch performance to identify overloaded branches, high-wait services, and efficiency gaps
+Built custom automation logic for a sample entity to auto-generate unique ID fields
+Practiced error handling, debugging techniques, and testing approaches
+Documented my learnings into structured guides covering 10 key competency areas for future reference
 
-2.	Any problems / Challenges and how did you overcome them?
+Weeks 3–4: Framework Study & Building Practice Projects
+I expanded my scope to study PwC's proprietary Hexa BPM Framework — the tool the team uses to deliver process automation solutions for clients:
 
-	Unstructured call data – Customer calls were not categorized clearly in the source system. Overcome by applying pattern recognition and logical grouping to derive a clean classification framework.
-	High variability in customer requests – Each call was unique, making pattern identification difficult. Resolved by focusing on frequency analysis and grouping similar intents together.
-	Data inconsistency across 44 branches – Branch data had formatting inconsistencies. Resolved through a standardization process in Excel before loading into Power BI.
-	Large dataset volume – Six years of data across 44 branches was resource-intensive. Managed by segmenting and processing data in structured batches.
+Studied the Hexa documentation end-to-end, covering how business processes, workflows, approvals, and business rules are configured
+Created a series of summary documents explaining how Hexa works and how it compares to standard platform capabilities
+Built a complete Visitor Management System as a practice project — including a business app, relational data tables, approval workflows, a dashboard, and role-based security
+Started designing a Vendor Compliance & Certification System — a more advanced practice project inspired by Hexa's architecture
 
-3.	Any training courses you attended during the apprenticeship, whether you opted for independently or through the employer.
-	Name of the course: N/A – No formal external courses attended during Month 1.
-	Main Topics: Development was driven through hands-on, project-based learning (Power BI, Excel, systems analysis).
-	Copy of certification: N/A
+Upskilling Sessions & Team Engagement
 
-4.	What software / tools did you use?
+Attended weekly Power Platform & Dynamics CRM Upskilling sessions with the team:
 
-	Microsoft Power BI – Dashboard creation, branch performance visualization, and interactive reporting
-	Microsoft Excel – Data cleaning, transformation, and quantitative analysis across branch datasets
-	Microsoft Copilot – AI-assisted analysis, pattern recognition, and productivity acceleration
-	Internal Call Center Systems – Accessing call logs and service interaction records for pattern analysis
+April 22: Business Apps & Canvas Apps Basics
+April 29: Plugins, Workflows & Web Resources
 
-5.	Technical and non-technical skills
 
+Participated in Interns Bi-Weekly Checkpoint meetings (April 15 & 29) for progress tracking
+Attended a team Catchup meeting on April 26
+
+
+2. Any Problems / Challenges and How Did You Overcome Them?
+
+Steep learning curve — The technology stack was new to me. Overcame by following a structured self-study approach: read → practice → document → repeat.
+Understanding a proprietary framework without a live environment — Hexa is PwC's own tool, so public resources don't exist. Resolved by thoroughly studying internal documentation and building a similar practice project using standard tools to simulate its patterns.
+Bridging theory and practice — Upskilling sessions covered concepts, but real understanding came from building projects independently. Resolved by designing and implementing two full practice projects end-to-end.
+Debugging in a cloud-based environment — Unlike traditional development, cloud platform code can't be tested locally the same way. Overcame by learning the platform's built-in logging and debugging tools.
+
+
+3. Any Training Courses You Attended
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Course NameMain TopicsProviderPower Platform & Dynamics CRM Upskilling (Weekly)Business Apps, Canvas Apps, Plugins, WorkflowsPwC InternalHexa Framework Self-StudyProcess Automation, Workflows, Business RulesPwC Internal DocumentationSelf-directed Platform TrainingDynamics 365 Fundamentals, Plugin DevelopmentSelf-study
+
+Copy of certification: N/A – Development was driven through hands-on project-based learning and internal upskilling sessions.
+
+
+4. What Software / Tools Did You Use?
+
+Microsoft Dynamics 365 — Business application platform used in consulting projects
+Microsoft Power Apps — Building business applications (model-driven and canvas apps)
+Microsoft Dataverse — Data storage, table design, and security configuration
+Microsoft Power Automate — Approval flows and workflow automation
+Visual Studio — Writing and testing custom code (plugins)
+Microsoft Teams — Collaboration, meetings, and upskilling sessions
+Microsoft Copilot — AI-assisted learning and documentation
+SharePoint — File storage and document sharing
+
+
+5. Technical and Non-Technical Skills
 Technical Skills:
-	Data analysis and visualization using Power BI and Excel
-	Systems analysis, process mapping, and documentation
-	Pattern recognition and trend analysis from large-scale datasets
-	AI-assisted analysis using Microsoft Copilot
-	Branch performance benchmarking and KPI reporting
+
+Business application design and configuration
+Data modeling and table/relationship design
+Workflow and approval automation
+Custom code development for business logic
+Security and access control configuration
+Dashboard creation and reporting
+Understanding of PwC's Hexa BPM Framework
+
 Non-Technical Skills:
-	Analytical thinking – synthesizing unstructured observations into structured findings
-	Communication – engaging with call center staff and supervisors to gather qualitative insights
-	Problem solving – developing workarounds for unstructured and inconsistent data
-	Documentation – producing clear, structured reports from raw observations
-	Time management – balancing two distinct project phases within a single month
 
-6.	Did you work on the National Occupational Standards (NOSs):
-	How many NOSs did you complete out of 5?  
-	List of NOSs (Number (URN) – Name of NOS):
+Self-directed learning — independently building knowledge from documentation and practice
+Documentation — producing clear guides and summaries for knowledge sharing
+Analytical thinking — breaking down complex frameworks into simple, understandable concepts
+Collaboration — engaging with mentors and colleagues during meetings and sessions
+Time management — balancing multiple learning tracks within a single month
+Problem solving — finding creative solutions when resources or environments were limited
 
-7.	Events / Conferences you participated in
 
-No external events or conferences were attended during Month 1. Engagement was focused entirely on internal project work and collaboration with bank staff and department teams.
+6. Did You Work on the National Occupational Standards (NOSs)?
 
-8.	Your Plan for Next Month.
+How many NOSs did you complete out of 5? ___
+List of NOSs (Number (URN) – Name of NOS): (To be filled)
 
-	Conduct a deep-dive analysis of specific banking processes, focusing on Withdrawal and Deposit transactions
-	Process and categorize approximately 10 million transaction records spanning the last 3 years
-	Analyze data by customer type (Individual vs. Corporate; VIP vs. Regular), channel (Branch vs. ATM), and time trends
-	Identify opportunities to shift branch-based transactions to self-service channels (ATM/CDM)
-	Begin system integration work on the WSO2 Safwa Portal
-	Build on Power BI and Excel proficiency from Month 1 to produce richer dashboards
 
+7. Events / Conferences You Participated In
+No external events or conferences were attended during Month 1. Engagement was focused on internal upskilling sessions, team checkpoint meetings, and hands-on project work.
+
+8. Your Plan for Next Month
+
+Continue the weekly Power Platform & Dynamics CRM Upskilling sessions
+Complete the Vendor Compliance & Certification System practice project
+Gain hands-on experience with the Hexa Framework in a live environment
+Begin preparation for the Microsoft PL-200 certification exam
+Start contributing to active client consulting projects under team guidance
+Continue building documentation and knowledge-sharing materials
